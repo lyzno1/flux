@@ -1,14 +1,14 @@
 {
 	"dependencies": {
 		"@flux/utils": "workspace:*",
-		"zustand": "catalog:"
+		"zustand": "catalog:frontend"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"@types/react": "catalog:",
-		"jsdom": "catalog:",
-		"typescript": "catalog:",
-		"vitest": "catalog:"
+		"@types/react": "catalog:dev",
+		"jsdom": "catalog:dev",
+		"typescript": "catalog:dev",
+		"vitest": "catalog:dev"
 	},
 	"exports": {
 		"./*": {
@@ -17,7 +17,7 @@
 	},
 	"name": "@flux/store",
 	"peerDependencies": {
-		"react": "catalog:"
+		"react": "catalog:frontend"
 	},
 	"scripts": {
 		"check-types": "tsgo --noEmit",

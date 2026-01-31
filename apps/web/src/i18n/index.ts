@@ -27,7 +27,7 @@ i18n
 			escapeValue: false,
 		},
 		detection: {
-			order: ["navigator", "htmlTag"],
+			order: ["localStorage", "navigator", "htmlTag"],
 			caches: ["localStorage"],
 			lookupLocalStorage: "i18nextLng",
 		},

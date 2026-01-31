@@ -1,8 +1,8 @@
 {
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"typescript": "catalog:",
-		"vitest": "catalog:"
+		"typescript": "catalog:dev",
+		"vitest": "catalog:dev"
 	},
 	"exports": {
 		"./*": {

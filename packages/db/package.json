@@ -1,16 +1,16 @@
 {
 	"dependencies": {
 		"@flux/env": "workspace:*",
-		"dotenv": "catalog:",
-		"drizzle-orm": "catalog:",
+		"dotenv": "catalog:prod",
+		"drizzle-orm": "catalog:prod",
 		"pg": "8.18.0",
-		"zod": "catalog:"
+		"zod": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
 		"@types/pg": "8.16.0",
-		"drizzle-kit": "catalog:",
-		"typescript": "catalog:"
+		"drizzle-kit": "catalog:dev",
+		"typescript": "catalog:dev"
 	},
 	"exports": {
 		".": {

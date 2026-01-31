@@ -2,13 +2,13 @@
 	"dependencies": {
 		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
-		"better-auth": "catalog:",
-		"dotenv": "catalog:",
-		"zod": "catalog:"
+		"better-auth": "catalog:prod",
+		"dotenv": "catalog:prod",
+		"zod": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"typescript": "catalog:"
+		"typescript": "catalog:dev"
 	},
 	"exports": {
 		".": {

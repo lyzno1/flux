@@ -5,10 +5,66 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  default:
+  dev:
     '@biomejs/biome':
       specifier: 2.3.13
       version: 2.3.13
+    '@tailwindcss/vite':
+      specifier: 4.1.18
+      version: 4.1.18
+    '@types/node':
+      specifier: 25.1.0
+      version: 25.1.0
+    '@types/react':
+      specifier: 19.2.10
+      version: 19.2.10
+    '@types/react-dom':
+      specifier: 19.2.3
+      version: 19.2.3
+    '@vitejs/plugin-react':
+      specifier: 5.1.2
+      version: 5.1.2
+    '@vitest/coverage-v8':
+      specifier: 3.2.4
+      version: 3.2.4
+    drizzle-kit:
+      specifier: 0.31.8
+      version: 0.31.8
+    jsdom:
+      specifier: 26.1.0
+      version: 26.1.0
+    postcss:
+      specifier: 8.5.6
+      version: 8.5.6
+    tailwindcss:
+      specifier: 4.1.18
+      version: 4.1.18
+    typescript:
+      specifier: '5'
+      version: 5.9.3
+    vite:
+      specifier: 7.3.1
+      version: 7.3.1
+    vitest:
+      specifier: 3.2.4
+      version: 3.2.4
+  frontend:
+    '@tanstack/react-query':
+      specifier: 5.90.20
+      version: 5.90.20
+    lucide-react:
+      specifier: 0.563.0
+      version: 0.563.0
+    react:
+      specifier: 19.2.4
+      version: 19.2.4
+    react-dom:
+      specifier: 19.2.4
+      version: 19.2.4
+    zustand:
+      specifier: 5.0.10
+      version: 5.0.10
+  prod:
     '@orpc/client':
       specifier: 1.13.4
       version: 1.13.4
@@ -27,72 +83,18 @@ catalogs:
     '@orpc/zod':
       specifier: 1.13.4
       version: 1.13.4
-    '@tailwindcss/vite':
-      specifier: 4.1.18
-      version: 4.1.18
-    '@tanstack/react-query':
-      specifier: 5.90.20
-      version: 5.90.20
-    '@types/node':
-      specifier: 25.1.0
-      version: 25.1.0
-    '@types/react':
-      specifier: 19.2.10
-      version: 19.2.10
-    '@types/react-dom':
-      specifier: 19.2.3
-      version: 19.2.3
-    '@vitejs/plugin-react':
-      specifier: 5.1.2
-      version: 5.1.2
-    '@vitest/coverage-v8':
-      specifier: 3.2.4
-      version: 3.2.4
     better-auth:
       specifier: 1.4.18
       version: 1.4.18
     dotenv:
       specifier: 17.2.3
       version: 17.2.3
-    drizzle-kit:
-      specifier: 0.31.8
-      version: 0.31.8
     drizzle-orm:
       specifier: 0.45.1
       version: 0.45.1
-    jsdom:
-      specifier: 26.1.0
-      version: 26.1.0
-    lucide-react:
-      specifier: 0.563.0
-      version: 0.563.0
-    postcss:
-      specifier: 8.5.6
-      version: 8.5.6
-    react:
-      specifier: 19.2.4
-      version: 19.2.4
-    react-dom:
-      specifier: 19.2.4
-      version: 19.2.4
-    tailwindcss:
-      specifier: 4.1.18
-      version: 4.1.18
-    typescript:
-      specifier: '5'
-      version: 5.9.3
-    vite:
-      specifier: 7.3.1
-      version: 7.3.1
-    vitest:
-      specifier: 3.2.4
-      version: 3.2.4
     zod:
       specifier: 4.3.6
       version: 4.3.6
-    zustand:
-      specifier: 5.0.10
-      version: 5.0.10
 
 importers:
 
@@ -102,26 +104,26 @@ importers:
         specifier: workspace:*
         version: link:packages/env
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@biomejs/biome':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 2.3.13
       '@flux/config':
         specifier: workspace:*
         version: link:packages/config
       '@types/node':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 25.1.0
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260130.1
         version: 7.0.0-dev.20260130.1
       '@vitest/coverage-v8':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 3.2.4(vitest@3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       knip:
         specifier: 5.82.1
@@ -136,10 +138,10 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
       vitest:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
 
   apps/server:
@@ -160,32 +162,32 @@ importers:
         specifier: workspace:*
         version: link:../../packages/env
       '@orpc/openapi':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(fastify@5.7.2)(ws@8.19.0)
       '@orpc/server':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(fastify@5.7.2)(ws@8.19.0)
       '@orpc/zod':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(@orpc/contract@1.13.4)(@orpc/server@1.13.4(fastify@5.7.2)(ws@8.19.0))(fastify@5.7.2)(ws@8.19.0)(zod@4.3.6)
       better-auth:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.4.18(drizzle-kit@0.31.8)(drizzle-orm@0.45.1(@types/pg@8.16.0)(kysely@0.28.10)(pg@8.18.0))(pg@8.18.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.11)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       fastify:
         specifier: 5.7.2
         version: 5.7.2
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@flux/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@types/node':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 25.1.0
       tsdown:
         specifier: 0.20.1
@@ -194,7 +196,7 @@ importers:
         specifier: 4.21.0
         version: 4.21.0
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
 
   apps/web:
@@ -218,31 +220,31 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(react-hook-form@7.71.1(react@19.2.4))
       '@orpc/client':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4
       '@orpc/contract':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4
       '@orpc/server':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(fastify@5.7.2)(ws@8.19.0)
       '@orpc/tanstack-query':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(@orpc/client@1.13.4)(@tanstack/query-core@5.90.20)
       '@tailwindcss/vite':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 4.1.18(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/react-form':
         specifier: 1.28.0
         version: 1.28.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/react-query':
-        specifier: 'catalog:'
+        specifier: catalog:frontend
         version: 5.90.20(react@19.2.4)
       '@tanstack/react-router':
         specifier: 1.157.17
         version: 1.157.17(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       better-auth:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.4.18(drizzle-kit@0.31.8)(drizzle-orm@0.45.1(@types/pg@8.16.0)(kysely@0.28.10)(pg@8.18.0))(pg@8.18.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.11)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       class-variance-authority:
         specifier: 0.7.1
@@ -251,7 +253,7 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       i18next:
         specifier: 25.8.0
@@ -263,16 +265,16 @@ importers:
         specifier: 1.2.1
         version: 1.2.1
       lucide-react:
-        specifier: 'catalog:'
+        specifier: catalog:frontend
         version: 0.563.0(react@19.2.4)
       next-themes:
         specifier: 0.4.6
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
-        specifier: 'catalog:'
+        specifier: catalog:frontend
         version: 19.2.4
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:frontend
         version: 19.2.4(react@19.2.4)
       react-i18next:
         specifier: 16.5.4
@@ -290,7 +292,7 @@ importers:
         specifier: 1.4.0
         version: 1.4.0
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@flux/config':
@@ -306,28 +308,28 @@ importers:
         specifier: 1.157.17
         version: 1.157.17(@tanstack/react-router@1.157.17(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(webpack@5.104.1)
       '@types/node':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 25.1.0
       '@types/react':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 19.2.10
       '@types/react-dom':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 19.2.3(@types/react@19.2.10)
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.1.2(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       postcss:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 8.5.6
       tailwindcss:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 4.1.18
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
       vite:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
 
   packages/api:
@@ -342,38 +344,38 @@ importers:
         specifier: workspace:*
         version: link:../env
       '@orpc/client':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4
       '@orpc/contract':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4
       '@orpc/openapi':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(fastify@5.7.2)(ws@8.19.0)
       '@orpc/server':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(fastify@5.7.2)(ws@8.19.0)
       '@orpc/zod':
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.13.4(@orpc/contract@1.13.4)(@orpc/server@1.13.4(fastify@5.7.2)(ws@8.19.0))(fastify@5.7.2)(ws@8.19.0)(zod@4.3.6)
       better-auth:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.4.18(drizzle-kit@0.31.8)(drizzle-orm@0.45.1(@types/pg@8.16.0)(kysely@0.28.10)(pg@8.18.0))(pg@8.18.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.11)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@flux/config':
         specifier: workspace:*
         version: link:../config
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
       vitest:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
 
   packages/auth:
@@ -385,20 +387,20 @@ importers:
         specifier: workspace:*
         version: link:../env
       better-auth:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 1.4.18(drizzle-kit@0.31.8)(drizzle-orm@0.45.1(@types/pg@8.16.0)(kysely@0.28.10)(pg@8.18.0))(pg@8.18.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.11)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@flux/config':
         specifier: workspace:*
         version: link:../config
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
 
   packages/config: {}
@@ -409,16 +411,16 @@ importers:
         specifier: workspace:*
         version: link:../env
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       drizzle-orm:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 0.45.1(@types/pg@8.16.0)(kysely@0.28.10)(pg@8.18.0)
       pg:
         specifier: 8.18.0
         version: 8.18.0
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@flux/config':
@@ -428,10 +430,10 @@ importers:
         specifier: 8.16.0
         version: 8.16.0
       drizzle-kit:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 0.31.8
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
 
   packages/env:
@@ -440,20 +442,20 @@ importers:
         specifier: 0.13.10
         version: 0.13.10(arktype@2.1.29)(typescript@5.9.3)(zod@4.3.6)
       dotenv:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 17.2.3
       zod:
-        specifier: 'catalog:'
+        specifier: catalog:prod
         version: 4.3.6
     devDependencies:
       '@flux/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 25.1.0
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
 
   packages/store:
@@ -462,26 +464,26 @@ importers:
         specifier: workspace:*
         version: link:../utils
       react:
-        specifier: 'catalog:'
+        specifier: catalog:frontend
         version: 19.2.4
       zustand:
-        specifier: 'catalog:'
+        specifier: catalog:frontend
         version: 5.0.10(@types/react@19.2.10)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
     devDependencies:
       '@flux/config':
         specifier: workspace:*
         version: link:../config
       '@types/react':
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 19.2.10
       jsdom:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 26.1.0
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
       vitest:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
 
   packages/utils:
@@ -490,10 +492,10 @@ importers:
         specifier: workspace:*
         version: link:../config
       typescript:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 5.9.3
       vitest:
-        specifier: 'catalog:'
+        specifier: catalog:dev
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.1.0)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(msw@2.12.7(@types/node@25.1.0)(typescript@5.9.3))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
 
 packages:

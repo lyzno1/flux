@@ -3,19 +3,19 @@
 		"@flux/auth": "workspace:*",
 		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
-		"@orpc/client": "catalog:",
-		"@orpc/contract": "catalog:",
-		"@orpc/openapi": "catalog:",
-		"@orpc/server": "catalog:",
-		"@orpc/zod": "catalog:",
-		"better-auth": "catalog:",
-		"dotenv": "catalog:",
-		"zod": "catalog:"
+		"@orpc/client": "catalog:prod",
+		"@orpc/contract": "catalog:prod",
+		"@orpc/openapi": "catalog:prod",
+		"@orpc/server": "catalog:prod",
+		"@orpc/zod": "catalog:prod",
+		"better-auth": "catalog:prod",
+		"dotenv": "catalog:prod",
+		"zod": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"typescript": "catalog:",
-		"vitest": "catalog:"
+		"typescript": "catalog:dev",
+		"vitest": "catalog:dev"
 	},
 	"exports": {
 		".": {

@@ -5,20 +5,20 @@
 		"@flux/auth": "workspace:*",
 		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
-		"@orpc/openapi": "catalog:",
-		"@orpc/server": "catalog:",
-		"@orpc/zod": "catalog:",
-		"better-auth": "catalog:",
-		"dotenv": "catalog:",
+		"@orpc/openapi": "catalog:prod",
+		"@orpc/server": "catalog:prod",
+		"@orpc/zod": "catalog:prod",
+		"better-auth": "catalog:prod",
+		"dotenv": "catalog:prod",
 		"fastify": "5.7.2",
-		"zod": "catalog:"
+		"zod": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"@types/node": "catalog:",
+		"@types/node": "catalog:dev",
 		"tsdown": "0.20.1",
 		"tsx": "4.21.0",
-		"typescript": "catalog:"
+		"typescript": "catalog:dev"
 	},
 	"main": "src/index.ts",
 	"name": "server",
