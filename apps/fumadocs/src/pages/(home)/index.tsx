@@ -2,11 +2,11 @@ import { Link } from "waku";
 
 export default function Home() {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center text-center">
-      <h1 className="font-medium text-xl mb-4">Fumadocs on Waku.</h1>
+    <div className="flex flex-1 flex-col items-center justify-center text-center">
+      <h1 className="mb-4 font-medium text-xl">Fumadocs on Waku.</h1>
       <Link
         to="/docs"
-        className="px-3 py-2 rounded-lg bg-fd-primary text-fd-primary-foreground font-medium text-sm mx-auto"
+        className="mx-auto rounded-lg bg-fd-primary px-3 py-2 font-medium text-fd-primary-foreground text-sm"
       >
         Open Docs
       </Link>
@@ -14,7 +14,7 @@ export default function Home() {
   );
 }
 
-export const getConfig = async () => {
+export const getConfig = () => {
   return {
     render: "static",
   };

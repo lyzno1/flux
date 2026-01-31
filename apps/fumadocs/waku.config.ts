@@ -1,7 +1,6 @@
-import type { UserConfig } from "vite";
-
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "fumadocs-mdx/vite";
+import type { UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { type Config, defineConfig } from "waku/config";
 

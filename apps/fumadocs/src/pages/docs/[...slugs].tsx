@@ -1,6 +1,11 @@
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/docs/page";
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+} from "fumadocs-ui/layouts/docs/page";
 import defaultMdxComponents from "fumadocs-ui/mdx";
-import { PageProps } from "waku/router";
+import type { PageProps } from "waku/router";
 
 import { source } from "@/lib/source";
 
@@ -9,8 +14,10 @@ export default function DocPage({ slugs }: PageProps<"/docs/[...slugs]">) {
 
   if (!page) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100">Page Not Found</h1>
+      <div className="py-12 text-center">
+        <h1 className="mb-4 font-bold text-3xl text-gray-900 dark:text-gray-100">
+          Page Not Found
+        </h1>
         <p className="text-gray-600 dark:text-gray-400">
           The page you are looking for does not exist.
         </p>
@@ -34,7 +41,7 @@ export default function DocPage({ slugs }: PageProps<"/docs/[...slugs]">) {
   );
 }
 
-export async function getConfig() {
+export function getConfig() {
   const pages = source
     .generateParams()
     .map((item) => (item.lang ? [item.lang, ...item.slug] : item.slug));

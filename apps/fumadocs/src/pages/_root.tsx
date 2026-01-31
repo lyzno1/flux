@@ -3,10 +3,10 @@ import type { ReactNode } from "react";
 import { Provider } from "@/components/provider";
 import "@/styles/globals.css";
 
-export default async function RootElement({ children }: { children: ReactNode }) {
+export default function RootElement({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head></head>
+      <head />
       <body data-version="1.0">
         <Provider>{children}</Provider>
       </body>
@@ -14,7 +14,7 @@ export default async function RootElement({ children }: { children: ReactNode })
   );
 }
 
-export const getConfig = async () => {
+export const getConfig = () => {
   return {
     render: "static",
   } as const;
