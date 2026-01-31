@@ -50,8 +50,8 @@ async function* parseDifySSE(stream: ReadableStream<Uint8Array>) {
 	}
 }
 
-const chatMessages = authed.dify.chatMessages.handler(async ({ input }) => {
-	const res = await fetchDify("/chat-messages", { ...input, response_mode: "blocking" });
+const chatMessages = authed.dify.chatMessages.handler(async ({ input, context }) => {
+	const res = await fetchDify("/chat-messages", { ...input, user: context.session.user.id, response_mode: "blocking" });
 
 	if (!res.ok) {
 		const text = await res.text();
@@ -61,8 +61,12 @@ const chatMessages = authed.dify.chatMessages.handler(async ({ input }) => {
 	return chatMessagesBlockingResponseSchema.parse(await res.json());
 });
 
-const chatMessagesStream = authed.dify.chatMessagesStream.handler(async function* ({ input, signal }) {
-	const res = await fetchDify("/chat-messages", { ...input, response_mode: "streaming" }, signal);
+const chatMessagesStream = authed.dify.chatMessagesStream.handler(async function* ({ input, context, signal }) {
+	const res = await fetchDify(
+		"/chat-messages",
+		{ ...input, user: context.session.user.id, response_mode: "streaming" },
+		signal,
+	);
 
 	if (!res.ok) {
 		const text = await res.text();

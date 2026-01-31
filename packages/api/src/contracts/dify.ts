@@ -6,7 +6,7 @@ import {
 	chatMessagesStreamEventSchema,
 } from "../schemas/dify/chat-messages";
 
-const chatMessagesInput = chatMessagesRequestSchema.omit({ response_mode: true });
+const chatMessagesInput = chatMessagesRequestSchema.omit({ response_mode: true, user: true });
 
 export const dify = {
 	chatMessages: oc

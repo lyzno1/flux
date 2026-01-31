@@ -83,7 +83,6 @@ async function consumeStream(
 function DifyDemo() {
 	const id = useId();
 	const [query, setQuery] = useState("hello");
-	const [user, setUser] = useState("demo-user");
 	const [conversationId, setConversationId] = useState("");
 
 	const [entries, setEntries] = useState<StreamEntry[]>([]);
@@ -113,7 +112,6 @@ function DifyDemo() {
 			const iterator = await client.dify.chatMessagesStream(
 				{
 					query,
-					user,
 					inputs: {},
 					...(conversationId ? { conversation_id: conversationId } : {}),
 				},
@@ -141,14 +139,13 @@ function DifyDemo() {
 			abortRef.current = null;
 			scrollToBottom();
 		}
-	}, [query, user, conversationId, scrollToBottom]);
+	}, [query, conversationId, scrollToBottom]);
 
 	const handleStop = useCallback(() => {
 		abortRef.current?.abort();
 	}, []);
 
 	const queryId = `${id}-query`;
-	const userId = `${id}-user`;
 	const convId = `${id}-conv`;
 
 	return (
@@ -160,11 +157,6 @@ function DifyDemo() {
 					<div className="flex flex-col gap-1.5">
 						<Label htmlFor={queryId}>Query</Label>
 						<Input id={queryId} value={query} onChange={(e) => setQuery((e.target as HTMLInputElement).value)} />
-					</div>
-
-					<div className="flex flex-col gap-1.5">
-						<Label htmlFor={userId}>User</Label>
-						<Input id={userId} value={user} onChange={(e) => setUser((e.target as HTMLInputElement).value)} />
 					</div>
 
 					<div className="flex flex-col gap-1.5">
