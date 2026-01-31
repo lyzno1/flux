@@ -21,6 +21,7 @@ i18n
 		fallbackLng,
 		supportedLngs,
 		defaultNS,
+		keySeparator: false,
 		ns: [],
 		interpolation: {
 			escapeValue: false,

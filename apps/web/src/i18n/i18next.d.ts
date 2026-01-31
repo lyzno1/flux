@@ -8,6 +8,7 @@ import type dify from "../locales/en-US/dify.json";
 declare module "i18next" {
 	interface CustomTypeOptions {
 		defaultNS: "common";
+		keySeparator: false;
 		resources: {
 			common: typeof common;
 			auth: typeof auth;
