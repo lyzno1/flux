@@ -16,8 +16,7 @@ export const Route = createFileRoute("/dashboard")({
 		}
 		return { session };
 	},
-	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(orpc.privateData.queryOptions()),
+	loader: ({ context }) => context.queryClient.ensureQueryData(orpc.privateData.queryOptions()),
 });
 
 function RouteComponent() {
