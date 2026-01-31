@@ -20,36 +20,6 @@ const baseCorsConfig = {
 	maxAge: 86400,
 };
 
-const rpcHandler = new RPCHandler(appRouter, {
-	plugins: [
-		new CORSPlugin({
-			origin: env.CORS_ORIGIN,
-			credentials: true,
-			allowHeaders: ["Content-Type", "Authorization"],
-		}),
-	],
-	interceptors: [
-		onError((error) => {
-			// biome-ignore lint/suspicious/noConsole: server error logging
-			console.error(error);
-		}),
-	],
-});
-
-const apiHandler = new OpenAPIHandler(appRouter, {
-	plugins: [
-		new OpenAPIReferencePlugin({
-			schemaConverters: [new ZodToJsonSchemaConverter()],
-		}),
-	],
-	interceptors: [
-		onError((error) => {
-			// biome-ignore lint/suspicious/noConsole: server error logging
-			console.error(error);
-		}),
-	],
-});
-
 const fastify = Fastify({
 	logger: true,
 	serverFactory: (fastifyHandler) => {
@@ -77,6 +47,34 @@ const fastify = Fastify({
 
 		return server;
 	},
+});
+
+const rpcHandler = new RPCHandler(appRouter, {
+	plugins: [
+		new CORSPlugin({
+			origin: env.CORS_ORIGIN,
+			credentials: true,
+			allowHeaders: ["Content-Type", "Authorization"],
+		}),
+	],
+	interceptors: [
+		onError((error) => {
+			fastify.log.error(error);
+		}),
+	],
+});
+
+const apiHandler = new OpenAPIHandler(appRouter, {
+	plugins: [
+		new OpenAPIReferencePlugin({
+			schemaConverters: [new ZodToJsonSchemaConverter()],
+		}),
+	],
+	interceptors: [
+		onError((error) => {
+			fastify.log.error(error);
+		}),
+	],
 });
 
 fastify.register(fastifyCors, baseCorsConfig);

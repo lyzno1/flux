@@ -1,0 +1,33 @@
+{
+	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"workspaces": {
+		".": {
+			"ignoreDependencies": ["@flux/config", "@flux/env"]
+		},
+		"packages/config": {},
+		"packages/env": {
+			"entry": "src/{server,web}.ts"
+		},
+		"packages/db": {},
+		"packages/auth": {},
+		"packages/api": {},
+		"apps/web": {
+			"entry": ["src/main.tsx", "src/routes/**/*.tsx"],
+			"project": "src/**/*.{ts,tsx}",
+			"ignoreDependencies": [
+				"shadcn",
+				"tw-animate-css",
+				"tailwindcss",
+				"postcss"
+			]
+		},
+		"apps/server": {},
+		"apps/fumadocs": {
+			"entry": ["src/pages/**/*.tsx", "waku.config.ts"],
+			"ignoreDependencies": ["@fumadocs/ui"]
+		}
+	},
+	"ignore": ["**/routeTree.gen.ts"],
+	"ignoreUnresolved": ["./routeTree.gen"],
+	"ignoreDependencies": ["dotenv"]
+}

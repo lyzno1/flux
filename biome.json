@@ -35,6 +35,9 @@
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
+		"domains": {
+			"react": "all"
+		},
 		"rules": {
 			"recommended": true,
 			"correctness": {
@@ -83,7 +86,9 @@
 				"useForOf": "error",
 				"useShorthandAssign": "error",
 				"useCollapsedElseIf": "error",
-				"noYodaExpression": "error"
+				"noYodaExpression": "error",
+				"noNamespace": "error",
+				"useComponentExportOnlyModules": "off"
 			},
 			"suspicious": {
 				"noConsole": "warn",
@@ -100,8 +105,8 @@
 		}
 	},
 	"css": {
-		"parser": {
-			"tailwindDirectives": true
+		"linter": {
+			"enabled": false
 		}
 	},
 	"overrides": [
