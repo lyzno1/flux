@@ -264,8 +264,10 @@ When creating a new skill from scratch, always run the `init_skill.py` script. T
 Usage:
 
 ```bash
-scripts/init_skill.py <skill-name> --path <output-directory>
+scripts/init_skill.py <skill-name> --path .agents/skills
 ```
+
+Always create skills in the `.agents/skills/` directory. This is the standard location for all project skills.
 
 The script:
 

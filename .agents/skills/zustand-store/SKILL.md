@@ -1,11 +1,11 @@
 ---
 name: zustand-store
-description: Zustand state management patterns for the Flux project. LobeHub-style architecture with Slice pattern, strict selectors, and shared package structure. Use when creating new zustand stores, adding slices, writing selectors, integrating stores with React components, or refactoring client-side state management. Triggers on tasks involving zustand, store creation, state management, selectors, or client UI state.
+description: Zustand state management patterns for the Flux project. Slice pattern, strict selectors, and shared package structure. Use when creating new zustand stores, adding slices, writing selectors, integrating stores with React components, or refactoring client-side state management. Triggers on tasks involving zustand, store creation, state management, selectors, or client UI state.
 ---
 
 # Zustand Store
 
-Zustand state management following LobeHub-style Slice architecture for the Flux monorepo.
+Zustand state management with Slice architecture for the Flux monorepo.
 
 ## Architecture
 
