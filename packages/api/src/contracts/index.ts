@@ -1,6 +1,8 @@
 import { oc } from "@orpc/contract";
 import { z } from "zod";
 
+import { dify } from "./dify";
+
 export const healthCheck = oc
 	.route({
 		method: "GET",
@@ -35,4 +37,5 @@ export const privateData = oc
 export const contract = {
 	healthCheck,
 	privateData,
+	dify,
 };
