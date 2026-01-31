@@ -1,5 +1,9 @@
 import { QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+	createRouter,
+	ErrorComponent,
+	RouterProvider,
+} from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 
 import Loader from "./components/loader";
@@ -9,7 +13,10 @@ import { orpc, queryClient } from "./utils/orpc";
 const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
+	defaultPreloadStaleTime: 0,
 	defaultPendingComponent: () => <Loader />,
+	defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+	scrollRestoration: true,
 	context: { orpc, queryClient },
 	Wrap: function WrapComponent({ children }: { children: React.ReactNode }) {
 		return (
