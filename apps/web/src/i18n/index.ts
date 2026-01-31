@@ -33,4 +33,15 @@ i18n
 		},
 	});
 
+i18n.services.formatter?.addCached("duration", (lng, options) => {
+	const fractionDigits = options?.maximumFractionDigits ?? 2;
+	const formatter = new Intl.NumberFormat(lng ?? undefined, {
+		style: "unit",
+		unit: "second",
+		maximumFractionDigits: fractionDigits,
+		minimumFractionDigits: fractionDigits,
+	});
+	return (val: number) => formatter.format(val / 1000);
+});
+
 export default i18n;

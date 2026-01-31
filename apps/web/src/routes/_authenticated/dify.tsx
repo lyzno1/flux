@@ -186,7 +186,7 @@ function DifyDemo() {
 						</CardContent>
 						{elapsed !== null && (
 							<CardFooter>
-								<span className="text-muted-foreground text-xs">{(elapsed / 1000).toFixed(2)}s</span>
+								<span className="text-muted-foreground text-xs">{t("elapsedShort", { val: elapsed })}</span>
 							</CardFooter>
 						)}
 					</Card>
@@ -195,7 +195,7 @@ function DifyDemo() {
 				{entries.length > 0 && (
 					<div className="text-muted-foreground text-xs">
 						{t("eventsCount", { count: entries.filter((e) => e.event !== "ping").length })}
-						{elapsed !== null && <> {t("elapsed", { time: (elapsed / 1000).toFixed(2) })}</>}
+						{elapsed !== null && <> {t("elapsed", { val: elapsed })}</>}
 					</div>
 				)}
 			</div>
@@ -208,8 +208,8 @@ function DifyDemo() {
 							key={`${entry.receivedAt}-${i}`}
 							className="flex items-start gap-2 rounded border p-2 font-mono text-xs"
 						>
-							<span className="w-16 shrink-0 text-right text-muted-foreground">
-								{(entry.receivedAt / 1000).toFixed(3)}s
+							<span className="w-20 shrink-0 text-right text-muted-foreground">
+								{t("eventTimestamp", { val: entry.receivedAt })}
 							</span>
 							<EventBadge event={entry.event} />
 							<pre className="min-w-0 flex-1 overflow-x-auto whitespace-pre-wrap break-all">
