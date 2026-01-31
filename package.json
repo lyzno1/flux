@@ -23,7 +23,7 @@
 		"prepare": "simple-git-hooks"
 	},
 	"simple-git-hooks": {
-		"pre-commit": "pnpm run check-types && npx lint-staged"
+		"pre-commit": "npx lint-staged && pnpm run check-types"
 	},
 	"lint-staged": {
 		"*": "biome check --write --no-errors-on-unmatched"

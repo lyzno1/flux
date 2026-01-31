@@ -41,7 +41,8 @@
 		"rules": {
 			"recommended": true,
 			"correctness": {
-				"useExhaustiveDependencies": "info"
+				"useExhaustiveDependencies": "info",
+				"noUndeclaredDependencies": "error"
 			},
 			"performance": {
 				"noBarrelFile": "error",
@@ -57,7 +58,10 @@
 				},
 				"noUselessStringConcat": "error",
 				"noUselessUndefinedInitialization": "error",
-				"noStaticOnlyClass": "error"
+				"noStaticOnlyClass": "error",
+				"noForEach": "error",
+				"useDateNow": "error",
+				"useFlatMap": "error"
 			},
 			"nursery": {
 				"useSortedClasses": {
@@ -88,10 +92,28 @@
 				"useCollapsedElseIf": "error",
 				"noYodaExpression": "error",
 				"noNamespace": "error",
-				"useComponentExportOnlyModules": "off"
+				"useComponentExportOnlyModules": "off",
+				"useConsistentArrayType": {
+					"level": "error",
+					"options": {
+						"syntax": "shorthand"
+					}
+				},
+				"useFilenamingConvention": {
+					"level": "error",
+					"options": {
+						"requireAscii": true,
+						"filenameCases": ["kebab-case", "PascalCase"]
+					}
+				}
 			},
 			"suspicious": {
-				"noConsole": "warn",
+				"noConsole": {
+					"level": "error",
+					"options": {
+						"allow": ["error", "warn"]
+					}
+				},
 				"noEmptyBlockStatements": "error",
 				"useAwait": "error",
 				"useErrorMessage": "error",
@@ -106,7 +128,8 @@
 	},
 	"css": {
 		"parser": {
-			"cssModules": true
+			"cssModules": true,
+			"tailwindDirectives": true
 		},
 		"linter": {
 			"enabled": true
