@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, isRedirect, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import * as z from "zod";
 
@@ -15,10 +15,14 @@ const loginSearchSchema = z.object({
 
 export const Route = createFileRoute("/login")({
 	validateSearch: (search) => loginSearchSchema.parse(search),
-	beforeLoad: async ({ search }) => {
-		const session = await authClient.getSession();
-		if (session.data) {
-			throw redirect({ to: search.redirect });
+	beforeLoad: async ({ context, search }) => {
+		try {
+			const session = context.auth.data ?? (await authClient.getSession()).data;
+			if (session) {
+				throw redirect({ to: search.redirect });
+			}
+		} catch (error) {
+			if (isRedirect(error)) throw error;
 		}
 	},
 	component: RouteComponent,

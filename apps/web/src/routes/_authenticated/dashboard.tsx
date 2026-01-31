@@ -17,7 +17,7 @@ function RouteComponent() {
 	return (
 		<div>
 			<h1>{t("title")}</h1>
-			<p>{t("welcome", { name: session.data?.user.name })}</p>
+			<p>{t("welcome", { name: session.user.name })}</p>
 			<p>{t("apiMessage", { message: data.message })}</p>
 		</div>
 	);

@@ -8,6 +8,7 @@ import { PageLoading } from "@/components/page-loading";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { STORAGE_KEYS } from "@/config/storage-keys";
+import type { authClient } from "@/lib/auth-client";
 import type { orpc } from "@/utils/orpc";
 
 import "../index.css";
@@ -15,6 +16,7 @@ import "../index.css";
 export interface RouterAppContext {
 	orpc: typeof orpc;
 	queryClient: QueryClient;
+	auth: ReturnType<typeof authClient.useSession>;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
