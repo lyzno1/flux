@@ -68,7 +68,7 @@ export const annotationReplySchema = z.object({
 export const metadataSchema = z.object({
 	usage: usageSchema.optional(),
 	retriever_resources: z.array(retrieverResourceSchema).optional(),
-	annotation_reply: annotationReplySchema.optional(),
+	annotation_reply: annotationReplySchema.nullable().optional(),
 });
 
 export const workflowNodeExecutionStatus = z.enum([
