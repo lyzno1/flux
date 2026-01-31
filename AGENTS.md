@@ -12,8 +12,8 @@ pnpm build              # build all
 pnpm check              # biome check --write
 pnpm check-types        # typescript type-check all packages
 
-pnpm db:push            # push drizzle schema to database
-pnpm db:generate        # generate migration files
+pnpm db:push            # push drizzle schema to database (dev only)
+pnpm db:generate -- --name=xxx_xxx  # generate migration files (always use --name)
 pnpm db:migrate         # run migrations
 pnpm db:studio          # open drizzle studio
 ```

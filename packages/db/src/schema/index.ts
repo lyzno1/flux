@@ -7,4 +7,4 @@ export {
 	user,
 	userRelations,
 	verification,
-} from "./auth";
+} from "./auth.sql";
