@@ -1,62 +1,26 @@
-import { createServer } from "node:http";
 import fastifyCors from "@fastify/cors";
 import { createContext } from "@flux/api/context";
 import { appRouter } from "@flux/api/routers/index";
 import { auth } from "@flux/auth";
 import { env } from "@flux/env/server";
-import { OpenAPIHandler } from "@orpc/openapi/node";
+import { OpenAPIHandler } from "@orpc/openapi/fastify";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { onError } from "@orpc/server";
-import { RPCHandler } from "@orpc/server/node";
-import { CORSPlugin } from "@orpc/server/plugins";
+import { RPCHandler } from "@orpc/server/fastify";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
-import Fastify from "fastify";
+import Fastify, { type RouteHandlerMethod } from "fastify";
 
-const baseCorsConfig = {
-	origin: env.CORS_ORIGIN,
-	methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-	allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-	credentials: true,
-	maxAge: 86400,
-};
+function toWebHeaders(raw: Record<string, string | string[] | undefined>): Headers {
+	const headers = new Headers();
+	for (const [key, value] of Object.entries(raw)) {
+		if (value !== undefined) headers.append(key, Array.isArray(value) ? value.join(", ") : value);
+	}
+	return headers;
+}
 
-const fastify = Fastify({
-	logger: true,
-	serverFactory: (fastifyHandler) => {
-		const server = createServer(async (req, res) => {
-			const { matched } = await rpcHandler.handle(req, res, {
-				context: await createContext(req.headers),
-				prefix: "/rpc",
-			});
-
-			if (matched) {
-				return;
-			}
-
-			const apiResult = await apiHandler.handle(req, res, {
-				context: await createContext(req.headers),
-				prefix: "/api-reference",
-			});
-
-			if (apiResult.matched) {
-				return;
-			}
-
-			fastifyHandler(req, res);
-		});
-
-		return server;
-	},
-});
+const fastify = Fastify({ logger: true });
 
 const rpcHandler = new RPCHandler(appRouter, {
-	plugins: [
-		new CORSPlugin({
-			origin: env.CORS_ORIGIN,
-			credentials: true,
-			allowHeaders: ["Content-Type", "Authorization"],
-		}),
-	],
 	interceptors: [
 		onError((error) => {
 			fastify.log.error(error);
@@ -77,7 +41,46 @@ const apiHandler = new OpenAPIHandler(appRouter, {
 	],
 });
 
-fastify.register(fastifyCors, baseCorsConfig);
+fastify.register(fastifyCors, {
+	origin: env.CORS_ORIGIN,
+	methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+	allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+	credentials: true,
+	maxAge: 86400,
+});
+
+fastify.register((app, _opts, done) => {
+	app.addContentTypeParser("*", (_request, _payload, done) => {
+		done(null, undefined);
+	});
+
+	app.all("/rpc/*", async (request, reply) => {
+		const { matched } = await rpcHandler.handle(request, reply, {
+			prefix: "/rpc",
+			context: createContext(toWebHeaders(request.headers)),
+		});
+
+		if (!matched) {
+			reply.status(404).send("Not found");
+		}
+	});
+
+	const handleApiReference: RouteHandlerMethod = async (request, reply) => {
+		const { matched } = await apiHandler.handle(request, reply, {
+			prefix: "/api-reference",
+			context: createContext(toWebHeaders(request.headers)),
+		});
+
+		if (!matched) {
+			reply.status(404).send("Not found");
+		}
+	};
+
+	app.all("/api-reference", handleApiReference);
+	app.all("/api-reference/*", handleApiReference);
+
+	done();
+});
 
 fastify.route({
 	method: ["GET", "POST"],
@@ -85,14 +88,14 @@ fastify.route({
 	async handler(request, reply) {
 		try {
 			const url = new URL(request.url, `http://${request.headers.host}`);
-			const headers = new Headers();
-			for (const [key, value] of Object.entries(request.headers)) {
-				if (value) headers.append(key, value.toString());
-			}
+			const webHeaders = toWebHeaders(request.headers);
 			const req = new Request(url.toString(), {
 				method: request.method,
-				headers,
-				body: request.body ? JSON.stringify(request.body) : undefined,
+				headers: webHeaders,
+				body:
+					request.method !== "GET" && request.method !== "HEAD" && request.body
+						? JSON.stringify(request.body)
+						: undefined,
 			});
 			const response = await auth.handler(req);
 			reply.status(response.status);
