@@ -1,14 +1,20 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useState } from "react";
+import { z } from "zod";
 
 import SignInForm from "@/components/sign-in-form";
 import SignUpForm from "@/components/sign-up-form";
 import { authClient } from "@/lib/auth-client";
 
+const loginSearchSchema = z.object({
+	redirect: z
+		.string()
+		.catch("/dashboard")
+		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dashboard")),
+});
+
 export const Route = createFileRoute("/login")({
-	validateSearch: (search) => ({
-		redirect: (search.redirect as string) || "/dashboard",
-	}),
+	validateSearch: (search) => loginSearchSchema.parse(search),
 	beforeLoad: async ({ search }) => {
 		const session = await authClient.getSession();
 		if (session.data) {
