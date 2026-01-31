@@ -10,10 +10,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () => void }) {
-	const navigate = useNavigate({
-		from: "/",
-	});
+export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToSignIn: () => void; redirect: string }) {
+	const navigate = useNavigate();
 	const { isPending } = authClient.useSession();
 
 	const form = useForm({
@@ -31,9 +29,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
 				},
 				{
 					onSuccess: () => {
-						navigate({
-							to: "/dashboard",
-						});
+						navigate({ to: redirect });
 						toast.success("Sign up successful");
 					},
 					onError: (error) => {
@@ -77,7 +73,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
 									name={field.name}
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+									onChange={(e) => field.handleChange(e.currentTarget.value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -100,7 +96,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
 									type="email"
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+									onChange={(e) => field.handleChange(e.currentTarget.value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -123,7 +119,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
 									type="password"
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+									onChange={(e) => field.handleChange(e.currentTarget.value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">

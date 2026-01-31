@@ -1,22 +1,15 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useId, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { client } from "@/utils/orpc";
 
-export const Route = createFileRoute("/dify")({
+export const Route = createFileRoute("/_authenticated/dify")({
 	component: DifyDemo,
-	beforeLoad: async () => {
-		const session = await authClient.getSession();
-		if (!session.data) {
-			throw redirect({ to: "/login" });
-		}
-	},
 });
 
 interface StreamEntry {
@@ -156,7 +149,7 @@ function DifyDemo() {
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1.5">
 						<Label htmlFor={queryId}>Query</Label>
-						<Input id={queryId} value={query} onChange={(e) => setQuery((e.target as HTMLInputElement).value)} />
+						<Input id={queryId} value={query} onChange={(e) => setQuery(e.currentTarget.value)} />
 					</div>
 
 					<div className="flex flex-col gap-1.5">
@@ -164,7 +157,7 @@ function DifyDemo() {
 						<Input
 							id={convId}
 							value={conversationId}
-							onChange={(e) => setConversationId((e.target as HTMLInputElement).value)}
+							onChange={(e) => setConversationId(e.currentTarget.value)}
 							placeholder="auto-filled after first message"
 						/>
 					</div>

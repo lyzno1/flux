@@ -9,6 +9,18 @@ import { toast } from "sonner";
 
 const NO_RETRY_STATUSES = new Set([400, 401, 403, 404, 409, 422]);
 
+let last401 = 0;
+
+function handleUnauthorized() {
+	const now = Date.now();
+	if (now - last401 > 5_000) {
+		last401 = now;
+		import("../router").then(({ router }) =>
+			router.navigate({ to: "/login", search: { redirect: router.state.location.href } }),
+		);
+	}
+}
+
 export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -23,13 +35,12 @@ export const queryClient = new QueryClient({
 		},
 	},
 	queryCache: new QueryCache({
-		onError: (error, query) => {
-			toast.error(`Error: ${error.message}`, {
-				action: {
-					label: "retry",
-					onClick: query.invalidate,
-				},
-			});
+		onError: (error) => {
+			if (error instanceof ORPCError && error.status === 401) {
+				handleUnauthorized();
+				return;
+			}
+			toast.error(`Error: ${error.message}`);
 		},
 	}),
 });

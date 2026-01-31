@@ -1,18 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { authClient } from "@/lib/auth-client";
 import { orpc } from "@/utils/orpc";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
 	component: RouteComponent,
-	beforeLoad: async () => {
-		const session = await authClient.getSession();
-		if (!session.data) {
-			throw redirect({ to: "/login" });
-		}
-		return { session };
-	},
 	loader: ({ context }) => context.queryClient.ensureQueryData(orpc.privateData.queryOptions()),
 });
 

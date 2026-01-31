@@ -10,10 +10,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void }) {
-	const navigate = useNavigate({
-		from: "/",
-	});
+export default function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToSignUp: () => void; redirect: string }) {
+	const navigate = useNavigate();
 	const { isPending } = authClient.useSession();
 
 	const form = useForm({
@@ -29,9 +27,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
 				},
 				{
 					onSuccess: () => {
-						navigate({
-							to: "/dashboard",
-						});
+						navigate({ to: redirect });
 						toast.success("Sign in successful");
 					},
 					onError: (error) => {
@@ -75,7 +71,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
 									type="email"
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+									onChange={(e) => field.handleChange(e.currentTarget.value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -98,7 +94,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
 									type="password"
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+									onChange={(e) => field.handleChange(e.currentTarget.value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
