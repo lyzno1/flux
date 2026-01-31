@@ -10,6 +10,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { STORAGE_KEYS } from "@/config/storage-keys";
 import type { orpc } from "@/utils/orpc";
 
 import "../index.css";
@@ -48,7 +49,7 @@ function RootComponent() {
 				attribute="class"
 				defaultTheme="system"
 				disableTransitionOnChange
-				storageKey="vite-ui-theme"
+				storageKey={STORAGE_KEYS.LOCAL.THEME}
 			>
 				<div className="grid h-svh grid-rows-[auto_1fr]">
 					<Header />
