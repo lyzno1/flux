@@ -1,6 +1,6 @@
 import { env } from "@flux/env/server";
 import { authed } from "../index";
-import type { ChatMessagesBlockingResponse } from "../schemas/dify/chat-messages";
+import { chatMessagesBlockingResponseSchema } from "../schemas/dify/chat-messages";
 
 function fetchDify(path: string, body: Record<string, unknown>, signal?: AbortSignal) {
 	return fetch(`${env.DIFY_API_URL}${path}`, {
@@ -58,7 +58,7 @@ const chatMessages = authed.dify.chatMessages.handler(async ({ input }) => {
 		throw new Error(`Dify API error (${res.status}): ${text}`);
 	}
 
-	return (await res.json()) as ChatMessagesBlockingResponse;
+	return chatMessagesBlockingResponseSchema.parse(await res.json());
 });
 
 const chatMessagesStream = authed.dify.chatMessagesStream.handler(async function* ({ input, signal }) {
