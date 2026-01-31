@@ -4,7 +4,7 @@ import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
 
-function shouldEnableDevtools(name: string) {
+export function shouldEnableDevtools(name: string) {
 	if (!isClient) return false;
 	const debug = new URL(window.location.href).searchParams.get("debug");
 	return debug?.includes(name) ?? false;
