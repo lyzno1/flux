@@ -7,6 +7,14 @@
   </head>
 
   <body>
+    <script>
+      (() => {
+        var t = localStorage.getItem("vite-ui-theme");
+        if (t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme:dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <div id="app"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
