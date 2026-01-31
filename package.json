@@ -7,7 +7,8 @@
 	],
 	"type": "module",
 	"scripts": {
-		"dev": "turbo dev",
+		"dev": "turbo dev --filter=!fumadocs",
+		"dev:docs": "turbo -F fumadocs dev",
 		"build": "turbo build",
 		"dev:native": "turbo -F native dev",
 		"dev:web": "turbo -F web dev",
