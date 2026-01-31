@@ -1,7 +1,7 @@
 import { env } from "@flux/env/server";
 import { drizzle } from "drizzle-orm/node-postgres";
 
-import * as schema from "./schema";
+import * as schema from "./schema/auth.sql";
 
 export const db: ReturnType<typeof drizzle<typeof schema>> = drizzle({
 	connection: {
