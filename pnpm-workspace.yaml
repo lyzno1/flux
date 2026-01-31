@@ -6,6 +6,8 @@ catalogs:
   dev:
     '@biomejs/biome': 2.3.13
     '@tailwindcss/vite': 4.1.18
+    '@tanstack/devtools-vite': 0.5.0
+    '@tanstack/react-devtools': 0.9.4
     '@tanstack/react-query-devtools': 5.91.3
     '@tanstack/react-router-devtools': 1.157.17
     '@tanstack/router-plugin': 1.157.17
