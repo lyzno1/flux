@@ -5,7 +5,7 @@ import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
 
 export function shouldEnableDevtools(name: string) {
-	if (!isClient) return false;
+	if (import.meta.env.PROD || !isClient) return false;
 	const debug = new URL(window.location.href).searchParams.get("debug");
 	return debug?.includes(name) ?? false;
 }

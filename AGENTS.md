@@ -18,11 +18,19 @@ pnpm db:migrate         # run migrations
 pnpm db:studio          # open drizzle studio
 ```
 
-**Adding dependencies:** This monorepo uses pnpm catalog. Use `pnpm add -D <pkg> --save-catalog` in the target package directory — this automatically adds the version to `pnpm-workspace.yaml` catalog and writes `"catalog:"` in `package.json`.
+**Adding dependencies:** This monorepo uses pnpm named catalogs (`dev`, `frontend`, `prod`). Use `--save-catalog-name=<name>` to add to the correct catalog group:
+
+```bash
+pnpm add -D <pkg> --save-catalog-name=dev        # dev tools (biome, typescript, vite, vitest…)
+pnpm add <pkg> --save-catalog-name=prod           # production deps (orpc, drizzle, zod, better-auth…)
+pnpm add <pkg> --save-catalog-name=frontend       # frontend libs (react, tanstack, zustand…)
+```
+
+Run in the target package directory. This adds the version to `pnpm-workspace.yaml` catalogs and writes `"catalog:<name>"` in `package.json`.
 
 ## Architecture
 
-Turborepo monorepo with two apps and seven shared packages. All packages use ESM (`"type": "module"`).
+Turborepo monorepo with two apps and six shared packages. All packages use ESM (`"type": "module"`).
 
 ### Apps
 
@@ -38,7 +46,6 @@ Turborepo monorepo with two apps and seven shared packages. All packages use ESM
 @flux/db        — Drizzle ORM schema + PostgreSQL connection
 @flux/auth      — Better-Auth config with Drizzle adapter
 @flux/api       — ORPC router definitions, publicProcedure / protectedProcedure
-@flux/store     — Zustand store factory with devtools (debug via ?debug=storeName)
 ```
 
 ### Key patterns
