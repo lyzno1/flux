@@ -3,12 +3,12 @@
 		"@flux/env": "workspace:*",
 		"dotenv": "catalog:prod",
 		"drizzle-orm": "catalog:prod",
-		"pg": "8.18.0",
+		"pg": "catalog:prod",
 		"zod": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"@types/pg": "8.16.0",
+		"@types/pg": "catalog:dev",
 		"drizzle-kit": "catalog:dev",
 		"typescript": "catalog:dev"
 	},

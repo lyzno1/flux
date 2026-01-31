@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@t3-oss/env-core": "0.13.10",
+		"@t3-oss/env-core": "catalog:prod",
 		"dotenv": "catalog:prod",
 		"zod": "catalog:prod"
 	},

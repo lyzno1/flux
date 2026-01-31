@@ -3,15 +3,15 @@
 ## createStore Wrapper
 
 ```ts
-// packages/store/src/create-store.ts — the only thing in the shared package
+// apps/web/src/lib/create-store.ts
 import { isClient } from "@flux/utils/runtime";
 import type { StateCreator } from "zustand";
 import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
 
-function shouldEnableDevtools(name: string) {
-	if (!isClient) return false;
+export function shouldEnableDevtools(name: string) {
+	if (import.meta.env.PROD || !isClient) return false;
 	const debug = new URL(window.location.href).searchParams.get("debug");
 	return debug?.includes(name) ?? false;
 }
@@ -45,7 +45,7 @@ export function createStore<T>(
 ```ts
 // apps/web/src/stores/global/store.ts
 import type { StateCreator } from "zustand";
-import { createStore } from "@flux/store/create-store";
+import { createStore } from "@/lib/create-store";
 import type { GlobalState } from "./initial-state";
 import { initialState } from "./initial-state";
 import { type SidebarAction, createSidebarSlice } from "./slices/sidebar/action";

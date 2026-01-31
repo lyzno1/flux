@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@fastify/cors": "11.2.0",
+		"@fastify/cors": "catalog:prod",
 		"@flux/api": "workspace:*",
 		"@flux/auth": "workspace:*",
 		"@flux/db": "workspace:*",
@@ -10,14 +10,14 @@
 		"@orpc/zod": "catalog:prod",
 		"better-auth": "catalog:prod",
 		"dotenv": "catalog:prod",
-		"fastify": "5.7.2",
+		"fastify": "catalog:prod",
 		"zod": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
 		"@types/node": "catalog:dev",
-		"tsdown": "0.20.1",
-		"tsx": "4.21.0",
+		"tsdown": "catalog:dev",
+		"tsx": "catalog:dev",
 		"typescript": "catalog:dev"
 	},
 	"main": "src/index.ts",

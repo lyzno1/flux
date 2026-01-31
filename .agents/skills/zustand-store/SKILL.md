@@ -9,7 +9,7 @@ Zustand state management with Slice architecture for the Flux monorepo.
 
 ## Architecture
 
-- **Factory**: `packages/store` (`@flux/store`) - only the `createStore` wrapper, shared across apps
+- **Factory**: `apps/web/src/lib/create-store.ts` - the `createStore` wrapper, local to web app
 - **Store definitions**: `apps/web/src/stores/` - domain stores live in the consuming app
 - **Store creation**: `createWithEqualityFn` + `shallow` default + optional `devtools` + `subscribeWithSelector`
 - **Organization**: Multi-store by domain, each store uses Slice pattern
@@ -26,13 +26,7 @@ Zustand state management with Slice architecture for the Flux monorepo.
 
 ## Directory Structure
 
-**Shared package** (factory only):
-```
-packages/store/src/
-  └── create-store.ts          # createStore wrapper
-```
-
-**App-local stores** (domain stores in consuming app):
+**App-local stores** (factory + domain stores):
 ```
 apps/web/src/stores/
   └── <domain>/

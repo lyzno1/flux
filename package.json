@@ -5,10 +5,10 @@
 		"@types/node": "catalog:dev",
 		"@typescript/native-preview": "7.0.0-dev.20260130.1",
 		"@vitest/coverage-v8": "catalog:dev",
-		"knip": "5.82.1",
-		"lint-staged": "16.2.7",
-		"simple-git-hooks": "2.13.1",
-		"turbo": "2.8.1",
+		"knip": "catalog:dev",
+		"lint-staged": "catalog:dev",
+		"simple-git-hooks": "catalog:dev",
+		"turbo": "catalog:dev",
 		"typescript": "catalog:dev",
 		"vitest": "catalog:dev"
 	},
@@ -38,9 +38,5 @@
 	"simple-git-hooks": {
 		"pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged && pnpm run check-types"
 	},
-	"type": "module",
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	]
+	"type": "module"
 }
