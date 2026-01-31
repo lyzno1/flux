@@ -99,16 +99,6 @@ catalogs:
 importers:
 
   .:
-    dependencies:
-      '@flux/env':
-        specifier: workspace:*
-        version: link:packages/env
-      dotenv:
-        specifier: catalog:prod
-        version: 17.2.3
-      zod:
-        specifier: catalog:prod
-        version: 4.3.6
     devDependencies:
       '@biomejs/biome':
         specifier: catalog:dev

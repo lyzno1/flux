@@ -31,7 +31,8 @@
 	"name": "@flux/api",
 	"scripts": {
 		"check-types": "tsgo --noEmit",
-		"test": "vitest run"
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage"
 	},
 	"type": "module"
 }

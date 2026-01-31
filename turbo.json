@@ -7,7 +7,7 @@
 			"outputs": ["dist/**"]
 		},
 		"check-types": {
-			"dependsOn": ["^check-types"]
+			"dependsOn": ["transit"]
 		},
 		"db:generate": {
 			"cache": false
@@ -29,6 +29,13 @@
 		},
 		"test": {
 			"dependsOn": ["^build"]
+		},
+		"test:coverage": {
+			"dependsOn": ["^build"],
+			"outputs": ["coverage/**"]
+		},
+		"transit": {
+			"dependsOn": ["^transit"]
 		}
 	},
 	"ui": "tui"

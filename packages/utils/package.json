@@ -12,7 +12,8 @@
 	"name": "@flux/utils",
 	"scripts": {
 		"check-types": "tsc --noEmit",
-		"test": "vitest run"
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage"
 	},
 	"type": "module"
 }
