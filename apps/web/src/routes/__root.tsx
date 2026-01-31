@@ -48,13 +48,13 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey={STORAGE_KEYS.LOCAL.THEME}
 			>
-				<Suspense fallback={<Loader />}>
-					<div className="grid h-svh grid-rows-[auto_1fr]">
-						<Header />
+				<div className="grid h-svh grid-rows-[auto_1fr]">
+					<Header />
+					<Suspense fallback={<Loader />}>
 						<Outlet />
-					</div>
-					<Toaster richColors />
-				</Suspense>
+					</Suspense>
+				</div>
+				<Toaster richColors />
 			</ThemeProvider>
 			<DevtoolsLoader />
 		</>
