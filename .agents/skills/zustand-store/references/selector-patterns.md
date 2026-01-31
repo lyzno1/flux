@@ -3,7 +3,7 @@
 ## Basic Selector Object
 
 ```ts
-// stores/global/slices/sidebar/selectors.ts
+// apps/web/src/stores/global/slices/sidebar/selectors.ts
 import type { GlobalStore } from "../../store";
 
 const isSidebarOpen = (s: GlobalStore) => s.sidebarOpen;
@@ -11,9 +11,9 @@ const currentTab = (s: GlobalStore) => s.sidebarTab;
 const isSearchActive = (s: GlobalStore) => s.sidebarTab === "search";
 
 export const sidebarSelectors = {
-  isSidebarOpen,
-  currentTab,
-  isSearchActive,
+	isSidebarOpen,
+	currentTab,
+	isSearchActive,
 };
 ```
 
@@ -21,14 +21,14 @@ export const sidebarSelectors = {
 
 ```ts
 const currentSettings = (s: UserStore): UserSettings =>
-  merge(s.defaultSettings, s.settings);
+	merge(s.defaultSettings, s.settings);
 
 const currentTheme = (s: UserStore) =>
-  currentSettings(s).theme;
+	currentSettings(s).theme;
 
 export const settingsSelectors = {
-  currentSettings,
-  currentTheme,
+	currentSettings,
+	currentTheme,
 };
 ```
 
@@ -36,14 +36,14 @@ export const settingsSelectors = {
 
 ```ts
 const getItemById = (id: string) => (s: ListStore) =>
-  s.items[id];
+	s.items[id];
 
 const isItemSelected = (id: string) => (s: ListStore) =>
-  s.selectedIds.includes(id);
+	s.selectedIds.includes(id);
 
 export const listSelectors = {
-  getItemById,
-  isItemSelected,
+	getItemById,
+	isItemSelected,
 };
 ```
 
@@ -58,8 +58,8 @@ const item = useListStore(listSelectors.getItemById(itemId));
 
 // multiple values (auto shallow compare)
 const [tab, isOpen] = useGlobalStore((s) => [
-  sidebarSelectors.currentTab(s),
-  sidebarSelectors.isSidebarOpen(s),
+	sidebarSelectors.currentTab(s),
+	sidebarSelectors.isSidebarOpen(s),
 ]);
 
 // deep object - use isEqual
@@ -72,5 +72,5 @@ const settings = useUserStore(settingsSelectors.currentSettings, isEqual);
 ```ts
 // for use in services, utils, or event handlers outside React
 export const getIsSidebarOpen = () =>
-  sidebarSelectors.isSidebarOpen(useGlobalStore.getState());
+	sidebarSelectors.isSidebarOpen(useGlobalStore.getState());
 ```

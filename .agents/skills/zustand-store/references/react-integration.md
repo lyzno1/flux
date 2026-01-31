@@ -5,76 +5,79 @@
 Most stores are global singletons created at module scope:
 
 ```tsx
-import { useGlobalStore } from "@flux/store";
-import { sidebarSelectors } from "@flux/store";
+import { useGlobalStore } from "@/stores/global";
+import { sidebarSelectors } from "@/stores/global";
 
 function Sidebar() {
-  const isOpen = useGlobalStore(sidebarSelectors.isSidebarOpen);
-  const toggle = useGlobalStore((s) => s.toggleSidebar);
+	const isOpen = useGlobalStore(sidebarSelectors.isSidebarOpen);
+	const toggle = useGlobalStore((s) => s.toggleSidebar);
 
-  if (!isOpen) return null;
-  return <aside><button onClick={toggle}>Close</button></aside>;
+	if (!isOpen) return null;
+	return <aside><button onClick={toggle}>Close</button></aside>;
 }
 ```
 
 ## Context Store (Isolated Instances)
 
-Use `createContext` from `zustand-utils` when a store needs per-subtree isolation (e.g., editor instances, modals with local state):
+Use React context when a store needs per-subtree isolation (e.g., editor instances, modals with local state):
 
 ```tsx
-// stores/editor/store.ts
-import { createContext } from "zustand-utils";
+// apps/web/src/stores/editor/store.ts
+import { createStore as createZustandStore } from "zustand";
+import { useContext, createContext, useRef } from "react";
+import { useStoreWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
-import { createWithEqualityFn } from "zustand/traditional";
 
 interface EditorState {
-  content: string;
-  dirty: boolean;
-  setContent: (content: string) => void;
+	content: string;
+	dirty: boolean;
+	setContent: (content: string) => void;
 }
 
-const createEditorStore = (initialContent: string) =>
-  createWithEqualityFn<EditorState>(
-    (set) => ({
-      content: initialContent,
-      dirty: false,
-      setContent: (content) => set({ content, dirty: true }),
-    }),
-    shallow,
-  );
+export const createEditorStore = (initialContent: string) =>
+	createZustandStore<EditorState>((set) => ({
+		content: initialContent,
+		dirty: false,
+		setContent: (content) => set({ content, dirty: true }),
+	}));
 
-export const {
-  Provider: EditorProvider,
-  useStore: useEditorStore,
-  useStoreApi: useEditorStoreApi,
-} = createContext<ReturnType<typeof createEditorStore>>();
+type EditorStore = ReturnType<typeof createEditorStore>;
 
-export { createEditorStore };
+const EditorStoreContext = createContext<EditorStore | null>(null);
+
+export function EditorProvider({
+	initialContent,
+	children,
+}: {
+	initialContent: string;
+	children: React.ReactNode;
+}) {
+	const storeRef = useRef<EditorStore>(null);
+	if (!storeRef.current) {
+		storeRef.current = createEditorStore(initialContent);
+	}
+	return (
+		<EditorStoreContext value={storeRef.current}>
+			{children}
+		</EditorStoreContext>
+	);
+}
+
+export function useEditorStore<T>(selector: (s: EditorState) => T) {
+	const store = useContext(EditorStoreContext);
+	if (!store) throw new Error("useEditorStore must be used within EditorProvider");
+	return useStoreWithEqualityFn(store, selector, shallow);
+}
 ```
 
 ```tsx
 // usage
 function EditorContainer({ initialContent }: { initialContent: string }) {
-  return (
-    <EditorProvider createStore={() => createEditorStore(initialContent)}>
-      <EditorView />
-    </EditorProvider>
-  );
-}
-```
-
-## StoreUpdater Pattern
-
-Sync external props into a store without re-creating it:
-
-```tsx
-import { createStoreUpdater } from "zustand-utils";
-
-function StoreSync({ theme, locale }: { theme: string; locale: string }) {
-  const useUpdate = createStoreUpdater(useGlobalStore);
-  useUpdate("theme", theme);
-  useUpdate("locale", locale);
-  return null;
+	return (
+		<EditorProvider initialContent={initialContent}>
+			<EditorView />
+		</EditorProvider>
+	);
 }
 ```
 
@@ -82,10 +85,10 @@ function StoreSync({ theme, locale }: { theme: string; locale: string }) {
 
 ```ts
 const unsub = useGlobalStore.subscribe(
-  (s) => s.sidebarOpen,
-  (open) => console.log("sidebar:", open),
-  { fireImmediately: true },
+	(s) => s.sidebarOpen,
+	(open) => console.log("sidebar:", open),
+	{ fireImmediately: true },
 );
 ```
 
-Requires `subscribeWithSelector` middleware (included in `createFluxStore`).
+Requires `subscribeWithSelector` middleware (included in `createStore`).
