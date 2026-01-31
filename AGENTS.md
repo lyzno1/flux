@@ -19,7 +19,7 @@ pnpm db:migrate         # run migrations
 pnpm db:studio          # open drizzle studio
 ```
 
-**Adding dependencies:** This monorepo uses pnpm catalog. Add the version to `pnpm-workspace.yaml` under `catalog:`, then reference it with `"catalog:"` in the target `package.json`. Do not use `pnpm add` directly as it bypasses catalog and writes hardcoded versions.
+**Adding dependencies:** This monorepo uses pnpm catalog. Use `pnpm add -D <pkg> --save-catalog` in the target package directory — this automatically adds the version to `pnpm-workspace.yaml` catalog and writes `"catalog:"` in `package.json`.
 
 ## Architecture
 
