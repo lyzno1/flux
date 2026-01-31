@@ -1,0 +1,6 @@
+{
+	"title": "仪表板",
+	"welcome": "欢迎 {{name}}",
+	"apiStatus": "API 状态",
+	"apiMessage": "API：{{message}}"
+}

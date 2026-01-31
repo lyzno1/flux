@@ -1,0 +1,16 @@
+{
+	"nav.home": "Home",
+	"nav.dashboard": "Dashboard",
+	"nav.dify": "Dify",
+	"theme.toggle": "Toggle theme",
+	"theme.light": "Light",
+	"theme.dark": "Dark",
+	"theme.system": "System",
+	"user.signIn": "Sign In",
+	"user.signOut": "Sign Out",
+	"user.myAccount": "My Account",
+	"status.apiStatus": "API Status",
+	"status.connected": "Connected",
+	"status.disconnected": "Disconnected",
+	"error.generic": "Error: {{message}}"
+}

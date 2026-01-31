@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useId, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,6 +75,7 @@ async function consumeStream(
 }
 
 function DifyDemo() {
+	const { t } = useTranslation("dify");
 	const id = useId();
 	const [query, setQuery] = useState("hello");
 	const [conversationId, setConversationId] = useState("");
@@ -144,32 +146,32 @@ function DifyDemo() {
 	return (
 		<div className="grid h-full grid-cols-[320px_1fr] gap-0 overflow-hidden">
 			<div className="flex flex-col gap-4 overflow-y-auto border-r p-4">
-				<h2 className="font-bold text-lg">Dify Chat Messages</h2>
+				<h2 className="font-bold text-lg">{t("title")}</h2>
 
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor={queryId}>Query</Label>
+						<Label htmlFor={queryId}>{t("query")}</Label>
 						<Input id={queryId} value={query} onChange={(e) => setQuery(e.currentTarget.value)} />
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor={convId}>Conversation ID</Label>
+						<Label htmlFor={convId}>{t("conversationId")}</Label>
 						<Input
 							id={convId}
 							value={conversationId}
 							onChange={(e) => setConversationId(e.currentTarget.value)}
-							placeholder="auto-filled after first message"
+							placeholder={t("conversationIdPlaceholder")}
 						/>
 					</div>
 				</div>
 
 				<div className="flex gap-2">
 					<Button onClick={handleStream} disabled={streaming || !query.trim()}>
-						{streaming ? "Streaming..." : "Send (Stream)"}
+						{streaming ? t("streaming") : t("send")}
 					</Button>
 					{streaming && (
 						<Button variant="destructive" onClick={handleStop}>
-							Stop
+							{t("stop")}
 						</Button>
 					)}
 				</div>
@@ -177,7 +179,7 @@ function DifyDemo() {
 				{answer && (
 					<Card>
 						<CardHeader>
-							<CardTitle>Answer</CardTitle>
+							<CardTitle>{t("answer")}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<p className="whitespace-pre-wrap text-sm">{answer}</p>
@@ -192,17 +194,15 @@ function DifyDemo() {
 
 				{entries.length > 0 && (
 					<div className="text-muted-foreground text-xs">
-						{entries.filter((e) => e.event !== "ping").length} events
-						{elapsed !== null && <> in {(elapsed / 1000).toFixed(2)}s</>}
+						{t("eventsCount", { count: entries.filter((e) => e.event !== "ping").length })}
+						{elapsed !== null && <> {t("elapsed", { time: (elapsed / 1000).toFixed(2) })}</>}
 					</div>
 				)}
 			</div>
 
 			<div ref={scrollRef} className="overflow-y-auto p-4">
 				<div className="flex flex-col gap-1">
-					{entries.length === 0 && (
-						<p className="py-8 text-center text-muted-foreground text-sm">Send a message to see SSE events here.</p>
-					)}
+					{entries.length === 0 && <p className="py-8 text-center text-muted-foreground text-sm">{t("emptyState")}</p>}
 					{entries.map((entry, i) => (
 						<div
 							key={`${entry.receivedAt}-${i}`}

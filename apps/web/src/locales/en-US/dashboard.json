@@ -1,0 +1,6 @@
+{
+	"title": "Dashboard",
+	"welcome": "Welcome {{name}}",
+	"apiStatus": "API Status",
+	"apiMessage": "API: {{message}}"
+}

@@ -1,0 +1,13 @@
+{
+	"title": "Dify Chat Messages",
+	"query": "Query",
+	"conversationId": "Conversation ID",
+	"conversationIdPlaceholder": "auto-filled after first message",
+	"streaming": "Streaming...",
+	"send": "Send (Stream)",
+	"stop": "Stop",
+	"answer": "Answer",
+	"eventsCount": "{{count}} events",
+	"elapsed": "in {{time}}s",
+	"emptyState": "Send a message to see SSE events here."
+}

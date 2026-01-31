@@ -1,0 +1,16 @@
+{
+	"nav.home": "首页",
+	"nav.dashboard": "仪表板",
+	"nav.dify": "Dify",
+	"theme.toggle": "切换主题",
+	"theme.light": "浅色",
+	"theme.dark": "深色",
+	"theme.system": "跟随系统",
+	"user.signIn": "登录",
+	"user.signOut": "退出登录",
+	"user.myAccount": "我的账户",
+	"status.apiStatus": "API 状态",
+	"status.connected": "已连接",
+	"status.disconnected": "已断开",
+	"error.generic": "错误：{{message}}"
+}

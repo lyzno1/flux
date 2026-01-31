@@ -1,23 +1,26 @@
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { ModeToggle } from "./mode-toggle";
 import UserMenu from "./user-menu";
 
 const HEADER_LINKS = [
-	{ to: "/", label: "Home" },
-	{ to: "/dashboard", label: "Dashboard" },
-	{ to: "/dify", label: "Dify" },
+	{ to: "/", labelKey: "nav.home" },
+	{ to: "/dashboard", labelKey: "nav.dashboard" },
+	{ to: "/dify", labelKey: "nav.dify" },
 ] as const;
 
 export default function Header() {
+	const { t } = useTranslation();
+
 	return (
 		<div>
 			<div className="flex flex-row items-center justify-between px-2 py-1">
 				<nav className="flex gap-4 text-lg">
-					{HEADER_LINKS.map(({ to, label }) => {
+					{HEADER_LINKS.map(({ to, labelKey }) => {
 						return (
 							<Link key={to} to={to}>
-								{label}
+								{t(labelKey)}
 							</Link>
 						);
 					})}
