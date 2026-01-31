@@ -9,6 +9,16 @@ import {
 	workflowNodeExecutionStatus,
 } from "./shared";
 
+const workflowExecutionStatus = z.enum([
+	"scheduled",
+	"running",
+	"succeeded",
+	"failed",
+	"stopped",
+	"partial-succeeded",
+	"paused",
+]);
+
 // ---------------------------------------------------------------------------
 // Request
 // ---------------------------------------------------------------------------
@@ -191,7 +201,7 @@ export const workflowFinishedEventSchema = chatStreamBase.extend({
 	data: z.object({
 		id: z.string(),
 		workflow_id: z.string(),
-		status: z.enum(["succeeded", "failed", "partial-succeeded", "stopped"]),
+		status: workflowExecutionStatus,
 		outputs: z.record(z.string(), z.unknown()).nullable().optional(),
 		error: z.string().nullable().optional(),
 		elapsed_time: z.number(),
@@ -250,7 +260,7 @@ export const nodeFinishedEventSchema = chatStreamBase.extend({
 		process_data_truncated: z.boolean().optional(),
 		outputs: z.record(z.string(), z.unknown()).nullable().optional(),
 		outputs_truncated: z.boolean().optional(),
-		status: z.string(),
+		status: workflowNodeExecutionStatus,
 		error: z.string().nullable().optional(),
 		elapsed_time: z.number(),
 		execution_metadata: z.record(z.string(), z.unknown()).nullable().optional(),
@@ -283,7 +293,7 @@ export const nodeRetryEventSchema = chatStreamBase.extend({
 		process_data_truncated: z.boolean().optional(),
 		outputs: z.record(z.string(), z.unknown()).nullable().optional(),
 		outputs_truncated: z.boolean().optional(),
-		status: z.string(),
+		status: workflowNodeExecutionStatus,
 		error: z.string().nullable().optional(),
 		elapsed_time: z.number(),
 		execution_metadata: z.record(z.string(), z.unknown()).nullable().optional(),
