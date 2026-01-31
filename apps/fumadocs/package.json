@@ -7,7 +7,7 @@
     "dev": "waku dev --port=4000",
     "build": "waku build",
     "start": "waku start",
-    "check-types": "fumadocs-mdx && tsc --noEmit",
+    "check-types": "fumadocs-mdx && tsgo --noEmit",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
