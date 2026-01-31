@@ -6,15 +6,62 @@ export const fileType = z.enum(["image", "document", "audio", "video", "custom"]
 
 export const fileBelongsTo = z.enum(["user", "assistant"]);
 
-export const uploadFileSchema = z.object({
-	type: fileType.optional(),
-	transfer_method: fileTransferMethod,
-	url: z.string().optional(),
-	remote_url: z.string().optional(),
-	upload_file_id: z.string().optional(),
-	tool_file_id: z.string().optional(),
-	datasource_file_id: z.string().optional(),
-});
+export const uploadFileSchema = z
+	.object({
+		type: fileType.optional(),
+		transfer_method: fileTransferMethod,
+		url: z.string().optional(),
+		remote_url: z.string().optional(),
+		upload_file_id: z.string().optional(),
+		tool_file_id: z.string().optional(),
+		datasource_file_id: z.string().optional(),
+	})
+	.superRefine((value, ctx) => {
+		const hasValue = (field?: string) => typeof field === "string" && field.trim().length > 0;
+
+		switch (value.transfer_method) {
+			case "remote_url": {
+				if (!hasValue(value.url) && !hasValue(value.remote_url)) {
+					ctx.addIssue({
+						code: "custom",
+						message: "remote_url transfer_method requires url or remote_url",
+						path: ["url"],
+					});
+				}
+				break;
+			}
+			case "local_file": {
+				if (!hasValue(value.upload_file_id)) {
+					ctx.addIssue({
+						code: "custom",
+						message: "local_file transfer_method requires upload_file_id",
+						path: ["upload_file_id"],
+					});
+				}
+				break;
+			}
+			case "tool_file": {
+				if (!hasValue(value.tool_file_id)) {
+					ctx.addIssue({
+						code: "custom",
+						message: "tool_file transfer_method requires tool_file_id",
+						path: ["tool_file_id"],
+					});
+				}
+				break;
+			}
+			case "datasource_file": {
+				if (!hasValue(value.datasource_file_id)) {
+					ctx.addIssue({
+						code: "custom",
+						message: "datasource_file transfer_method requires datasource_file_id",
+						path: ["datasource_file_id"],
+					});
+				}
+				break;
+			}
+		}
+	});
 
 const decimalValue = z.union([z.number(), z.string()]);
 

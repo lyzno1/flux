@@ -115,13 +115,31 @@ export const agentThoughtEventSchema = chatStreamBase.extend({
 // 4. message_file
 // ---------------------------------------------------------------------------
 
-export const messageFileEventSchema = chatStreamBase.extend({
+export const messageFilePayloadEventSchema = chatStreamBase.extend({
 	event: z.literal("message_file"),
 	id: z.string(),
 	type: z.string(),
 	belongs_to: fileBelongsTo,
 	url: z.string(),
 });
+
+export const messageFileChunkEventSchema = chatStreamBase.extend({
+	event: z.literal("message_file"),
+	id: z.string(),
+	answer: z.string(),
+	from_variable_selector: z.array(z.string()).optional(),
+	chunk_type: chunkType.optional(),
+	tool_call_id: z.string().optional(),
+	tool_name: z.string().optional(),
+	tool_arguments: z.string().optional(),
+	tool_files: z.array(z.string()).optional(),
+	tool_error: z.string().optional(),
+	tool_elapsed_time: z.number().optional(),
+	tool_icon: z.union([z.string(), z.record(z.string(), z.unknown())]).optional(),
+	tool_icon_dark: z.union([z.string(), z.record(z.string(), z.unknown())]).optional(),
+});
+
+export const messageFileEventSchema = z.union([messageFilePayloadEventSchema, messageFileChunkEventSchema]);
 
 // ---------------------------------------------------------------------------
 // 5. message_end
@@ -501,11 +519,12 @@ export const pingEventSchema = z.object({
 // Discriminated Union — All SSE events for /chat-messages
 // ---------------------------------------------------------------------------
 
-export const chatMessagesStreamEventSchema = z.discriminatedUnion("event", [
+export const chatMessagesStreamEventSchema = z.union([
 	messageEventSchema,
 	agentMessageEventSchema,
 	agentThoughtEventSchema,
-	messageFileEventSchema,
+	messageFilePayloadEventSchema,
+	messageFileChunkEventSchema,
 	messageEndEventSchema,
 	messageReplaceEventSchema,
 	ttsMessageEventSchema,
