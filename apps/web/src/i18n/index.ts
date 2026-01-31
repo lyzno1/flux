@@ -44,4 +44,9 @@ i18n.services.formatter?.addCached("duration", (lng, options) => {
 	return (val: number) => formatter.format(val / 1000);
 });
 
+document.documentElement.lang = i18n.language;
+i18n.on("languageChanged", (lng) => {
+	document.documentElement.lang = lng;
+});
+
 export default i18n;
