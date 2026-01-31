@@ -21,11 +21,7 @@
 				"postcss"
 			]
 		},
-		"apps/server": {},
-		"apps/fumadocs": {
-			"entry": ["src/pages/**/*.tsx", "waku.config.ts"],
-			"ignoreDependencies": ["@fumadocs/ui"]
-		}
+		"apps/server": {}
 	},
 	"ignore": ["**/routeTree.gen.ts"],
 	"ignoreUnresolved": ["./routeTree.gen"],

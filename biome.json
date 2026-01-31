@@ -135,13 +135,5 @@
 			"enabled": true
 		}
 	},
-	"overrides": [
-		{
-			"includes": ["apps/fumadocs/**"],
-			"formatter": {
-				"indentStyle": "space",
-				"indentWidth": 2
-			}
-		}
-	]
+	"overrides": []
 }

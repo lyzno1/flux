@@ -57,7 +57,7 @@ createdb flux
 pnpm install
 ```
 
-This also triggers `postinstall` hooks (e.g., fumadocs MDX generation).
+This also triggers `postinstall` hooks.
 
 ## Step 2 — Configure Environment Variables
 
@@ -129,7 +129,7 @@ This installs `simple-git-hooks`, which runs Biome lint and TypeScript type chec
 
 ## Step 5 — Start Development Servers
 
-Start all services (web + server, excluding docs):
+Start all services:
 
 ```bash
 pnpm dev
@@ -140,7 +140,6 @@ Or start individually:
 ```bash
 pnpm dev:server   # Fastify API server  → http://localhost:3000
 pnpm dev:web      # Vite dev server     → http://localhost:3001
-pnpm dev:docs     # Fumadocs (Waku)     → http://localhost:4000
 ```
 
 ## Verifying the Setup
@@ -150,7 +149,6 @@ pnpm dev:docs     # Fumadocs (Waku)     → http://localhost:4000
 | Server health         | `http://localhost:3000`              | Returns `OK`             |
 | API reference         | `http://localhost:3000/api-reference`| OpenAPI docs page        |
 | Web app               | `http://localhost:3001`              | React SPA loads          |
-| Docs site             | `http://localhost:4000`              | Documentation site loads |
 | Database browser      | `pnpm db:studio`                    | Drizzle Studio opens     |
 
 ## Available Scripts
@@ -160,7 +158,6 @@ pnpm dev:docs     # Fumadocs (Waku)     → http://localhost:4000
 | `pnpm dev`         | Start web + server via Turbo                |
 | `pnpm dev:web`     | Start web app only (port 3001)              |
 | `pnpm dev:server`  | Start API server only (port 3000)           |
-| `pnpm dev:docs`    | Start docs site only (port 4000)            |
 | `pnpm build`       | Build all apps and packages                 |
 | `pnpm check`       | Run Biome linter/formatter with auto-fix    |
 | `pnpm check-types` | TypeScript type-check across all packages   |
@@ -202,4 +199,4 @@ psql postgresql://your_user:your_password@localhost:5432/flux
 The Drizzle config reads `.env` from `apps/server/.env`. Make sure that file exists and `DATABASE_URL` is set correctly.
 
 **Port already in use**
-Default ports are 3000 (server), 3001 (web), and 4000 (docs). Kill any conflicting processes or change ports in the respective config files.
+Default ports are 3000 (server) and 3001 (web). Kill any conflicting processes or change ports in the respective config files.

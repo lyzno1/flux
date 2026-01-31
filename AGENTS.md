@@ -5,10 +5,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-pnpm dev                # start all apps (except fumadocs) via turbo
+pnpm dev                # start all apps via turbo
 pnpm dev:web            # web only (port 3001)
 pnpm dev:server         # server only (port 3000)
-pnpm dev:docs           # fumadocs only (port 4000)
 pnpm build              # build all
 pnpm check              # biome check --write
 pnpm check-types        # typescript type-check all packages
@@ -23,13 +22,12 @@ pnpm db:studio          # open drizzle studio
 
 ## Architecture
 
-Turborepo monorepo with three apps and six shared packages. All packages use ESM (`"type": "module"`).
+Turborepo monorepo with two apps and seven shared packages. All packages use ESM (`"type": "module"`).
 
 ### Apps
 
 - **web** — React 19 SPA with TanStack Router (file-based routing in `apps/web/src/routes/`) and TanStack Query. UI via shadcn/ui + TailwindCSS v4.
 - **server** — Fastify HTTP server. Handles ORPC at `/rpc`, OpenAPI reference at `/api-reference`, and Better-Auth at `/api/auth/*`. Uses a custom `serverFactory` to route between ORPC and Fastify handlers.
-- **fumadocs** — Documentation site built with Waku.
 
 ### Packages (dependency order: bottom → top)
 
@@ -58,4 +56,3 @@ Turborepo monorepo with three apps and six shared packages. All packages use ESM
 - **Formatter/Linter:** Biome (not ESLint/Prettier). Tab indentation, double quotes. Run `pnpm check` to auto-fix.
 - **Pre-commit hook:** `check-types` + `lint-staged` (biome check) via simple-git-hooks.
 - **Key Biome rules:** No barrel files (`noBarrelFile`), no re-export all (`noReExportAll`), no `console.*` (warn), `noNonNullAssertion`, `useNodejsImportProtocol` for node builtins, sorted Tailwind classes (`useSortedClasses` with `cn`/`clsx`/`cva`).
-- **fumadocs override:** Uses 2-space indentation instead of tabs.
