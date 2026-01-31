@@ -7,16 +7,21 @@
 		},
 		"./*": {
 			"default": "./src/*.ts"
+		},
+		"./contracts/*": {
+			"default": "./src/contracts/*.ts"
 		}
 	},
 	"scripts": {
-		"check-types": "tsgo --noEmit"
+		"check-types": "tsgo --noEmit",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@flux/auth": "workspace:*",
 		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
 		"@orpc/client": "catalog:",
+		"@orpc/contract": "catalog:",
 		"@orpc/openapi": "catalog:",
 		"@orpc/server": "catalog:",
 		"@orpc/zod": "catalog:",
@@ -26,6 +31,7 @@
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
-		"typescript": "catalog:"
+		"typescript": "catalog:",
+		"vitest": "catalog:"
 	}
 }
