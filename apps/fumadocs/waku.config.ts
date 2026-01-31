@@ -1,0 +1,19 @@
+import type { UserConfig } from "vite";
+
+import tailwindcss from "@tailwindcss/vite";
+import mdx from "fumadocs-mdx/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import { type Config, defineConfig } from "waku/config";
+
+import * as MdxConfig from "./source.config.js";
+
+export default defineConfig({
+  vite: {
+    // we do this to avoid Vite from bundling React contexts and cause duplicated contexts conflicts.
+    optimizeDeps: {
+      exclude: ["fumadocs-ui", "fumadocs-core", "@fumadocs/ui"],
+    },
+
+    plugins: [tailwindcss(), mdx(MdxConfig), tsconfigPaths()],
+  } satisfies UserConfig as Config["vite"],
+});

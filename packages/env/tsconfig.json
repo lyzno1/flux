@@ -1,0 +1,3 @@
+{
+  "extends": "@flux/config/tsconfig.base.json"
+}
