@@ -1,0 +1,16 @@
+{
+	"name": "@flux/utils",
+	"type": "module",
+	"exports": {
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@flux/config": "workspace:*",
+		"typescript": "catalog:"
+	}
+}
