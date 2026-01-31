@@ -41,7 +41,7 @@
 		"test:coverage": "vitest run --coverage"
 	},
 	"simple-git-hooks": {
-		"pre-commit": "npx lint-staged && pnpm run check-types"
+		"pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged && pnpm run check-types"
 	},
 	"type": "module",
 	"workspaces": [
