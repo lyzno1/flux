@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 
 export const fileTransferMethod = z.enum(["remote_url", "local_file", "tool_file", "datasource_file"]);
 

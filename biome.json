@@ -1,9 +1,14 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"css": {
+		"linter": {
+			"enabled": true
+		},
+		"parser": {
+			"cssModules": true,
+			"tailwindDirectives": true
+		}
 	},
 	"files": {
 		"ignoreUnknown": false,
@@ -33,23 +38,17 @@
 		"indentStyle": "tab",
 		"lineWidth": 120
 	},
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	},
 	"linter": {
-		"enabled": true,
 		"domains": {
 			"react": "all"
 		},
+		"enabled": true,
 		"rules": {
-			"recommended": true,
-			"correctness": {
-				"useExhaustiveDependencies": "info",
-				"noUndeclaredDependencies": "error"
-			},
-			"performance": {
-				"noBarrelFile": "error",
-				"noReExportAll": "error",
-				"noAccumulatingSpread": "warn"
-			},
 			"complexity": {
 				"noExcessiveCognitiveComplexity": {
 					"level": "error",
@@ -57,42 +56,42 @@
 						"maxAllowedComplexity": 15
 					}
 				},
+				"noForEach": "error",
+				"noStaticOnlyClass": "error",
 				"noUselessStringConcat": "error",
 				"noUselessUndefinedInitialization": "error",
-				"noStaticOnlyClass": "error",
-				"noForEach": "error",
 				"useDateNow": "error",
 				"useFlatMap": "error"
 			},
+			"correctness": {
+				"noUndeclaredDependencies": "error",
+				"useExhaustiveDependencies": "info"
+			},
 			"nursery": {
 				"useSortedClasses": {
-					"level": "warn",
 					"fix": "safe",
+					"level": "warn",
 					"options": {
 						"functions": ["clsx", "cva", "cn"]
 					}
 				}
 			},
+			"performance": {
+				"noAccumulatingSpread": "warn",
+				"noBarrelFile": "error",
+				"noReExportAll": "error"
+			},
+			"recommended": true,
 			"style": {
-				"noParameterAssign": "error",
-				"useAsConstAssertion": "error",
-				"useDefaultParameterLast": "error",
-				"useEnumInitializers": "error",
-				"useSelfClosingElements": "error",
-				"useSingleVarDeclarator": "error",
-				"noUnusedTemplateLiteral": "error",
-				"useNumberNamespace": "error",
 				"noInferrableTypes": "error",
-				"noUselessElse": "error",
-				"noNonNullAssertion": "error",
-				"useThrowNewError": "error",
-				"useThrowOnlyError": "error",
-				"useNodejsImportProtocol": "error",
-				"useForOf": "error",
-				"useShorthandAssign": "error",
-				"useCollapsedElseIf": "error",
-				"noYodaExpression": "error",
 				"noNamespace": "error",
+				"noNonNullAssertion": "error",
+				"noParameterAssign": "error",
+				"noUnusedTemplateLiteral": "error",
+				"noUselessElse": "error",
+				"noYodaExpression": "error",
+				"useAsConstAssertion": "error",
+				"useCollapsedElseIf": "error",
 				"useComponentExportOnlyModules": "off",
 				"useConsistentArrayType": {
 					"level": "error",
@@ -100,13 +99,23 @@
 						"syntax": "shorthand"
 					}
 				},
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
 				"useFilenamingConvention": {
 					"level": "error",
 					"options": {
-						"requireAscii": true,
-						"filenameCases": ["kebab-case", "PascalCase"]
+						"filenameCases": ["kebab-case", "PascalCase"],
+						"requireAscii": true
 					}
-				}
+				},
+				"useForOf": "error",
+				"useNodejsImportProtocol": "error",
+				"useNumberNamespace": "error",
+				"useSelfClosingElements": "error",
+				"useShorthandAssign": "error",
+				"useSingleVarDeclarator": "error",
+				"useThrowNewError": "error",
+				"useThrowOnlyError": "error"
 			},
 			"suspicious": {
 				"noConsole": {
@@ -116,25 +125,21 @@
 					}
 				},
 				"noEmptyBlockStatements": "error",
+				"noEvolvingTypes": "error",
 				"useAwait": "error",
-				"useErrorMessage": "error",
-				"noEvolvingTypes": "error"
+				"useErrorMessage": "error"
 			}
 		}
 	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double"
+	"overrides": [
+		{
+			"assist": { "actions": { "source": { "useSortedKeys": "on" } } },
+			"includes": ["**/*.json"]
 		}
-	},
-	"css": {
-		"parser": {
-			"cssModules": true,
-			"tailwindDirectives": true
-		},
-		"linter": {
-			"enabled": true
-		}
-	},
-	"overrides": []
+	],
+	"vcs": {
+		"clientKind": "git",
+		"enabled": true,
+		"useIgnoreFile": true
+	}
 }

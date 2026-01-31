@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import {
 	DropdownMenu,
@@ -16,6 +17,7 @@ import { Skeleton } from "./ui/skeleton";
 
 export default function UserMenu() {
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const { data: session, isPending } = authClient.useSession();
 
 	if (isPending) {
@@ -25,7 +27,7 @@ export default function UserMenu() {
 	if (!session) {
 		return (
 			<Link to="/login" search={{ redirect: "/dashboard" }}>
-				<Button variant="outline">Sign In</Button>
+				<Button variant="outline">{t("user.signIn")}</Button>
 			</Link>
 		);
 	}
@@ -35,7 +37,7 @@ export default function UserMenu() {
 			<DropdownMenuTrigger render={<Button variant="outline" />}>{session.user.name}</DropdownMenuTrigger>
 			<DropdownMenuContent className="bg-card">
 				<DropdownMenuGroup>
-					<DropdownMenuLabel>My Account</DropdownMenuLabel>
+					<DropdownMenuLabel>{t("user.myAccount")}</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem>{session.user.email}</DropdownMenuItem>
 					<DropdownMenuItem
@@ -52,7 +54,7 @@ export default function UserMenu() {
 							});
 						}}
 					>
-						Sign Out
+						{t("user.signOut")}
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>

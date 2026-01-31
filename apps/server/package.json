@@ -1,14 +1,4 @@
 {
-	"name": "server",
-	"type": "module",
-	"main": "src/index.ts",
-	"scripts": {
-		"build": "tsdown",
-		"check-types": "tsgo --noEmit",
-		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
-		"dev": "tsx watch src/index.ts",
-		"start": "node dist/index.mjs"
-	},
 	"dependencies": {
 		"@fastify/cors": "11.2.0",
 		"@flux/api": "workspace:*",
@@ -29,5 +19,15 @@
 		"tsdown": "0.20.1",
 		"tsx": "4.21.0",
 		"typescript": "catalog:"
-	}
+	},
+	"main": "src/index.ts",
+	"name": "server",
+	"scripts": {
+		"build": "tsdown",
+		"check-types": "tsgo --noEmit",
+		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+		"dev": "tsx watch src/index.ts",
+		"start": "node dist/index.mjs"
+	},
+	"type": "module"
 }

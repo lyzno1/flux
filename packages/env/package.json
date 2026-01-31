@@ -1,15 +1,4 @@
 {
-	"name": "@flux/env",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"exports": {
-		"./server": "./src/server.ts",
-		"./web": "./src/web.ts"
-	},
-	"scripts": {
-		"check-types": "tsgo --noEmit"
-	},
 	"dependencies": {
 		"@t3-oss/env-core": "0.13.10",
 		"dotenv": "catalog:",
@@ -19,5 +8,16 @@
 		"@flux/config": "workspace:*",
 		"@types/node": "catalog:",
 		"typescript": "catalog:"
-	}
+	},
+	"exports": {
+		"./server": "./src/server.ts",
+		"./web": "./src/web.ts"
+	},
+	"name": "@flux/env",
+	"private": true,
+	"scripts": {
+		"check-types": "tsgo --noEmit"
+	},
+	"type": "module",
+	"version": "0.0.0"
 }

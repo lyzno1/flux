@@ -1,17 +1,4 @@
 {
-	"name": "@flux/auth",
-	"type": "module",
-	"exports": {
-		".": {
-			"default": "./src/index.ts"
-		},
-		"./*": {
-			"default": "./src/*.ts"
-		}
-	},
-	"scripts": {
-		"check-types": "tsgo --noEmit"
-	},
 	"dependencies": {
 		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
@@ -22,5 +9,18 @@
 	"devDependencies": {
 		"@flux/config": "workspace:*",
 		"typescript": "catalog:"
-	}
+	},
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"name": "@flux/auth",
+	"scripts": {
+		"check-types": "tsgo --noEmit"
+	},
+	"type": "module"
 }

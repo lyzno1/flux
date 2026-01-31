@@ -1,12 +1,12 @@
 {
-	"extends": "@flux/config/tsconfig.base.json",
 	"compilerOptions": {
-		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"jsx": "react-jsx",
-		"types": ["vite/client"],
-		"rootDirs": ["."],
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"paths": {
 			"@/*": ["./src/*"]
-		}
-	}
+		},
+		"rootDirs": ["."],
+		"types": ["vite/client"]
+	},
+	"extends": "@flux/config/tsconfig.base.json"
 }

@@ -1,7 +1,8 @@
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import z from "zod";
+import * as z from "zod";
 
 import { authClient } from "@/lib/auth-client";
 
@@ -12,6 +13,7 @@ import { Label } from "./ui/label";
 
 export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToSignIn: () => void; redirect: string }) {
 	const navigate = useNavigate();
+	const { t } = useTranslation("auth");
 	const { isPending } = authClient.useSession();
 
 	const form = useForm({
@@ -30,7 +32,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 				{
 					onSuccess: () => {
 						navigate({ to: redirect });
-						toast.success("Sign up successful");
+						toast.success(t("signUp.success"));
 					},
 					onError: (error) => {
 						toast.error(error.error.message || error.error.statusText);
@@ -40,9 +42,9 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 		},
 		validators: {
 			onSubmit: z.object({
-				name: z.string().min(2, "Name must be at least 2 characters"),
-				email: z.email("Invalid email address"),
-				password: z.string().min(8, "Password must be at least 8 characters"),
+				name: z.string().min(2, t("validation.nameMin")),
+				email: z.email(t("validation.emailInvalid")),
+				password: z.string().min(8, t("validation.passwordMin")),
 			}),
 		},
 	});
@@ -53,7 +55,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 
 	return (
 		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-center font-bold text-3xl">Create Account</h1>
+			<h1 className="mb-6 text-center font-bold text-3xl">{t("signUp.title")}</h1>
 
 			<form
 				onSubmit={(e) => {
@@ -67,7 +69,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 					<form.Field name="name">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Name</Label>
+								<Label htmlFor={field.name}>{t("signUp.name")}</Label>
 								<Input
 									id={field.name}
 									name={field.name}
@@ -89,7 +91,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 					<form.Field name="email">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Email</Label>
+								<Label htmlFor={field.name}>{t("signUp.email")}</Label>
 								<Input
 									id={field.name}
 									name={field.name}
@@ -112,7 +114,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 					<form.Field name="password">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Password</Label>
+								<Label htmlFor={field.name}>{t("signUp.password")}</Label>
 								<Input
 									id={field.name}
 									name={field.name}
@@ -134,7 +136,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 				<form.Subscribe>
 					{(state) => (
 						<Button type="submit" className="w-full" disabled={!state.canSubmit || state.isSubmitting}>
-							{state.isSubmitting ? "Submitting..." : "Sign Up"}
+							{state.isSubmitting ? t("signUp.submitting") : t("signUp.submit")}
 						</Button>
 					)}
 				</form.Subscribe>
@@ -142,7 +144,7 @@ export default function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToS
 
 			<div className="mt-4 text-center">
 				<Button variant="link" onClick={onSwitchToSignIn} className="text-indigo-600 hover:text-indigo-800">
-					Already have an account? Sign In
+					{t("signUp.switchToSignIn")}
 				</Button>
 			</div>
 		</div>
