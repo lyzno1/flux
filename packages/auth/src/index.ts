@@ -1,5 +1,5 @@
 import { db } from "@flux/db";
-import * as schema from "@flux/db/schema/auth";
+import * as schema from "@flux/db/schema/auth.sql";
 import { env } from "@flux/env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
