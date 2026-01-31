@@ -30,7 +30,8 @@ const DEFAULT_TIMEOUT = 30_000;
 export const link = new RPCLink({
 	url: `${env.VITE_SERVER_URL}/rpc`,
 	fetch(request, init) {
-		const signal = AbortSignal.any([request.signal, AbortSignal.timeout(DEFAULT_TIMEOUT)]);
+		const isStream = request.headers.get("Accept")?.includes("text/event-stream");
+		const signal = isStream ? request.signal : AbortSignal.any([request.signal, AbortSignal.timeout(DEFAULT_TIMEOUT)]);
 
 		return fetch(request, {
 			...init,
