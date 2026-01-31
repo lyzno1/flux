@@ -18,7 +18,7 @@ export const chatMessagesRequestSchema = z.object({
 	query: z.string(),
 	files: z.array(uploadFileSchema).optional(),
 	response_mode: z.enum(["blocking", "streaming"]).optional(),
-	conversation_id: z.string().uuid().optional(),
+	conversation_id: z.uuid().optional(),
 	retriever_from: z.string().default("dev"),
 	auto_generate_name: z.boolean().default(true),
 	workflow_id: z.string().optional(),
