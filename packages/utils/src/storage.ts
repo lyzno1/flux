@@ -1,12 +1,6 @@
 import { isClient } from "./runtime";
 
-type JsonValue =
-	| string
-	| number
-	| boolean
-	| null
-	| JsonValue[]
-	| { [key: string]: JsonValue };
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 const STORAGE_VERSION = "v1";
 
@@ -57,8 +51,7 @@ function set<T extends JsonValue>(key: string, value: T): void {
 	if (!isLocalStorageAvailable()) return;
 
 	try {
-		const stringValue =
-			typeof value === "string" ? value : JSON.stringify(value);
+		const stringValue = typeof value === "string" ? value : JSON.stringify(value);
 		localStorage.setItem(versionedKey(key), stringValue);
 	} catch {
 		// localStorage may be full or disabled
@@ -81,8 +74,7 @@ function getNumber(key: string, defaultValue?: number): number | null {
 	const value = get<string | number>(key);
 	if (value === null) return defaultValue ?? null;
 
-	const parsed =
-		typeof value === "number" ? value : Number.parseFloat(value as string);
+	const parsed = typeof value === "number" ? value : Number.parseFloat(value as string);
 	return Number.isNaN(parsed) ? (defaultValue ?? null) : parsed;
 }
 

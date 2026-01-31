@@ -9,15 +9,11 @@ export const Route = createFileRoute("/dashboard")({
 	beforeLoad: async () => {
 		const session = await authClient.getSession();
 		if (!session.data) {
-			redirect({
-				to: "/login",
-				throw: true,
-			});
+			throw redirect({ to: "/login" });
 		}
 		return { session };
 	},
-	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(orpc.privateData.queryOptions()),
+	loader: ({ context }) => context.queryClient.ensureQueryData(orpc.privateData.queryOptions()),
 });
 
 function RouteComponent() {

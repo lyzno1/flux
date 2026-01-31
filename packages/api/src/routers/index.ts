@@ -1,4 +1,5 @@
 import { authed, pub } from "../index";
+import { difyRouter } from "./dify";
 
 const healthCheck = pub.healthCheck.handler(() => {
 	return "OK";
@@ -14,6 +15,7 @@ const privateData = authed.privateData.handler(({ context }) => {
 export const appRouter = pub.router({
 	healthCheck,
 	privateData,
+	dify: difyRouter,
 });
 
 export type AppRouter = typeof appRouter;

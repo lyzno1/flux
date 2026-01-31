@@ -4,8 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { orpc } from "@/utils/orpc";
 
 export const Route = createFileRoute("/")({
-	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(orpc.healthCheck.queryOptions()),
+	loader: ({ context }) => context.queryClient.ensureQueryData(orpc.healthCheck.queryOptions()),
 	component: HomeComponent,
 });
 
@@ -35,12 +34,8 @@ function HomeComponent() {
 				<section className="rounded-lg border p-4">
 					<h2 className="mb-2 font-medium">API Status</h2>
 					<div className="flex items-center gap-2">
-						<div
-							className={`h-2 w-2 rounded-full ${data ? "bg-green-500" : "bg-red-500"}`}
-						/>
-						<span className="text-muted-foreground text-sm">
-							{data ? "Connected" : "Disconnected"}
-						</span>
+						<div className={`h-2 w-2 rounded-full ${data ? "bg-green-500" : "bg-red-500"}`} />
+						<span className="text-muted-foreground text-sm">{data ? "Connected" : "Disconnected"}</span>
 					</div>
 				</section>
 			</div>

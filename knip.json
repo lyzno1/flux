@@ -14,12 +14,7 @@
 		"apps/web": {
 			"entry": ["src/main.tsx", "src/routes/**/*.tsx"],
 			"project": "src/**/*.{ts,tsx}",
-			"ignoreDependencies": [
-				"shadcn",
-				"tw-animate-css",
-				"tailwindcss",
-				"postcss"
-			]
+			"ignoreDependencies": ["shadcn", "tw-animate-css", "tailwindcss", "postcss"]
 		},
 		"apps/server": {}
 	},

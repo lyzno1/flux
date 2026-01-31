@@ -25,25 +25,13 @@ export const queryClient = new QueryClient({
 	}),
 });
 
-const DEFAULT_TIMEOUT = 30_000;
-
 export const link = new RPCLink({
 	url: `${env.VITE_SERVER_URL}/rpc`,
 	fetch(request, init) {
-		const signal = AbortSignal.any([
-			request.signal,
-			AbortSignal.timeout(DEFAULT_TIMEOUT),
-		]);
-
-		return fetch(request, {
-			...init,
-			credentials: "include",
-			signal,
-		});
+		return fetch(request, { ...init, credentials: "include" });
 	},
 });
 
-export const client: ContractRouterClient<typeof contract> =
-	createORPCClient(link);
+export const client: ContractRouterClient<typeof contract> = createORPCClient(link);
 
 export const orpc = createTanstackQueryUtils(client);

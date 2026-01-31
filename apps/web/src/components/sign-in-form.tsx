@@ -10,11 +10,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignInForm({
-	onSwitchToSignUp,
-}: {
-	onSwitchToSignUp: () => void;
-}) {
+export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void }) {
 	const navigate = useNavigate({
 		from: "/",
 	});
@@ -79,9 +75,7 @@ export default function SignInForm({
 									type="email"
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) =>
-										field.handleChange((e.target as HTMLInputElement).value)
-									}
+									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -104,9 +98,7 @@ export default function SignInForm({
 									type="password"
 									value={field.state.value}
 									onBlur={field.handleBlur}
-									onChange={(e) =>
-										field.handleChange((e.target as HTMLInputElement).value)
-									}
+									onChange={(e) => field.handleChange((e.target as HTMLInputElement).value)}
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -120,11 +112,7 @@ export default function SignInForm({
 
 				<form.Subscribe>
 					{(state) => (
-						<Button
-							type="submit"
-							className="w-full"
-							disabled={!state.canSubmit || state.isSubmitting}
-						>
+						<Button type="submit" className="w-full" disabled={!state.canSubmit || state.isSubmitting}>
 							{state.isSubmitting ? "Submitting..." : "Sign In"}
 						</Button>
 					)}
@@ -132,11 +120,7 @@ export default function SignInForm({
 			</form>
 
 			<div className="mt-4 text-center">
-				<Button
-					variant="link"
-					onClick={onSwitchToSignUp}
-					className="text-indigo-600 hover:text-indigo-800"
-				>
+				<Button variant="link" onClick={onSwitchToSignUp} className="text-indigo-600 hover:text-indigo-800">
 					Need an account? Sign Up
 				</Button>
 			</div>
