@@ -2,7 +2,7 @@ import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import z from "zod";
+import * as z from "zod";
 
 import { authClient } from "@/lib/auth-client";
 

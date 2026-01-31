@@ -56,3 +56,4 @@ Turborepo monorepo with two apps and seven shared packages. All packages use ESM
 - **Formatter/Linter:** Biome (not ESLint/Prettier). Tab indentation, double quotes. Run `pnpm check` to auto-fix.
 - **Pre-commit hook:** `check-types` + `lint-staged` (biome check) via simple-git-hooks.
 - **Key Biome rules:** No barrel files (`noBarrelFile`), no re-export all (`noReExportAll`), no `console.*` (warn), `noNonNullAssertion`, `useNodejsImportProtocol` for node builtins, sorted Tailwind classes (`useSortedClasses` with `cn`/`clsx`/`cva`).
+- **Import conventions:** Use namespace imports for modules without a real default export. Write `import * as z from "zod"` (not `import z from "zod"` or `import { z } from "zod"`). For React, use named imports (`import { useState } from "react"`) and `import type * as React from "react"` when the `React` namespace type is needed.
