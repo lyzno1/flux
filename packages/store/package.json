@@ -1,21 +1,7 @@
 {
-	"name": "@flux/store",
-	"type": "module",
-	"exports": {
-		"./*": {
-			"default": "./src/*.ts"
-		}
-	},
-	"scripts": {
-		"check-types": "tsgo --noEmit",
-		"test": "vitest run"
-	},
 	"dependencies": {
 		"@flux/utils": "workspace:*",
 		"zustand": "catalog:"
-	},
-	"peerDependencies": {
-		"react": "catalog:"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
@@ -23,5 +9,19 @@
 		"jsdom": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
-	}
+	},
+	"exports": {
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"name": "@flux/store",
+	"peerDependencies": {
+		"react": "catalog:"
+	},
+	"scripts": {
+		"check-types": "tsgo --noEmit",
+		"test": "vitest run"
+	},
+	"type": "module"
 }

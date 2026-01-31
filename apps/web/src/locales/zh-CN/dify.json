@@ -1,13 +1,13 @@
 {
-	"title": "Dify 聊天消息",
-	"query": "查询",
+	"answer": "回答",
 	"conversationId": "会话 ID",
 	"conversationIdPlaceholder": "首次发送消息后自动填充",
-	"streaming": "传输中...",
+	"elapsed": "耗时 {{time}}s",
+	"emptyState": "发送消息以查看 SSE 事件。",
+	"eventsCount": "{{count}} 个事件",
+	"query": "查询",
 	"send": "发送（流式）",
 	"stop": "停止",
-	"answer": "回答",
-	"eventsCount": "{{count}} 个事件",
-	"elapsed": "耗时 {{time}}s",
-	"emptyState": "发送消息以查看 SSE 事件。"
+	"streaming": "传输中...",
+	"title": "Dify 聊天消息"
 }

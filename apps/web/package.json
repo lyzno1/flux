@@ -1,15 +1,4 @@
 {
-	"name": "web",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"serve": "vite preview",
-		"start": "vite",
-		"check-types": "tsgo --noEmit"
-	},
 	"dependencies": {
 		"@base-ui/react": "1.1.0",
 		"@flux/api": "workspace:*",
@@ -56,5 +45,16 @@
 		"tailwindcss": "catalog:",
 		"typescript": "catalog:",
 		"vite": "catalog:"
-	}
+	},
+	"name": "web",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"check-types": "tsgo --noEmit",
+		"dev": "vite dev",
+		"serve": "vite preview",
+		"start": "vite"
+	},
+	"type": "module",
+	"version": "0.0.0"
 }

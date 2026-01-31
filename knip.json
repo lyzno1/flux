@@ -1,24 +1,24 @@
 {
 	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"ignore": ["**/routeTree.gen.ts"],
+	"ignoreDependencies": ["dotenv"],
+	"ignoreUnresolved": ["./routeTree.gen"],
 	"workspaces": {
 		".": {
 			"ignoreDependencies": ["@flux/config", "@flux/env"]
 		},
-		"packages/config": {},
-		"packages/env": {
-			"entry": "src/{server,web}.ts"
-		},
-		"packages/db": {},
-		"packages/auth": {},
-		"packages/api": {},
+		"apps/server": {},
 		"apps/web": {
 			"entry": ["src/main.tsx", "src/routes/**/*.tsx"],
-			"project": "src/**/*.{ts,tsx}",
-			"ignoreDependencies": ["shadcn", "tw-animate-css", "tailwindcss", "postcss"]
+			"ignoreDependencies": ["shadcn", "tw-animate-css", "tailwindcss", "postcss"],
+			"project": "src/**/*.{ts,tsx}"
 		},
-		"apps/server": {}
-	},
-	"ignore": ["**/routeTree.gen.ts"],
-	"ignoreUnresolved": ["./routeTree.gen"],
-	"ignoreDependencies": ["dotenv"]
+		"packages/api": {},
+		"packages/auth": {},
+		"packages/config": {},
+		"packages/db": {},
+		"packages/env": {
+			"entry": "src/{server,web}.ts"
+		}
+	}
 }

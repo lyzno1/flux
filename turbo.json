@@ -1,6 +1,5 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"ui": "tui",
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
@@ -10,10 +9,10 @@
 		"check-types": {
 			"dependsOn": ["^check-types"]
 		},
-		"test": {
-			"dependsOn": ["^build"]
+		"db:generate": {
+			"cache": false
 		},
-		"dev": {
+		"db:migrate": {
 			"cache": false,
 			"persistent": true
 		},
@@ -24,12 +23,13 @@
 			"cache": false,
 			"persistent": true
 		},
-		"db:migrate": {
+		"dev": {
 			"cache": false,
 			"persistent": true
 		},
-		"db:generate": {
-			"cache": false
+		"test": {
+			"dependsOn": ["^build"]
 		}
-	}
+	},
+	"ui": "tui"
 }

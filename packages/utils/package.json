@@ -1,18 +1,18 @@
 {
-	"name": "@flux/utils",
-	"type": "module",
+	"devDependencies": {
+		"@flux/config": "workspace:*",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
 	"exports": {
 		"./*": {
 			"default": "./src/*.ts"
 		}
 	},
+	"name": "@flux/utils",
 	"scripts": {
 		"check-types": "tsc --noEmit",
 		"test": "vitest run"
 	},
-	"devDependencies": {
-		"@flux/config": "workspace:*",
-		"typescript": "catalog:",
-		"vitest": "catalog:"
-	}
+	"type": "module"
 }

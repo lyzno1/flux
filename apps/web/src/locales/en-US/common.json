@@ -1,16 +1,16 @@
 {
-	"nav.home": "Home",
+	"error.generic": "Error: {{message}}",
 	"nav.dashboard": "Dashboard",
 	"nav.dify": "Dify",
-	"theme.toggle": "Toggle theme",
-	"theme.light": "Light",
-	"theme.dark": "Dark",
-	"theme.system": "System",
-	"user.signIn": "Sign In",
-	"user.signOut": "Sign Out",
-	"user.myAccount": "My Account",
+	"nav.home": "Home",
 	"status.apiStatus": "API Status",
 	"status.connected": "Connected",
 	"status.disconnected": "Disconnected",
-	"error.generic": "Error: {{message}}"
+	"theme.dark": "Dark",
+	"theme.light": "Light",
+	"theme.system": "System",
+	"theme.toggle": "Toggle theme",
+	"user.myAccount": "My Account",
+	"user.signIn": "Sign In",
+	"user.signOut": "Sign Out"
 }

@@ -1,21 +1,4 @@
 {
-	"name": "@flux/db",
-	"type": "module",
-	"exports": {
-		".": {
-			"default": "./src/index.ts"
-		},
-		"./*": {
-			"default": "./src/*.ts"
-		}
-	},
-	"scripts": {
-		"check-types": "tsgo --noEmit",
-		"db:push": "drizzle-kit push",
-		"db:generate": "drizzle-kit generate",
-		"db:studio": "drizzle-kit studio",
-		"db:migrate": "drizzle-kit migrate"
-	},
 	"dependencies": {
 		"@flux/env": "workspace:*",
 		"dotenv": "catalog:",
@@ -28,5 +11,22 @@
 		"@types/pg": "8.16.0",
 		"drizzle-kit": "catalog:",
 		"typescript": "catalog:"
-	}
+	},
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"name": "@flux/db",
+	"scripts": {
+		"check-types": "tsgo --noEmit",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate",
+		"db:push": "drizzle-kit push",
+		"db:studio": "drizzle-kit studio"
+	},
+	"type": "module"
 }
