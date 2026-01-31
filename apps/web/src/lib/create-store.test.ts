@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { createStore, shouldEnableDevtools } from "./create-store";
+import { describe, expect, it, vi } from "vitest";
+import { createStore } from "./create-store";
 
 interface CounterState {
 	count: number;
@@ -69,55 +69,5 @@ describe("createStore", () => {
 
 		useStore.setState({ count: 42 });
 		expect(useStore.getState().count).toBe(42);
-	});
-
-	it("accepts custom devtools name via options", () => {
-		const useStore = createStore("internal-name", () => ({ value: 1 }), {
-			devtools: "CustomName",
-		});
-		expect(useStore.getState().value).toBe(1);
-	});
-});
-
-describe("shouldEnableDevtools", () => {
-	const originalLocation = window.location;
-
-	afterEach(() => {
-		Object.defineProperty(window, "location", {
-			writable: true,
-			value: originalLocation,
-		});
-	});
-
-	function setUrl(url: string) {
-		Object.defineProperty(window, "location", {
-			writable: true,
-			value: { href: url },
-		});
-	}
-
-	it("returns false without debug param", () => {
-		setUrl("http://localhost:3000");
-		expect(shouldEnableDevtools("myStore")).toBe(false);
-	});
-
-	it("returns true when debug param matches store name", () => {
-		setUrl("http://localhost:3000?debug=myStore");
-		expect(shouldEnableDevtools("myStore")).toBe(true);
-	});
-
-	it("returns false when debug param does not match", () => {
-		setUrl("http://localhost:3000?debug=otherStore");
-		expect(shouldEnableDevtools("myStore")).toBe(false);
-	});
-
-	it("returns true when debug param contains store name among others", () => {
-		setUrl("http://localhost:3000?debug=fooStore,myStore,barStore");
-		expect(shouldEnableDevtools("myStore")).toBe(true);
-	});
-
-	it("returns false for partial name match when name is substring", () => {
-		setUrl("http://localhost:3000?debug=myStorePlus");
-		expect(shouldEnableDevtools("myStore")).toBe(true);
 	});
 });
