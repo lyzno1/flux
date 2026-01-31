@@ -9,12 +9,13 @@ import { authClient } from "@/lib/auth-client";
 const loginSearchSchema = z.object({
 	redirect: z
 		.string()
+		.default("/dashboard")
 		.catch("/dashboard")
 		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dashboard")),
 });
 
 export const Route = createFileRoute("/login")({
-	validateSearch: (search) => loginSearchSchema.parse(search),
+	validateSearch: loginSearchSchema,
 	beforeLoad: async ({ context, search }) => {
 		try {
 			const session = context.auth.data ?? (await authClient.getSession()).data;

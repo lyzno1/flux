@@ -26,7 +26,7 @@ export function UserMenu() {
 
 	if (!session) {
 		return (
-			<Link to="/login" search={{ redirect: "/dashboard" }}>
+			<Link to="/login">
 				<Button variant="outline">{t("user.signIn")}</Button>
 			</Link>
 		);
