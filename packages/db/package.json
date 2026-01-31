@@ -10,6 +10,7 @@
 		}
 	},
 	"scripts": {
+		"check-types": "tsc -b",
 		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
 		"db:studio": "drizzle-kit studio",
@@ -18,14 +19,14 @@
 	"dependencies": {
 		"@flux/env": "workspace:*",
 		"dotenv": "catalog:",
-		"drizzle-orm": "0.45.1",
-		"pg": "8.17.1",
+		"drizzle-orm": "catalog:",
+		"pg": "8.18.0",
 		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
 		"@types/pg": "8.16.0",
-		"drizzle-kit": "0.31.8",
+		"drizzle-kit": "catalog:",
 		"typescript": "catalog:"
 	}
 }
