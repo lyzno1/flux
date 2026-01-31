@@ -3,8 +3,8 @@ import { createRootRouteWithContext, HeadContent, Outlet } from "@tanstack/react
 import { Suspense } from "react";
 
 import { DevtoolsLoader } from "@/components/devtools/loader";
-import Header from "@/components/header";
-import Loader from "@/components/loader";
+import { Header } from "@/components/header";
+import { PageLoading } from "@/components/page-loading";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { STORAGE_KEYS } from "@/config/storage-keys";
@@ -48,12 +48,14 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey={STORAGE_KEYS.LOCAL.THEME}
 			>
-				<Suspense fallback={<Loader />}>
-					<div className="grid h-svh grid-rows-[auto_1fr]">
-						<Header />
-						<Outlet />
+				<div className="grid h-svh grid-rows-[auto_1fr]">
+					<Header />
+					<div className="relative min-h-0 overflow-auto">
+						<Suspense fallback={<PageLoading />}>
+							<Outlet />
+						</Suspense>
 					</div>
-				</Suspense>
+				</div>
 				<Toaster richColors />
 			</ThemeProvider>
 			<DevtoolsLoader />

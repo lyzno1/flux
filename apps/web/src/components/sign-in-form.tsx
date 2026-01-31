@@ -6,12 +6,12 @@ import * as z from "zod";
 
 import { authClient } from "@/lib/auth-client";
 
-import Loader from "./loader";
+import { PageLoading } from "./page-loading";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToSignUp: () => void; redirect: string }) {
+export function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToSignUp: () => void; redirect: string }) {
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 	const { isPending } = authClient.useSession();
@@ -47,7 +47,7 @@ export default function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToS
 	});
 
 	if (isPending) {
-		return <Loader />;
+		return <PageLoading />;
 	}
 
 	return (

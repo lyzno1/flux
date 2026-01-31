@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 
-import Loader from "./components/loader";
+import { PageLoading } from "./components/page-loading";
 import { routeTree } from "./routeTree.gen";
 import { orpc, queryClient } from "./utils/orpc";
 
@@ -9,7 +9,7 @@ export const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
 	defaultPreloadStaleTime: 0,
-	defaultPendingComponent: () => <Loader />,
+	defaultPendingComponent: () => <PageLoading />,
 	defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
 	scrollRestoration: true,
 	context: { orpc, queryClient },

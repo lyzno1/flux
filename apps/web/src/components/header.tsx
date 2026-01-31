@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { LanguageToggle } from "./language-toggle";
 import { ModeToggle } from "./mode-toggle";
-import UserMenu from "./user-menu";
+import { UserMenu } from "./user-menu";
 
 const HEADER_LINKS = [
 	{ to: "/", labelKey: "nav.home" },
@@ -11,7 +11,7 @@ const HEADER_LINKS = [
 	{ to: "/dify", labelKey: "nav.dify" },
 ] as const;
 
-export default function Header() {
+export function Header() {
 	const { t } = useTranslation();
 
 	return (
