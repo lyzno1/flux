@@ -1,11 +1,10 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
-import type { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-	"group/button inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap rounded-none border border-transparent bg-clip-padding font-medium text-xs outline-none transition-[color,background-color,border-color,opacity,box-shadow] focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+	"group/button inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap rounded-none border border-transparent bg-clip-padding font-medium text-xs outline-none transition-[color,background-color,border-color,box-shadow] focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive/20 motion-reduce:transition-none dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
 	{
 		variants: {
 			variant: {
@@ -42,9 +41,21 @@ function Button({
 	className,
 	variant = "default",
 	size = "default",
+	type,
+	render,
 	...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
-	return <ButtonPrimitive data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
+	const resolvedType = type ?? (render ? undefined : "button");
+
+	return (
+		<ButtonPrimitive
+			data-slot="button"
+			className={cn(buttonVariants({ variant, size, className }))}
+			render={render}
+			type={resolvedType}
+			{...props}
+		/>
+	);
 }
 
 export { Button, buttonVariants };
