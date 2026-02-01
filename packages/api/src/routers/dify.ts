@@ -4,6 +4,10 @@ import { parseDifySSE } from "../lib/sse";
 import { chatMessagesBlockingResponseSchema } from "../schemas/dify/chat-messages";
 
 function fetchDify(path: string, body: Record<string, unknown>, signal?: AbortSignal) {
+	if (!env.DIFY_API_URL || !env.DIFY_API_KEY) {
+		throw new Error("Dify is not configured: DIFY_API_URL and DIFY_API_KEY are required");
+	}
+
 	return fetch(`${env.DIFY_API_URL}${path}`, {
 		method: "POST",
 		headers: {

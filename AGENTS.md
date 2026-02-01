@@ -56,7 +56,7 @@ Turborepo monorepo with two apps and six shared packages. All packages use ESM (
 
 **Auth flow:** Better-Auth handles sessions. The ORPC context extracts the session from request headers. `protectedProcedure` middleware enforces authentication. Client uses `better-auth/react`'s `createAuthClient`.
 
-**Environment variables:** Validated via `@flux/env` using T3 Env + Zod. Server env requires `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `CORS_ORIGIN`. Web env uses `VITE_` prefixed vars.
+**Environment variables:** Validated via `@flux/env` using T3 Env + Zod. Server env requires `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `CORS_ORIGIN`. Web env uses `VITE_` prefixed vars. When adding a new environment variable, always update both `packages/env/src/server.ts` (or `web.ts`) and the corresponding `.env.example` file (`apps/server/.env.example` or `apps/web/.env.example`).
 
 ## Code Style
 
