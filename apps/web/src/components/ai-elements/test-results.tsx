@@ -96,16 +96,14 @@ export const TestResultsDuration = ({ className, children, ...props }: TestResul
 		return null;
 	}
 
-	const formatDuration = (ms: number) => {
-		if (ms < 1000) {
-			return `${ms}ms`;
-		}
-		return `${(ms / 1000).toFixed(2)}s`;
-	};
+	const formatted =
+		summary.duration < 1000
+			? `${new Intl.NumberFormat("en-US").format(summary.duration)}ms`
+			: `${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(summary.duration / 1000)}s`;
 
 	return (
 		<span className={cn("text-muted-foreground text-sm", className)} {...props}>
-			{children ?? formatDuration(summary.duration)}
+			{children ?? formatted}
 		</span>
 	);
 };

@@ -41,10 +41,6 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } fro
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-// ============================================================================
-// Provider Context & Types
-// ============================================================================
-
 export interface AttachmentsContext {
 	files: (FileUIPart & { id: string })[];
 	add: (files: File[] | FileList) => void;
@@ -206,10 +202,6 @@ export function PromptInputProvider({ initialInput: initialTextInput = "", child
 	);
 }
 
-// ============================================================================
-// Component Context & Hooks
-// ============================================================================
-
 const LocalAttachmentsContext = createContext<AttachmentsContext | null>(null);
 
 export const usePromptInputAttachments = () => {
@@ -222,10 +214,6 @@ export const usePromptInputAttachments = () => {
 	}
 	return context;
 };
-
-// ============================================================================
-// Referenced Sources (Local to PromptInput)
-// ============================================================================
 
 export interface ReferencedSourcesContext {
 	sources: (SourceDocumentUIPart & { id: string })[];

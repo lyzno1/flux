@@ -201,7 +201,9 @@ export const TerminalContent = ({ className, children, ...props }: TerminalConte
 			{children ?? (
 				<pre className="whitespace-pre-wrap break-words">
 					<Ansi>{output}</Ansi>
-					{isStreaming && <span className="ml-0.5 inline-block h-4 w-2 animate-pulse bg-zinc-100" />}
+					{isStreaming && (
+						<span className="ml-0.5 inline-block h-4 w-2 animate-pulse bg-zinc-100 motion-reduce:animate-none" />
+					)}
 				</pre>
 			)}
 		</div>
