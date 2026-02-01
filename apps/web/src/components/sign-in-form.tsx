@@ -6,6 +6,7 @@ import * as z from "zod";
 
 import { authClient } from "@/lib/auth-client";
 
+import { GoogleOAuthButton, OAuthDivider } from "./google-oauth-button";
 import { PageLoading } from "./page-loading";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -53,6 +54,9 @@ export function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToSignUp: (
 	return (
 		<div className="mx-auto mt-10 w-full max-w-md p-6">
 			<h1 className="mb-6 text-center font-bold text-3xl">{t("signIn.title")}</h1>
+
+			<GoogleOAuthButton redirect={redirect} />
+			<OAuthDivider />
 
 			<form
 				onSubmit={(e) => {
