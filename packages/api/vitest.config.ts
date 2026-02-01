@@ -7,5 +7,6 @@ export default defineProject({
 		include: ["src/**/*.test.ts"],
 		clearMocks: true,
 		restoreMocks: true,
+		unstubGlobals: true,
 	},
 });
