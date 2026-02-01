@@ -4,7 +4,8 @@ export default defineProject({
 	test: {
 		name: "web",
 		environment: "jsdom",
-		include: ["src/**/*.test.ts"],
+		include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+		setupFiles: ["./setup-vitest.ts"],
 		clearMocks: true,
 		restoreMocks: true,
 	},
