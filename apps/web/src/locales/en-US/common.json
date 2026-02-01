@@ -1,5 +1,6 @@
 {
 	"error.generic": "Error: {{message}}",
+	"error.notFound": "404 - Not Found",
 	"nav.dashboard": "Dashboard",
 	"nav.dify": "Dify",
 	"nav.home": "Home",

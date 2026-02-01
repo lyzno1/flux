@@ -1,6 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
 
 import { DevtoolsLoader } from "@/components/devtools/loader";
 import { Header } from "@/components/header";
@@ -21,6 +22,7 @@ export interface RouterAppContext {
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	component: RootComponent,
+	notFoundComponent: NotFoundComponent,
 	head: () => ({
 		meta: [
 			{
@@ -39,6 +41,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 		],
 	}),
 });
+
+function NotFoundComponent() {
+	const { t } = useTranslation();
+	return <div>{t("error.notFound")}</div>;
+}
 
 function RootComponent() {
 	return (

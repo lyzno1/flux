@@ -1,5 +1,6 @@
 {
 	"error.generic": "错误：{{message}}",
+	"error.notFound": "404 - 页面未找到",
 	"nav.dashboard": "仪表板",
 	"nav.dify": "Dify",
 	"nav.home": "首页",
