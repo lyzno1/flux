@@ -2,8 +2,8 @@ import { createFileRoute, isRedirect, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import * as z from "zod";
 
-import { SignInForm } from "@/components/sign-in-form";
-import { SignUpForm } from "@/components/sign-up-form";
+import { SignInForm } from "@/components/form/sign-in-form";
+import { SignUpForm } from "@/components/form/sign-up-form";
 import { authClient } from "@/lib/auth-client";
 
 const loginSearchSchema = z.object({
