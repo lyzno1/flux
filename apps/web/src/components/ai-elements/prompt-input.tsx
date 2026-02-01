@@ -907,10 +907,15 @@ export const PromptInputSelect = (props: PromptInputSelectProps) => <Select {...
 
 export type PromptInputSelectTriggerProps = ComponentProps<typeof SelectTrigger>;
 
-export const PromptInputSelectTrigger = ({ className, ...props }: PromptInputSelectTriggerProps) => (
+export const PromptInputSelectTrigger = ({
+	className,
+	["aria-label"]: ariaLabel,
+	...props
+}: PromptInputSelectTriggerProps) => (
 	<SelectTrigger
+		aria-label={ariaLabel ?? "Options"}
 		className={cn(
-			"border-none bg-transparent font-medium text-muted-foreground shadow-none transition-colors",
+			"border-none bg-transparent font-medium text-muted-foreground shadow-none transition-colors motion-reduce:transition-none",
 			"hover:bg-accent hover:text-foreground aria-expanded:bg-accent aria-expanded:text-foreground",
 			className,
 		)}

@@ -29,7 +29,10 @@ export type QueueItemProps = ComponentProps<"li">;
 
 export const QueueItem = ({ className, ...props }: QueueItemProps) => (
 	<li
-		className={cn("group flex flex-col gap-1 rounded-md px-3 py-1 text-sm transition-colors hover:bg-muted", className)}
+		className={cn(
+			"group flex flex-col gap-1 rounded-md px-3 py-1 text-sm transition-colors hover:bg-muted motion-reduce:transition-none",
+			className,
+		)}
 		{...props}
 	/>
 );
@@ -102,7 +105,7 @@ export const QueueItemAction = ({
 		<Button
 			aria-label={resolvedLabel}
 			className={cn(
-				"size-auto rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-muted-foreground/10 hover:text-foreground group-hover:opacity-100 motion-reduce:transition-none",
+				"size-auto rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-muted-foreground/10 hover:text-foreground focus-visible:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100 motion-reduce:transition-none",
 				className,
 			)}
 			size="icon"

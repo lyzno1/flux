@@ -81,15 +81,17 @@ export const FileTreeFolder = ({ path, name, className, children, ...props }: Fi
 	return (
 		<FileTreeFolderContext.Provider value={{ path, name, isExpanded }}>
 			<Collapsible onOpenChange={() => togglePath(path)} open={isExpanded}>
-				<div className={cn("", className)} role="treeitem" tabIndex={0} {...props}>
+				<div className={cn("", className)} {...props}>
 					<CollapsibleTrigger
 						render={
 							<button
+								aria-selected={isSelected}
 								className={cn(
 									"flex w-full items-center gap-1 rounded px-2 py-1 text-left transition-colors hover:bg-muted/50",
 									isSelected && "bg-muted",
 								)}
 								onClick={() => onSelect?.(path)}
+								role="treeitem"
 								type="button"
 							/>
 						}

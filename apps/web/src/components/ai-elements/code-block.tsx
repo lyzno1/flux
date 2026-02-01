@@ -411,8 +411,13 @@ export const CodeBlockLanguageSelector = (props: CodeBlockLanguageSelectorProps)
 
 export type CodeBlockLanguageSelectorTriggerProps = ComponentProps<typeof SelectTrigger>;
 
-export const CodeBlockLanguageSelectorTrigger = ({ className, ...props }: CodeBlockLanguageSelectorTriggerProps) => (
+export const CodeBlockLanguageSelectorTrigger = ({
+	className,
+	["aria-label"]: ariaLabel,
+	...props
+}: CodeBlockLanguageSelectorTriggerProps) => (
 	<SelectTrigger
+		aria-label={ariaLabel ?? "Language"}
 		className={cn("h-7 border-none bg-transparent px-2 text-xs shadow-none", className)}
 		size="sm"
 		{...props}
