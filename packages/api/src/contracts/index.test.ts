@@ -37,4 +37,31 @@ describe("contracts", () => {
 			}),
 		});
 	});
+
+	it("defines dify.chatMessagesStop as POST /dify/chat-messages/{task_id}/stop", () => {
+		expect(contract.dify.chatMessagesStop["~orpc"]).toMatchObject({
+			route: expect.objectContaining({
+				method: "POST",
+				path: "/dify/chat-messages/{task_id}/stop",
+			}),
+		});
+	});
+
+	it("defines dify.filePreview as GET /dify/files/{file_id}/preview", () => {
+		expect(contract.dify.filePreview["~orpc"]).toMatchObject({
+			route: expect.objectContaining({
+				method: "GET",
+				path: "/dify/files/{file_id}/preview",
+			}),
+		});
+	});
+
+	it("defines dify.fileUpload as POST /dify/files/upload", () => {
+		expect(contract.dify.fileUpload["~orpc"]).toMatchObject({
+			route: expect.objectContaining({
+				method: "POST",
+				path: "/dify/files/upload",
+			}),
+		});
+	});
 });

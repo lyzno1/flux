@@ -135,3 +135,127 @@ describe("dify.chatMessagesStream", () => {
 		}).rejects.toThrow("Dify API error (502)");
 	});
 });
+
+describe("dify.chatMessagesStop", () => {
+	it("returns success on stop", async () => {
+		const session = authenticateSession();
+		mockFetch.mockResolvedValueOnce(new Response(JSON.stringify({ result: "success" }), { status: 200 }));
+
+		const result = await call(
+			appRouter.dify.chatMessagesStop,
+			{ task_id: "task-1" },
+			{
+				context: createTestContext(),
+			},
+		);
+
+		expect(result).toEqual({ result: "success" });
+		expect(mockFetch).toHaveBeenCalledWith(
+			`${mockEnv.DIFY_API_URL}/chat-messages/task-1/stop`,
+			expect.objectContaining({
+				method: "POST",
+				headers: expect.objectContaining({ Authorization: `Bearer ${mockEnv.DIFY_API_KEY}` }),
+			}),
+		);
+		expect(JSON.parse(mockFetch.mock.lastCall?.[1]?.body as string)).toMatchObject({
+			user: session.user.id,
+		});
+	});
+
+	it("throws on API error", async () => {
+		authenticateSession();
+		mockFetch.mockResolvedValueOnce(new Response("Not Found", { status: 404 }));
+
+		await expect(
+			call(
+				appRouter.dify.chatMessagesStop,
+				{ task_id: "task-1" },
+				{
+					context: createTestContext(),
+				},
+			),
+		).rejects.toThrow("Dify API error (404)");
+	});
+});
+
+describe("dify.filePreview", () => {
+	const fileId = "550e8400-e29b-41d4-a716-446655440000";
+
+	it("returns a File on success", async () => {
+		const session = authenticateSession();
+		const blob = new Blob(["image-data"], { type: "image/png" });
+		const res = new Response(blob, {
+			status: 200,
+			headers: {
+				"Content-Type": "image/png",
+				"Content-Disposition": "inline; filename*=UTF-8''test.png",
+			},
+		});
+		mockFetch.mockResolvedValueOnce(res);
+
+		const result = await call(appRouter.dify.filePreview, { file_id: fileId }, { context: createTestContext() });
+
+		expect(result).toBeInstanceOf(File);
+		expect(result.type).toBe("image/png");
+		expect(result.name).toBe("test.png");
+		expect(mockFetch).toHaveBeenCalledWith(
+			`${mockEnv.DIFY_API_URL}/files/${fileId}/preview?user=${session.user.id}&as_attachment=false`,
+			expect.objectContaining({
+				method: "GET",
+				headers: expect.objectContaining({ Authorization: `Bearer ${mockEnv.DIFY_API_KEY}` }),
+			}),
+		);
+	});
+
+	it("throws on API error", async () => {
+		authenticateSession();
+		mockFetch.mockResolvedValueOnce(new Response("Forbidden", { status: 403 }));
+
+		await expect(
+			call(appRouter.dify.filePreview, { file_id: fileId }, { context: createTestContext() }),
+		).rejects.toThrow("Dify API error (403)");
+	});
+});
+
+describe("dify.fileUpload", () => {
+	it("returns parsed file response on success", async () => {
+		const session = authenticateSession();
+		const body = {
+			id: "file-1",
+			name: "test.png",
+			size: 1024,
+			extension: "png",
+			mime_type: "image/png",
+			created_by: session.user.id,
+			created_at: 1700000000,
+		};
+
+		mockFetch.mockResolvedValueOnce(new Response(JSON.stringify(body), { status: 201 }));
+
+		const file = new File(["test"], "test.png", { type: "image/png" });
+		const result = await call(appRouter.dify.fileUpload, { file }, { context: createTestContext() });
+
+		expect(result).toMatchObject(body);
+		expect(mockFetch).toHaveBeenCalledWith(
+			`${mockEnv.DIFY_API_URL}/files/upload`,
+			expect.objectContaining({
+				method: "POST",
+				headers: expect.objectContaining({ Authorization: `Bearer ${mockEnv.DIFY_API_KEY}` }),
+			}),
+		);
+
+		const sentFormData = mockFetch.mock.lastCall?.[1]?.body as FormData;
+		expect(sentFormData.get("user")).toBe(session.user.id);
+		expect(sentFormData.get("file")).toBeInstanceOf(File);
+	});
+
+	it("throws on API error", async () => {
+		authenticateSession();
+		mockFetch.mockResolvedValueOnce(new Response("Unsupported Media Type", { status: 415 }));
+
+		const file = new File(["test"], "test.xyz", { type: "application/octet-stream" });
+		await expect(call(appRouter.dify.fileUpload, { file }, { context: createTestContext() })).rejects.toThrow(
+			"Dify API error (415)",
+		);
+	});
+});
