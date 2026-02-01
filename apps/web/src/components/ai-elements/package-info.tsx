@@ -1,5 +1,6 @@
 import { ArrowRightIcon, MinusIcon, PackageIcon, PlusIcon } from "lucide-react";
 import { createContext, type HTMLAttributes, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -69,11 +70,11 @@ export const PackageInfoName = ({ className, children, ...props }: PackageInfoNa
 };
 
 const changeTypeStyles: Record<ChangeType, string> = {
-	major: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-	minor: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
-	patch: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-	added: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-	removed: "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400",
+	major: "bg-destructive/10 text-destructive",
+	minor: "bg-warning-muted text-warning-foreground",
+	patch: "bg-success-muted text-success-foreground",
+	added: "bg-info-muted text-info-foreground",
+	removed: "bg-muted text-muted-foreground",
 };
 
 const changeTypeIcons: Record<ChangeType, React.ReactNode> = {
@@ -145,12 +146,17 @@ export const PackageInfoContent = ({ className, children, ...props }: PackageInf
 
 export type PackageInfoDependenciesProps = HTMLAttributes<HTMLDivElement>;
 
-export const PackageInfoDependencies = ({ className, children, ...props }: PackageInfoDependenciesProps) => (
-	<div className={cn("space-y-2", className)} {...props}>
-		<span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">Dependencies</span>
-		<div className="space-y-1">{children}</div>
-	</div>
-);
+export const PackageInfoDependencies = ({ className, children, ...props }: PackageInfoDependenciesProps) => {
+	const { t } = useTranslation("ai");
+	return (
+		<div className={cn("space-y-2", className)} {...props}>
+			<span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
+				{t("envVars.dependencies")}
+			</span>
+			<div className="space-y-1">{children}</div>
+		</div>
+	);
+};
 
 export type PackageInfoDependencyProps = HTMLAttributes<HTMLDivElement> & {
 	name: string;

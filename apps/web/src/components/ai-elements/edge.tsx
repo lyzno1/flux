@@ -19,16 +19,7 @@ const Temporary = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
 		targetPosition,
 	});
 
-	return (
-		<BaseEdge
-			className="stroke-1 stroke-ring"
-			id={id}
-			path={edgePath}
-			style={{
-				strokeDasharray: "5, 5",
-			}}
-		/>
-	);
+	return <BaseEdge className="stroke-1 stroke-ring [stroke-dasharray:5,5]" id={id} path={edgePath} />;
 };
 
 const getHandleCoordsByPosition = (node: InternalNode<Node>, handlePosition: Position) => {
@@ -108,7 +99,7 @@ const Animated = ({ id, source, target, markerEnd, style }: EdgeProps) => {
 	return (
 		<>
 			<BaseEdge id={id} markerEnd={markerEnd} path={edgePath} style={style} />
-			<circle fill="var(--primary)" r="4">
+			<circle className="fill-primary" r="4">
 				<animateMotion dur="2s" path={edgePath} repeatCount="indefinite" />
 			</circle>
 		</>

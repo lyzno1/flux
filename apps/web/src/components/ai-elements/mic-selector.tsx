@@ -9,6 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -145,9 +146,10 @@ export type MicSelectorInputProps = ComponentProps<typeof CommandInput> & {
 	onValueChange?: (value: string) => void;
 };
 
-export const MicSelectorInput = ({ ...props }: MicSelectorInputProps) => (
-	<CommandInput placeholder="Search microphones..." {...props} />
-);
+export const MicSelectorInput = ({ ...props }: MicSelectorInputProps) => {
+	const { t } = useTranslation("ai");
+	return <CommandInput placeholder={t("mic.searchPlaceholder")} {...props} />;
+};
 
 export type MicSelectorListProps = Omit<ComponentProps<typeof CommandList>, "children"> & {
 	children: (devices: MediaDeviceInfo[]) => ReactNode;
@@ -161,9 +163,10 @@ export const MicSelectorList = ({ children, ...props }: MicSelectorListProps) =>
 
 export type MicSelectorEmptyProps = ComponentProps<typeof CommandEmpty>;
 
-export const MicSelectorEmpty = ({ children = "No microphone found.", ...props }: MicSelectorEmptyProps) => (
-	<CommandEmpty {...props}>{children}</CommandEmpty>
-);
+export const MicSelectorEmpty = ({ children, ...props }: MicSelectorEmptyProps) => {
+	const { t } = useTranslation("ai");
+	return <CommandEmpty {...props}>{children ?? t("mic.noMicFound")}</CommandEmpty>;
+};
 
 export type MicSelectorItemProps = ComponentProps<typeof CommandItem>;
 
@@ -211,12 +214,13 @@ export type MicSelectorValueProps = ComponentProps<"span">;
 
 export const MicSelectorValue = ({ className, ...props }: MicSelectorValueProps) => {
 	const { data, value } = useContext(MicSelectorContext);
+	const { t } = useTranslation("ai");
 	const currentDevice = data.find((d) => d.deviceId === value);
 
 	if (!currentDevice) {
 		return (
 			<span className={cn("flex-1 text-left", className)} {...props}>
-				Select microphone...
+				{t("mic.selectMic")}
 			</span>
 		);
 	}

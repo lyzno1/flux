@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -96,14 +97,18 @@ export type VoiceSelectorContentProps = ComponentProps<typeof DialogContent> & {
 export const VoiceSelectorContent = ({
 	className,
 	children,
-	title = "Voice Selector",
+	title: titleProp,
 	...props
-}: VoiceSelectorContentProps) => (
-	<DialogContent className={cn("p-0", className)} {...props}>
-		<DialogTitle className="sr-only">{title}</DialogTitle>
-		<Command className="**:data-[slot=command-input-wrapper]:h-auto">{children}</Command>
-	</DialogContent>
-);
+}: VoiceSelectorContentProps) => {
+	const { t } = useTranslation("ai");
+	const title = titleProp ?? t("voiceSelector.title");
+	return (
+		<DialogContent className={cn("p-0", className)} {...props}>
+			<DialogTitle className="sr-only">{title}</DialogTitle>
+			<Command className="**:data-[slot=command-input-wrapper]:h-auto">{children}</Command>
+		</DialogContent>
+	);
+};
 
 export type VoiceSelectorDialogProps = ComponentProps<typeof CommandDialog>;
 
@@ -327,7 +332,7 @@ export const VoiceSelectorAge = ({ className, ...props }: VoiceSelectorAgeProps)
 export type VoiceSelectorNameProps = ComponentProps<"span">;
 
 export const VoiceSelectorName = ({ className, ...props }: VoiceSelectorNameProps) => (
-	<span className={cn("flex-1 truncate text-left font-medium", className)} {...props} />
+	<span className={cn("min-w-0 flex-1 truncate text-left font-medium", className)} {...props} />
 );
 
 export type VoiceSelectorDescriptionProps = ComponentProps<"span">;
@@ -375,7 +380,7 @@ export const VoiceSelectorPreview = ({
 	let icon = <PlayIcon className="size-3" />;
 
 	if (loading) {
-		icon = <LoaderCircleIcon className="size-3 animate-spin" />;
+		icon = <LoaderCircleIcon className="size-3 animate-spin motion-reduce:animate-none" />;
 	} else if (playing) {
 		icon = <PauseIcon className="size-3" />;
 	}

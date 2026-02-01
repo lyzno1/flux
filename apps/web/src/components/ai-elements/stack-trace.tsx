@@ -1,6 +1,7 @@
 import { AlertTriangleIcon, CheckIcon, ChevronDownIcon, CopyIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { createContext, memo, useContext, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useControllableState } from "@/hooks/use-controllable-state";
@@ -195,14 +196,14 @@ export const StackTraceHeader = memo(({ className, children, ...props }: StackTr
 			<CollapsibleTrigger
 				{...props}
 				render={
-					<div
+					<button
 						className={cn(
 							"flex w-full cursor-pointer items-center gap-3 p-3 text-left transition-colors hover:bg-muted/50",
 							className,
 						)}
+						type="button"
 					/>
 				}
-				nativeButton={false}
 			>
 				{children}
 			</CollapsibleTrigger>
@@ -213,8 +214,8 @@ export const StackTraceHeader = memo(({ className, children, ...props }: StackTr
 export type StackTraceErrorProps = ComponentProps<"div">;
 
 export const StackTraceError = memo(({ className, children, ...props }: StackTraceErrorProps) => (
-	<div className={cn("flex flex-1 items-center gap-2 overflow-hidden", className)} {...props}>
-		<AlertTriangleIcon className="size-4 shrink-0 text-destructive" />
+	<div className={cn("flex min-w-0 flex-1 items-center gap-2 overflow-hidden", className)} {...props}>
+		<AlertTriangleIcon aria-hidden="true" className="size-4 shrink-0 text-destructive" />
 		{children}
 	</div>
 ));
@@ -314,6 +315,7 @@ export const StackTraceExpandButton = memo(({ className, ...props }: StackTraceE
 	return (
 		<div className={cn("flex size-7 items-center justify-center", className)} {...props}>
 			<ChevronDownIcon
+				aria-hidden="true"
 				className={cn("size-4 text-muted-foreground transition-transform", isOpen ? "rotate-180" : "rotate-0")}
 			/>
 		</div>
@@ -352,6 +354,7 @@ export const StackTraceFrames = memo(({ className, showInternalFrames = true, ..
 	const { trace, onFilePathClick } = useStackTrace();
 
 	const framesToShow = showInternalFrames ? trace.frames : trace.frames.filter((f) => !f.isInternal);
+	const { t } = useTranslation("ai");
 
 	return (
 		<div className={cn("space-y-1 p-3", className)} {...props}>
@@ -387,7 +390,9 @@ export const StackTraceFrames = memo(({ className, showInternalFrames = true, ..
 					{!(frame.filePath || frame.functionName) && <span>{frame.raw.replace(AT_PREFIX_REGEX, "")}</span>}
 				</div>
 			))}
-			{framesToShow.length === 0 && <div className="text-muted-foreground text-xs">No stack frames</div>}
+			{framesToShow.length === 0 && (
+				<div className="text-muted-foreground text-xs">{t("stackTrace.noStackFrames")}</div>
+			)}
 		</div>
 	);
 });

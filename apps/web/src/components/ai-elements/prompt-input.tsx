@@ -21,6 +21,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Command,
 	CommandEmpty,
@@ -237,10 +238,12 @@ export type PromptInputActionAddAttachmentsProps = ComponentProps<typeof Dropdow
 };
 
 export const PromptInputActionAddAttachments = ({
-	label = "Add photos or files",
+	label: labelProp,
 	...props
 }: PromptInputActionAddAttachmentsProps) => {
 	const attachments = usePromptInputAttachments();
+	const { t } = useTranslation("ai");
+	const label = labelProp ?? t("promptInput.addPhotosOrFiles");
 
 	return (
 		<DropdownMenuItem
@@ -696,9 +699,12 @@ export const PromptInputTextarea = ({
 	onChange,
 	onKeyDown,
 	className,
-	placeholder = "What would you like to know?",
+	placeholder: placeholderProp,
+	["aria-label"]: ariaLabel,
 	...props
 }: PromptInputTextareaProps) => {
+	const { t } = useTranslation("ai");
+	const placeholder = placeholderProp ?? t("promptInput.placeholder");
 	const controller = useOptionalPromptInputController();
 	const attachments = usePromptInputAttachments();
 	const [isComposing, setIsComposing] = useState(false);
@@ -780,6 +786,7 @@ export const PromptInputTextarea = ({
 
 	return (
 		<InputGroupTextarea
+			aria-label={ariaLabel ?? "Message"}
 			className={cn("field-sizing-content max-h-48 min-h-16", className)}
 			name="message"
 			onCompositionEnd={() => setIsComposing(false)}
@@ -863,7 +870,7 @@ export const PromptInputSubmit = ({
 	let Icon = <CornerDownLeftIcon className="size-4" />;
 
 	if (status === "submitted") {
-		Icon = <Loader2Icon className="size-4 animate-spin" />;
+		Icon = <Loader2Icon className="size-4 animate-spin motion-reduce:animate-none" />;
 	} else if (status === "streaming") {
 		Icon = <SquareIcon className="size-4" />;
 	} else if (status === "error") {

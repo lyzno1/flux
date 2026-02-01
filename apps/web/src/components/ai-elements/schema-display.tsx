@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "lucide-react";
 import { type ComponentProps, createContext, type HTMLAttributes, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
@@ -88,11 +89,11 @@ export const SchemaDisplayHeader = ({ className, children, ...props }: SchemaDis
 );
 
 const methodStyles: Record<HttpMethod, string> = {
-	GET: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-	POST: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-	PUT: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
-	PATCH: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
-	DELETE: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+	GET: "bg-success-muted text-success-foreground",
+	POST: "bg-info-muted text-info-foreground",
+	PUT: "bg-warning-muted text-warning-foreground",
+	PATCH: "bg-warning-muted text-warning-foreground",
+	DELETE: "bg-destructive/10 text-destructive",
 };
 
 export type SchemaDisplayMethodProps = ComponentProps<typeof Badge>;
@@ -126,7 +127,7 @@ export const SchemaDisplayPath = ({ className, children, ...props }: SchemaDispl
 		<span className={cn("font-mono text-sm", className)} {...props}>
 			{parts.map((part) =>
 				part.startsWith("{") && part.endsWith("}") ? (
-					<span className="text-blue-600 dark:text-blue-400" key={part}>
+					<span className="text-info-foreground" key={part}>
 						{part}
 					</span>
 				) : (
@@ -161,12 +162,13 @@ export type SchemaDisplayParametersProps = ComponentProps<typeof Collapsible>;
 
 export const SchemaDisplayParameters = ({ className, children, ...props }: SchemaDisplayParametersProps) => {
 	const { parameters } = useContext(SchemaDisplayContext);
+	const { t } = useTranslation("ai");
 
 	return (
 		<Collapsible className={cn(className)} defaultOpen {...props}>
 			<CollapsibleTrigger className="group flex w-full items-center gap-2 px-4 py-3 text-left transition-colors hover:bg-muted/50">
 				<ChevronRightIcon className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
-				<span className="font-medium text-sm">Parameters</span>
+				<span className="font-medium text-sm">{t("schema.parameters")}</span>
 				<Badge className="ml-auto text-xs" variant="secondary">
 					{parameters?.length}
 				</Badge>
@@ -190,38 +192,42 @@ export const SchemaDisplayParameter = ({
 	location,
 	className,
 	...props
-}: SchemaDisplayParameterProps) => (
-	<div className={cn("px-4 py-3 pl-10", className)} {...props}>
-		<div className="flex items-center gap-2">
-			<span className="font-mono text-sm">{name}</span>
-			<Badge className="text-xs" variant="outline">
-				{type}
-			</Badge>
-			{location && (
-				<Badge className="text-xs" variant="secondary">
-					{location}
+}: SchemaDisplayParameterProps) => {
+	const { t } = useTranslation("ai");
+	return (
+		<div className={cn("px-4 py-3 pl-10", className)} {...props}>
+			<div className="flex items-center gap-2">
+				<span className="font-mono text-sm">{name}</span>
+				<Badge className="text-xs" variant="outline">
+					{type}
 				</Badge>
-			)}
-			{required && (
-				<Badge className="bg-red-100 text-red-700 text-xs dark:bg-red-900/30 dark:text-red-400" variant="secondary">
-					required
-				</Badge>
-			)}
+				{location && (
+					<Badge className="text-xs" variant="secondary">
+						{location}
+					</Badge>
+				)}
+				{required && (
+					<Badge className="bg-destructive/10 text-destructive text-xs" variant="secondary">
+						{t("schema.required")}
+					</Badge>
+				)}
+			</div>
+			{description && <p className="mt-1 text-muted-foreground text-sm">{description}</p>}
 		</div>
-		{description && <p className="mt-1 text-muted-foreground text-sm">{description}</p>}
-	</div>
-);
+	);
+};
 
 export type SchemaDisplayRequestProps = ComponentProps<typeof Collapsible>;
 
 export const SchemaDisplayRequest = ({ className, children, ...props }: SchemaDisplayRequestProps) => {
 	const { requestBody } = useContext(SchemaDisplayContext);
+	const { t } = useTranslation("ai");
 
 	return (
 		<Collapsible className={cn(className)} defaultOpen {...props}>
 			<CollapsibleTrigger className="group flex w-full items-center gap-2 px-4 py-3 text-left transition-colors hover:bg-muted/50">
 				<ChevronRightIcon className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
-				<span className="font-medium text-sm">Request Body</span>
+				<span className="font-medium text-sm">{t("schema.requestBody")}</span>
 			</CollapsibleTrigger>
 			<CollapsibleContent>
 				<div className="border-t">
@@ -236,12 +242,13 @@ export type SchemaDisplayResponseProps = ComponentProps<typeof Collapsible>;
 
 export const SchemaDisplayResponse = ({ className, children, ...props }: SchemaDisplayResponseProps) => {
 	const { responseBody } = useContext(SchemaDisplayContext);
+	const { t } = useTranslation("ai");
 
 	return (
 		<Collapsible className={cn(className)} defaultOpen {...props}>
 			<CollapsibleTrigger className="group flex w-full items-center gap-2 px-4 py-3 text-left transition-colors hover:bg-muted/50">
 				<ChevronRightIcon className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
-				<span className="font-medium text-sm">Response</span>
+				<span className="font-medium text-sm">{t("schema.response")}</span>
 			</CollapsibleTrigger>
 			<CollapsibleContent>
 				<div className="border-t">
@@ -276,6 +283,7 @@ export const SchemaDisplayProperty = ({
 	className,
 	...props
 }: SchemaDisplayPropertyProps) => {
+	const { t } = useTranslation("ai");
 	const hasChildren = properties || items;
 	const paddingLeft = 40 + depth * 16;
 
@@ -295,8 +303,8 @@ export const SchemaDisplayProperty = ({
 						{type}
 					</Badge>
 					{required && (
-						<Badge className="bg-red-100 text-red-700 text-xs dark:bg-red-900/30 dark:text-red-400" variant="secondary">
-							required
+						<Badge className="bg-destructive/10 text-destructive text-xs" variant="secondary">
+							{t("schema.required")}
 						</Badge>
 					)}
 				</CollapsibleTrigger>
@@ -326,8 +334,8 @@ export const SchemaDisplayProperty = ({
 					{type}
 				</Badge>
 				{required && (
-					<Badge className="bg-red-100 text-red-700 text-xs dark:bg-red-900/30 dark:text-red-400" variant="secondary">
-						required
+					<Badge className="bg-destructive/10 text-destructive text-xs" variant="secondary">
+						{t("schema.required")}
 					</Badge>
 				)}
 			</div>

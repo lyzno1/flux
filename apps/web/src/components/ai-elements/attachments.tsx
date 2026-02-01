@@ -2,6 +2,7 @@ import type { FileUIPart, SourceDocumentUIPart } from "ai";
 import { FileTextIcon, GlobeIcon, ImageIcon, Music2Icon, PaperclipIcon, VideoIcon, XIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes, ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
@@ -43,13 +44,19 @@ export const getMediaCategory = (data: AttachmentData): AttachmentMediaCategory 
 	return "unknown";
 };
 
-export const getAttachmentLabel = (data: AttachmentData): string => {
+export const getAttachmentLabel = (
+	data: AttachmentData,
+	t?: (key: "attachments.source" | "attachments.image" | "attachments.attachment") => string,
+): string => {
 	if (data.type === "source-document") {
-		return data.title || data.filename || "Source";
+		return data.title || data.filename || t?.("attachments.source") || "Source";
 	}
 
 	const category = getMediaCategory(data);
-	return data.filename || (category === "image" ? "Image" : "Attachment");
+	return (
+		data.filename ||
+		(category === "image" ? t?.("attachments.image") || "Image" : t?.("attachments.attachment") || "Attachment")
+	);
 };
 
 // ============================================================================
@@ -140,7 +147,7 @@ export const Attachment = ({ data, onRemove, className, children, ...props }: At
 					variant === "inline" && [
 						"flex h-8 cursor-pointer select-none items-center gap-1.5",
 						"rounded-md border border-border px-1.5",
-						"font-medium text-sm transition-all",
+						"font-medium text-sm transition-colors motion-reduce:transition-none",
 						"hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
 					],
 					variant === "list" && ["flex w-full items-center gap-3 rounded-lg border p-3", "hover:bg-accent/50"],
@@ -224,7 +231,8 @@ export type AttachmentInfoProps = HTMLAttributes<HTMLDivElement> & {
 
 export const AttachmentInfo = ({ showMediaType = false, className, ...props }: AttachmentInfoProps) => {
 	const { data, variant } = useAttachmentContext();
-	const label = getAttachmentLabel(data);
+	const { t } = useTranslation("ai");
+	const label = getAttachmentLabel(data, t);
 
 	if (variant === "grid") {
 		return null;
@@ -248,7 +256,9 @@ export type AttachmentRemoveProps = ComponentProps<typeof Button> & {
 	label?: string;
 };
 
-export const AttachmentRemove = ({ label = "Remove", className, children, ...props }: AttachmentRemoveProps) => {
+export const AttachmentRemove = ({ label: labelProp, className, children, ...props }: AttachmentRemoveProps) => {
+	const { t } = useTranslation("ai");
+	const label = labelProp ?? t("attachments.remove");
 	const { onRemove, variant } = useAttachmentContext();
 
 	if (!onRemove) {
@@ -316,8 +326,11 @@ export const AttachmentHoverCardContent = ({
 
 export type AttachmentEmptyProps = HTMLAttributes<HTMLDivElement>;
 
-export const AttachmentEmpty = ({ className, children, ...props }: AttachmentEmptyProps) => (
-	<div className={cn("flex items-center justify-center p-4 text-muted-foreground text-sm", className)} {...props}>
-		{children ?? "No attachments"}
-	</div>
-);
+export const AttachmentEmpty = ({ className, children, ...props }: AttachmentEmptyProps) => {
+	const { t } = useTranslation("ai");
+	return (
+		<div className={cn("flex items-center justify-center p-4 text-muted-foreground text-sm", className)} {...props}>
+			{children ?? t("attachments.noAttachments")}
+		</div>
+	);
+};

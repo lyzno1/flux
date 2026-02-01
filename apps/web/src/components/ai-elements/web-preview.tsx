@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
@@ -101,6 +102,7 @@ export type WebPreviewUrlProps = ComponentProps<typeof Input>;
 export const WebPreviewUrl = ({ value, onChange, onKeyDown, ...props }: WebPreviewUrlProps) => {
 	const { url, setUrl } = useWebPreview();
 	const [inputValue, setInputValue] = useState(url);
+	const { t } = useTranslation("ai");
 
 	// Sync input value with context URL when it changes externally
 	useEffect(() => {
@@ -122,10 +124,15 @@ export const WebPreviewUrl = ({ value, onChange, onKeyDown, ...props }: WebPrevi
 
 	return (
 		<Input
+			aria-label="Preview URL"
+			autoComplete="off"
 			className="h-8 flex-1 text-sm"
+			inputMode="url"
 			onChange={onChange ?? handleChange}
 			onKeyDown={handleKeyDown}
-			placeholder="Enter URL…"
+			placeholder={t("webPreview.enterUrl")}
+			spellCheck={false}
+			type="url"
 			value={value ?? inputValue}
 			{...props}
 		/>
@@ -161,8 +168,11 @@ export type WebPreviewConsoleProps = ComponentProps<"div"> & {
 	}>;
 };
 
-export const WebPreviewConsole = ({ className, logs = [], children, ...props }: WebPreviewConsoleProps) => {
+const EMPTY_LOGS: WebPreviewConsoleProps["logs"] = [];
+
+export const WebPreviewConsole = ({ className, logs = EMPTY_LOGS, children, ...props }: WebPreviewConsoleProps) => {
 	const { consoleOpen, setConsoleOpen } = useWebPreview();
+	const { t } = useTranslation("ai");
 
 	return (
 		<Collapsible
@@ -179,8 +189,11 @@ export const WebPreviewConsole = ({ className, logs = [], children, ...props }: 
 					/>
 				}
 			>
-				Console
-				<ChevronDownIcon className={cn("h-4 w-4 transition-transform duration-200", consoleOpen && "rotate-180")} />
+				{t("webPreview.console")}
+				<ChevronDownIcon
+					aria-hidden="true"
+					className={cn("h-4 w-4 transition-transform duration-200", consoleOpen && "rotate-180")}
+				/>
 			</CollapsibleTrigger>
 			<CollapsibleContent
 				className={cn(
@@ -190,14 +203,14 @@ export const WebPreviewConsole = ({ className, logs = [], children, ...props }: 
 			>
 				<div className="max-h-48 space-y-1 overflow-y-auto">
 					{logs.length === 0 ? (
-						<p className="text-muted-foreground">No console output</p>
+						<p className="text-muted-foreground">{t("webPreview.noConsoleOutput")}</p>
 					) : (
 						logs.map((log, index) => (
 							<div
 								className={cn(
 									"text-xs",
 									log.level === "error" && "text-destructive",
-									log.level === "warn" && "text-yellow-600",
+									log.level === "warn" && "text-warning",
 									log.level === "log" && "text-foreground",
 								)}
 								key={`${log.timestamp.getTime()}-${index}`}

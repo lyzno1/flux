@@ -1,5 +1,6 @@
 import { CheckIcon, CopyIcon, EyeIcon, EyeOffIcon } from "lucide-react";
 import { type ComponentProps, createContext, type HTMLAttributes, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -56,11 +57,14 @@ export const EnvironmentVariablesHeader = ({ className, children, ...props }: En
 
 export type EnvironmentVariablesTitleProps = HTMLAttributes<HTMLHeadingElement>;
 
-export const EnvironmentVariablesTitle = ({ className, children, ...props }: EnvironmentVariablesTitleProps) => (
-	<h3 className={cn("font-medium text-sm", className)} {...props}>
-		{children ?? "Environment Variables"}
-	</h3>
-);
+export const EnvironmentVariablesTitle = ({ className, children, ...props }: EnvironmentVariablesTitleProps) => {
+	const { t } = useTranslation("ai");
+	return (
+		<h3 className={cn("font-medium text-sm", className)} {...props}>
+			{children ?? t("envVars.title")}
+		</h3>
+	);
+};
 
 export type EnvironmentVariablesToggleProps = ComponentProps<typeof Switch>;
 
@@ -210,8 +214,11 @@ export const EnvironmentVariableCopyButton = ({
 
 export type EnvironmentVariableRequiredProps = ComponentProps<typeof Badge>;
 
-export const EnvironmentVariableRequired = ({ className, children, ...props }: EnvironmentVariableRequiredProps) => (
-	<Badge className={cn("text-xs", className)} variant="secondary" {...props}>
-		{children ?? "Required"}
-	</Badge>
-);
+export const EnvironmentVariableRequired = ({ className, children, ...props }: EnvironmentVariableRequiredProps) => {
+	const { t } = useTranslation("ai");
+	return (
+		<Badge className={cn("text-xs", className)} variant="secondary" {...props}>
+			{children ?? t("envVars.required")}
+		</Badge>
+	);
+};

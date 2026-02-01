@@ -19,14 +19,14 @@ export const CommitHeader = ({ className, children, ...props }: CommitHeaderProp
 	<CollapsibleTrigger
 		{...props}
 		render={
-			<div
+			<button
 				className={cn(
 					"group flex cursor-pointer items-center justify-between gap-4 p-3 text-left transition-colors hover:opacity-80",
 					className,
 				)}
+				type="button"
 			/>
 		}
-		nativeButton={false}
 	>
 		{children}
 	</CollapsibleTrigger>
@@ -218,10 +218,10 @@ export const CommitFileInfo = ({ className, children, ...props }: CommitFileInfo
 );
 
 const fileStatusStyles = {
-	added: "text-green-600 dark:text-green-400",
-	modified: "text-yellow-600 dark:text-yellow-400",
-	deleted: "text-red-600 dark:text-red-400",
-	renamed: "text-blue-600 dark:text-blue-400",
+	added: "text-success-foreground",
+	modified: "text-warning-foreground",
+	deleted: "text-destructive",
+	renamed: "text-info-foreground",
 };
 
 const fileStatusLabels = {
@@ -250,7 +250,7 @@ export const CommitFileIcon = ({ className, ...props }: CommitFileIconProps) => 
 export type CommitFilePathProps = HTMLAttributes<HTMLSpanElement>;
 
 export const CommitFilePath = ({ className, children, ...props }: CommitFilePathProps) => (
-	<span className={cn("truncate font-mono text-xs", className)} {...props}>
+	<span className={cn("min-w-0 flex-1 truncate font-mono text-xs", className)} {...props}>
 		{children}
 	</span>
 );
@@ -273,7 +273,7 @@ export const CommitFileAdditions = ({ count, className, children, ...props }: Co
 	}
 
 	return (
-		<span className={cn("text-green-600 dark:text-green-400", className)} {...props}>
+		<span className={cn("text-success-foreground", className)} {...props}>
 			{children ?? (
 				<>
 					<PlusIcon className="inline-block size-3" />
@@ -294,7 +294,7 @@ export const CommitFileDeletions = ({ count, className, children, ...props }: Co
 	}
 
 	return (
-		<span className={cn("text-red-600 dark:text-red-400", className)} {...props}>
+		<span className={cn("text-destructive", className)} {...props}>
 			{children ?? (
 				<>
 					<MinusIcon className="inline-block size-3" />

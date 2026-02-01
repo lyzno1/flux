@@ -99,9 +99,9 @@ export const FileTreeFolder = ({ path, name, className, children, ...props }: Fi
 						/>
 						<FileTreeIcon>
 							{isExpanded ? (
-								<FolderOpenIcon className="size-4 text-blue-500" />
+								<FolderOpenIcon className="size-4 text-info" />
 							) : (
-								<FolderIcon className="size-4 text-blue-500" />
+								<FolderIcon className="size-4 text-info" />
 							)}
 						</FileTreeIcon>
 						<FileTreeName>{name}</FileTreeName>
@@ -176,7 +176,7 @@ export const FileTreeIcon = ({ className, children, ...props }: FileTreeIconProp
 export type FileTreeNameProps = HTMLAttributes<HTMLSpanElement>;
 
 export const FileTreeName = ({ className, children, ...props }: FileTreeNameProps) => (
-	<span className={cn("truncate", className)} {...props}>
+	<span className={cn("min-w-0 flex-1 truncate", className)} {...props}>
 		{children}
 	</span>
 );

@@ -263,13 +263,12 @@ export const CodeBlockContainer = ({
 	...props
 }: HTMLAttributes<HTMLDivElement> & { language: string }) => (
 	<div
-		className={cn("group relative w-full overflow-hidden rounded-md border bg-background text-foreground", className)}
+		className={cn(
+			"group relative w-full overflow-hidden rounded-md border bg-background text-foreground [contain-intrinsic-size:auto_200px] [content-visibility:auto]",
+			className,
+		)}
 		data-language={language}
-		style={{
-			contentVisibility: "auto",
-			containIntrinsicSize: "auto 200px",
-			...style,
-		}}
+		style={style}
 		{...props}
 	/>
 );

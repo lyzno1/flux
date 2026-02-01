@@ -85,20 +85,36 @@ export const QueueItemActions = ({ className, ...props }: QueueItemActionsProps)
 	<div className={cn("flex gap-1", className)} {...props} />
 );
 
-export type QueueItemActionProps = Omit<ComponentProps<typeof Button>, "variant" | "size">;
+export type QueueItemActionProps = Omit<ComponentProps<typeof Button>, "variant" | "size"> & {
+	"aria-label"?: string;
+};
 
-export const QueueItemAction = ({ className, ...props }: QueueItemActionProps) => (
-	<Button
-		className={cn(
-			"size-auto rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-muted-foreground/10 hover:text-foreground group-hover:opacity-100",
-			className,
-		)}
-		size="icon"
-		type="button"
-		variant="ghost"
-		{...props}
-	/>
-);
+export const QueueItemAction = ({
+	className,
+	children,
+	["aria-label"]: ariaLabel,
+	title,
+	...props
+}: QueueItemActionProps) => {
+	const resolvedLabel = ariaLabel ?? title ?? (typeof children === "string" ? children : "Queue action");
+
+	return (
+		<Button
+			aria-label={resolvedLabel}
+			className={cn(
+				"size-auto rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-muted-foreground/10 hover:text-foreground group-hover:opacity-100 motion-reduce:transition-none",
+				className,
+			)}
+			size="icon"
+			title={title ?? resolvedLabel}
+			type="button"
+			variant="ghost"
+			{...props}
+		>
+			{children}
+		</Button>
+	);
+};
 
 export type QueueItemAttachmentProps = ComponentProps<"div">;
 

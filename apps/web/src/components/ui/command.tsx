@@ -20,7 +20,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
 
 function CommandDialog({
 	title = "Command Palette",
-	description = "Search for a command to run...",
+	description = "Search for a command to run…",
 	children,
 	className,
 	showCloseButton = false,
@@ -48,13 +48,23 @@ function CommandDialog({
 	);
 }
 
-function CommandInput({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Input>) {
+function CommandInput({
+	className,
+	["aria-label"]: ariaLabel,
+	...props
+}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+	const resolvedAriaLabel = ariaLabel ?? "Search";
+
 	return (
 		<div data-slot="command-input-wrapper" className="border-b pb-0">
 			<InputGroup className="h-8 border-input/30 border-none bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!">
 				<CommandPrimitive.Input
-					data-slot="command-input"
+					aria-label={resolvedAriaLabel}
+					autoComplete="off"
+					data-command-input
+					data-slot="input-group-control"
 					className={cn("w-full text-xs outline-hidden disabled:cursor-not-allowed disabled:opacity-50", className)}
+					spellCheck={false}
 					{...props}
 				/>
 				<InputGroupAddon>

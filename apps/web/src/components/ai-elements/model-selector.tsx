@@ -1,4 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Command,
 	CommandDialog,
@@ -28,14 +29,18 @@ export type ModelSelectorContentProps = ComponentProps<typeof DialogContent> & {
 export const ModelSelectorContent = ({
 	className,
 	children,
-	title = "Model Selector",
+	title: titleProp,
 	...props
-}: ModelSelectorContentProps) => (
-	<DialogContent className={cn("outline! border-none! p-0 outline-border! outline-solid!", className)} {...props}>
-		<DialogTitle className="sr-only">{title}</DialogTitle>
-		<Command className="**:data-[slot=command-input-wrapper]:h-auto">{children}</Command>
-	</DialogContent>
-);
+}: ModelSelectorContentProps) => {
+	const { t } = useTranslation("ai");
+	const title = titleProp ?? t("modelSelector.title");
+	return (
+		<DialogContent className={cn("outline! border-none! p-0 outline-border! outline-solid!", className)} {...props}>
+			<DialogTitle className="sr-only">{title}</DialogTitle>
+			<Command className="**:data-[slot=command-input-wrapper]:h-auto">{children}</Command>
+		</DialogContent>
+	);
+};
 
 export type ModelSelectorDialogProps = ComponentProps<typeof CommandDialog>;
 
@@ -158,5 +163,5 @@ export const ModelSelectorLogoGroup = ({ className, ...props }: ModelSelectorLog
 export type ModelSelectorNameProps = ComponentProps<"span">;
 
 export const ModelSelectorName = ({ className, ...props }: ModelSelectorNameProps) => (
-	<span className={cn("flex-1 truncate text-left", className)} {...props} />
+	<span className={cn("min-w-0 flex-1 truncate text-left", className)} {...props} />
 );

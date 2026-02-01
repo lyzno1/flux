@@ -53,6 +53,12 @@ declare global {
 	}
 }
 
+const PULSE_ANIMATION_CLASSES = [
+	"[animation-delay:0s] [animation-duration:2s]",
+	"[animation-delay:0.3s] [animation-duration:2s]",
+	"[animation-delay:0.6s] [animation-duration:2s]",
+] as const;
+
 type SpeechInputMode = "speech-recognition" | "media-recorder" | "none";
 
 export type SpeechInputProps = ComponentProps<typeof Button> & {
@@ -248,17 +254,17 @@ export const SpeechInput = ({
 
 	return (
 		<div className="relative inline-flex items-center justify-center">
-			{isListening &&
-				[0, 1, 2].map((index) => (
-					<div
-						className="absolute inset-0 animate-ping rounded-full border-2 border-red-400/30 motion-reduce:animate-none"
-						key={index}
-						style={{
-							animationDelay: `${index * 0.3}s`,
-							animationDuration: "2s",
-						}}
-					/>
-				))}
+			{isListening
+				? [0, 1, 2].map((index) => (
+						<div
+							className={cn(
+								"absolute inset-0 animate-ping rounded-full border-2 border-destructive/30 motion-reduce:animate-none",
+								PULSE_ANIMATION_CLASSES[index],
+							)}
+							key={index}
+						/>
+					))
+				: null}
 
 			{/* Main record button */}
 			<Button
@@ -266,7 +272,7 @@ export const SpeechInput = ({
 				className={cn(
 					"relative z-10 rounded-full transition-colors",
 					isListening
-						? "bg-destructive text-white hover:bg-destructive/80 hover:text-white"
+						? "bg-destructive text-destructive-foreground hover:bg-destructive/80"
 						: "bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground",
 					className,
 				)}
@@ -274,7 +280,7 @@ export const SpeechInput = ({
 				onClick={toggleListening}
 				{...props}
 			>
-				{isProcessing && <LoaderIcon className="size-4 animate-spin" />}
+				{isProcessing && <LoaderIcon className="size-4 animate-spin motion-reduce:animate-none" />}
 				{!isProcessing && isListening && <SquareIcon className="size-4" />}
 				{!(isProcessing || isListening) && <MicIcon className="size-4" />}
 			</Button>

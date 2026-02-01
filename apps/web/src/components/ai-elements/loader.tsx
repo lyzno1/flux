@@ -8,7 +8,7 @@ interface LoaderIconProps {
 const LoaderIcon = ({ size = 16 }: LoaderIconProps) => {
 	const clipId = useId();
 	return (
-		<svg height={size} strokeLinejoin="round" style={{ color: "currentcolor" }} viewBox="0 0 16 16" width={size}>
+		<svg className="text-current" height={size} strokeLinejoin="round" viewBox="0 0 16 16" width={size}>
 			<title>Loader</title>
 			<g clipPath={`url(#${clipId})`}>
 				<path d="M8 0V4" stroke="currentColor" strokeWidth="1.5" />

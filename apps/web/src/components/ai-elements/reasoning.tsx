@@ -5,6 +5,7 @@ import { mermaid } from "@streamdown/mermaid";
 import { BrainIcon, ChevronDownIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Streamdown } from "streamdown";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useControllableState } from "@/hooks/use-controllable-state";
@@ -107,23 +108,29 @@ export const Reasoning = memo(
 	},
 );
 
+type TranslateFunction = (
+	key: "reasoning.thinking" | "reasoning.thoughtFewSeconds" | "reasoning.thoughtForSeconds",
+	options?: Record<string, unknown>,
+) => string;
+
 export type ReasoningTriggerProps = ComponentProps<typeof CollapsibleTrigger> & {
-	getThinkingMessage?: (isStreaming: boolean, duration?: number) => ReactNode;
+	getThinkingMessage?: (isStreaming: boolean, duration: number | undefined, t: TranslateFunction) => ReactNode;
 };
 
-const defaultGetThinkingMessage = (isStreaming: boolean, duration?: number) => {
+const defaultGetThinkingMessage = (isStreaming: boolean, duration: number | undefined, t: TranslateFunction) => {
 	if (isStreaming || duration === 0) {
-		return <Shimmer duration={1}>Thinking...</Shimmer>;
+		return <Shimmer duration={1}>{t("reasoning.thinking")}</Shimmer>;
 	}
 	if (duration === undefined) {
-		return <p>Thought for a few seconds</p>;
+		return <p>{t("reasoning.thoughtFewSeconds")}</p>;
 	}
-	return <p>Thought for {duration} seconds</p>;
+	return <p>{t("reasoning.thoughtForSeconds", { duration })}</p>;
 };
 
 export const ReasoningTrigger = memo(
 	({ className, children, getThinkingMessage = defaultGetThinkingMessage, ...props }: ReasoningTriggerProps) => {
 		const { isStreaming, isOpen, duration } = useReasoning();
+		const { t } = useTranslation("ai");
 
 		return (
 			<CollapsibleTrigger
@@ -136,7 +143,7 @@ export const ReasoningTrigger = memo(
 				{children ?? (
 					<>
 						<BrainIcon className="size-4" />
-						{getThinkingMessage(isStreaming, duration)}
+						{getThinkingMessage(isStreaming, duration, t)}
 						<ChevronDownIcon className={cn("size-4 transition-transform", isOpen ? "rotate-180" : "rotate-0")} />
 					</>
 				)}
