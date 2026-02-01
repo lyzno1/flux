@@ -3,8 +3,7 @@
 		"@flux/env": "workspace:*",
 		"dotenv": "catalog:prod",
 		"drizzle-orm": "catalog:prod",
-		"pg": "catalog:prod",
-		"zod": "catalog:prod"
+		"pg": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",

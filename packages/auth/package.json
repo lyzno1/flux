@@ -3,8 +3,7 @@
 		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
 		"better-auth": "catalog:prod",
-		"dotenv": "catalog:prod",
-		"zod": "catalog:prod"
+		"dotenv": "catalog:prod"
 	},
 	"devDependencies": {
 		"@flux/config": "workspace:*",
