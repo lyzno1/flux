@@ -29,6 +29,7 @@ export const auth = betterAuth({
 		},
 	},
 	advanced: {
+		cookiePrefix: "flux",
 		defaultCookieAttributes: {
 			sameSite: "none",
 			secure: true,
