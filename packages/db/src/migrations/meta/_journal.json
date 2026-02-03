@@ -7,6 +7,13 @@
 			"tag": "20260131161950_init",
 			"version": "7",
 			"when": 1769876390504
+		},
+		{
+			"breakpoints": true,
+			"idx": 1,
+			"tag": "20260203053744_add_username_fields",
+			"version": "7",
+			"when": 1770097064280
 		}
 	],
 	"version": "7"

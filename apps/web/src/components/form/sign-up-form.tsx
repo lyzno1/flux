@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -8,16 +7,24 @@ import { PageLoading } from "../page-loading";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
-export function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToSignIn: () => void; redirect: string }) {
-	const navigate = useNavigate();
+export function SignUpForm({
+	onSwitchToSignIn,
+	onVerifyEmail,
+	redirect,
+}: {
+	onSwitchToSignIn: () => void;
+	onVerifyEmail: (email: string) => void;
+	redirect: string;
+}) {
 	const { t } = useTranslation("auth");
 	const { isPending } = authClient.useSession();
 
 	const form = useAppForm({
 		defaultValues: {
+			name: "",
+			username: "",
 			email: "",
 			password: "",
-			name: "",
 		},
 		onSubmit: async ({ value }) => {
 			await authClient.signUp.email(
@@ -25,11 +32,12 @@ export function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToSignIn: (
 					email: value.email,
 					password: value.password,
 					name: value.name,
+					username: value.username,
 				},
 				{
 					onSuccess: () => {
-						navigate({ to: redirect });
 						toast.success(t("signUp.success"));
+						onVerifyEmail(value.email);
 					},
 					onError: (error) => {
 						toast.error(error.error.message || error.error.statusText);
@@ -60,6 +68,10 @@ export function SignUpForm({ onSwitchToSignIn, redirect }: { onSwitchToSignIn: (
 			>
 				<form.AppField name="name">
 					{(field) => <field.TextField label={t("signUp.name")} autoComplete="name" />}
+				</form.AppField>
+
+				<form.AppField name="username">
+					{(field) => <field.TextField label={t("signUp.username")} autoComplete="username" />}
 				</form.AppField>
 
 				<form.AppField name="email">

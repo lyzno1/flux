@@ -2,9 +2,15 @@ import { createFileRoute, isRedirect, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import * as z from "zod";
 
+import { ForgotPasswordForm } from "@/components/form/forgot-password-form";
+import { OtpLoginForm } from "@/components/form/otp-login-form";
+import { ResetPasswordForm } from "@/components/form/reset-password-form";
 import { SignInForm } from "@/components/form/sign-in-form";
 import { SignUpForm } from "@/components/form/sign-up-form";
+import { VerifyEmailForm } from "@/components/form/verify-email-form";
 import { authClient } from "@/lib/auth-client";
+
+type AuthView = "sign-in" | "sign-up" | "otp-login" | "verify-email" | "forgot-password" | "reset-password";
 
 const loginSearchSchema = z.object({
 	redirect: z
@@ -31,11 +37,45 @@ export const Route = createFileRoute("/login")({
 
 function RouteComponent() {
 	const { redirect } = Route.useSearch();
-	const [showSignIn, setShowSignIn] = useState(false);
+	const [view, setView] = useState<AuthView>("sign-in");
+	const [email, setEmail] = useState("");
 
-	return showSignIn ? (
-		<SignInForm onSwitchToSignUp={() => setShowSignIn(false)} redirect={redirect} />
-	) : (
-		<SignUpForm onSwitchToSignIn={() => setShowSignIn(true)} redirect={redirect} />
-	);
+	switch (view) {
+		case "sign-in":
+			return (
+				<SignInForm
+					onSwitchToSignUp={() => setView("sign-up")}
+					onOtpLogin={() => setView("otp-login")}
+					onForgotPassword={() => setView("forgot-password")}
+					redirect={redirect}
+				/>
+			);
+		case "sign-up":
+			return (
+				<SignUpForm
+					onSwitchToSignIn={() => setView("sign-in")}
+					onVerifyEmail={(e) => {
+						setEmail(e);
+						setView("verify-email");
+					}}
+					redirect={redirect}
+				/>
+			);
+		case "otp-login":
+			return <OtpLoginForm onBack={() => setView("sign-in")} redirect={redirect} />;
+		case "verify-email":
+			return <VerifyEmailForm email={email} redirect={redirect} />;
+		case "forgot-password":
+			return (
+				<ForgotPasswordForm
+					onBack={() => setView("sign-in")}
+					onOtpSent={(e) => {
+						setEmail(e);
+						setView("reset-password");
+					}}
+				/>
+			);
+		case "reset-password":
+			return <ResetPasswordForm email={email} onBack={() => setView("sign-in")} />;
+	}
 }

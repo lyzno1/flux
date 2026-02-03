@@ -29,6 +29,7 @@
 		"i18next": "catalog:frontend",
 		"i18next-browser-languagedetector": "catalog:frontend",
 		"i18next-resources-to-backend": "catalog:frontend",
+		"input-otp": "catalog:frontend",
 		"lucide-react": "catalog:frontend",
 		"media-chrome": "catalog:frontend",
 		"motion": "catalog:frontend",
