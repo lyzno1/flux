@@ -3,7 +3,6 @@ import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
-import { PageLoading } from "../page-loading";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
@@ -17,7 +16,6 @@ export function SignUpForm({
 	redirect: string;
 }) {
 	const { t } = useTranslation("auth");
-	const { isPending } = authClient.useSession();
 
 	const form = useAppForm({
 		defaultValues: {
@@ -46,10 +44,6 @@ export function SignUpForm({
 			);
 		},
 	});
-
-	if (isPending) {
-		return <PageLoading />;
-	}
 
 	return (
 		<div className="mx-auto mt-10 w-full max-w-md p-6">

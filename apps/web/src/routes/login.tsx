@@ -8,6 +8,7 @@ import { ResetPasswordForm } from "@/components/form/reset-password-form";
 import { SignInForm } from "@/components/form/sign-in-form";
 import { SignUpForm } from "@/components/form/sign-up-form";
 import { VerifyEmailForm } from "@/components/form/verify-email-form";
+import { PageLoading } from "@/components/page-loading";
 import { authClient } from "@/lib/auth-client";
 
 type AuthView = "sign-in" | "sign-up" | "otp-login" | "verify-email" | "forgot-password" | "reset-password";
@@ -37,8 +38,13 @@ export const Route = createFileRoute("/login")({
 
 function RouteComponent() {
 	const { redirect } = Route.useSearch();
+	const { isPending } = authClient.useSession();
 	const [view, setView] = useState<AuthView>("sign-in");
 	const [email, setEmail] = useState("");
+
+	if (isPending) {
+		return <PageLoading />;
+	}
 
 	switch (view) {
 		case "sign-in":

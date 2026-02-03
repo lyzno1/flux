@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
-import { PageLoading } from "../page-loading";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
@@ -21,7 +20,6 @@ export function SignInForm({
 }) {
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
-	const { isPending } = authClient.useSession();
 
 	const form = useAppForm({
 		defaultValues: {
@@ -48,10 +46,6 @@ export function SignInForm({
 			toast.success(t("signIn.success"));
 		},
 	});
-
-	if (isPending) {
-		return <PageLoading />;
-	}
 
 	return (
 		<div className="mx-auto mt-10 w-full max-w-md p-6">
