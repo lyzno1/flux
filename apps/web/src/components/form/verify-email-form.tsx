@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
+import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -42,10 +43,15 @@ export function VerifyEmailForm({ email }: { email: string }) {
 	}
 
 	return (
-		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-pretty text-center font-bold text-3xl">{t("verifyEmail.title")}</h1>
-			<p className="mb-6 text-center text-muted-foreground text-sm">{t("verifyEmail.description")}</p>
-
+		<AuthFormLayout
+			title={t("verifyEmail.title")}
+			description={t("verifyEmail.description")}
+			footer={
+				<Button variant="link" onClick={handleResend} className="text-indigo-600 hover:text-indigo-800">
+					{t("verifyEmail.resend")}
+				</Button>
+			}
+		>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -60,12 +66,6 @@ export function VerifyEmailForm({ email }: { email: string }) {
 					<form.SubmitButton label={t("verifyEmail.submit")} submittingLabel={t("verifyEmail.submitting")} />
 				</form.AppForm>
 			</form>
-
-			<div className="mt-4 text-center">
-				<Button variant="link" onClick={handleResend} className="text-indigo-600 hover:text-indigo-800">
-					{t("verifyEmail.resend")}
-				</Button>
-			</div>
-		</div>
+		</AuthFormLayout>
 	);
 }

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
 export function ForgotPasswordForm() {
@@ -26,9 +27,14 @@ export function ForgotPasswordForm() {
 	});
 
 	return (
-		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-pretty text-center font-bold text-3xl">{t("forgotPassword.title")}</h1>
-
+		<AuthFormLayout
+			title={t("forgotPassword.title")}
+			footer={
+				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
+					{t("forgotPassword.back")}
+				</Link>
+			}
+		>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -45,12 +51,6 @@ export function ForgotPasswordForm() {
 					<form.SubmitButton label={t("forgotPassword.submit")} submittingLabel={t("forgotPassword.submitting")} />
 				</form.AppForm>
 			</form>
-
-			<div className="mt-4 text-center">
-				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
-					{t("forgotPassword.back")}
-				</Link>
-			</div>
-		</div>
+		</AuthFormLayout>
 	);
 }

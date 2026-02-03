@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
+import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -40,9 +41,19 @@ export function SignInForm() {
 	});
 
 	return (
-		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-pretty text-center font-bold text-3xl">{t("signIn.title")}</h1>
-
+		<AuthFormLayout
+			title={t("signIn.title")}
+			footer={
+				<div className="flex flex-col items-center gap-1">
+					<Link to="/otp" className="text-indigo-600 text-sm hover:text-indigo-800">
+						{t("signIn.otpLogin")}
+					</Link>
+					<Link to="/sign-up" className="text-indigo-600 text-sm hover:text-indigo-800">
+						{t("signIn.switchToSignUp")}
+					</Link>
+				</div>
+			}
+		>
 			<GoogleOAuthButton redirect={redirect} />
 			<OAuthDivider />
 
@@ -72,15 +83,6 @@ export function SignInForm() {
 					<form.SubmitButton label={t("signIn.submit")} submittingLabel={t("signIn.submitting")} />
 				</form.AppForm>
 			</form>
-
-			<div className="mt-4 flex flex-col items-center gap-1">
-				<Link to="/otp" className="text-indigo-600 text-sm hover:text-indigo-800">
-					{t("signIn.otpLogin")}
-				</Link>
-				<Link to="/sign-up" className="text-indigo-600 text-sm hover:text-indigo-800">
-					{t("signIn.switchToSignUp")}
-				</Link>
-			</div>
-		</div>
+		</AuthFormLayout>
 	);
 }

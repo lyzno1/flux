@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
+import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -42,9 +43,14 @@ export function SignUpForm() {
 	});
 
 	return (
-		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-pretty text-center font-bold text-3xl">{t("signUp.title")}</h1>
-
+		<AuthFormLayout
+			title={t("signUp.title")}
+			footer={
+				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
+					{t("signUp.switchToSignIn")}
+				</Link>
+			}
+		>
 			<GoogleOAuthButton redirect={redirect} />
 			<OAuthDivider />
 
@@ -76,12 +82,6 @@ export function SignUpForm() {
 					<form.SubmitButton label={t("signUp.submit")} submittingLabel={t("signUp.submitting")} />
 				</form.AppForm>
 			</form>
-
-			<div className="mt-4 text-center">
-				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
-					{t("signUp.switchToSignIn")}
-				</Link>
-			</div>
-		</div>
+		</AuthFormLayout>
 	);
 }
