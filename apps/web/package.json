@@ -58,6 +58,7 @@
 		"@tanstack/router-plugin": "catalog:dev",
 		"@testing-library/jest-dom": "catalog:dev",
 		"@testing-library/react": "catalog:dev",
+		"@testing-library/user-event": "catalog:dev",
 		"@types/node": "catalog:dev",
 		"@types/react": "catalog:dev",
 		"@types/react-dom": "catalog:dev",
