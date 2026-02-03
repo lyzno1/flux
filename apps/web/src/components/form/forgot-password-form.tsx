@@ -1,9 +1,8 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
-import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
 export function ForgotPasswordForm() {
@@ -48,13 +47,9 @@ export function ForgotPasswordForm() {
 			</form>
 
 			<div className="mt-4 text-center">
-				<Button
-					variant="link"
-					onClick={() => navigate({ to: "/login" })}
-					className="text-indigo-600 hover:text-indigo-800"
-				>
+				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("forgotPassword.back")}
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);

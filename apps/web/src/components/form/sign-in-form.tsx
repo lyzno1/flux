@@ -1,10 +1,9 @@
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
-import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -64,14 +63,9 @@ export function SignInForm() {
 				</form.AppField>
 
 				<div className="flex justify-end">
-					<Button
-						type="button"
-						variant="link"
-						onClick={() => navigate({ to: "/forgot-password" })}
-						className="h-auto p-0 text-sm"
-					>
+					<Link to="/forgot-password" className="text-sm hover:underline">
 						{t("signIn.forgotPassword")}
-					</Button>
+					</Link>
 				</div>
 
 				<form.AppForm>
@@ -80,20 +74,12 @@ export function SignInForm() {
 			</form>
 
 			<div className="mt-4 flex flex-col items-center gap-1">
-				<Button
-					variant="link"
-					onClick={() => navigate({ to: "/otp" })}
-					className="text-indigo-600 hover:text-indigo-800"
-				>
+				<Link to="/otp" className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("signIn.otpLogin")}
-				</Button>
-				<Button
-					variant="link"
-					onClick={() => navigate({ to: "/sign-up" })}
-					className="text-indigo-600 hover:text-indigo-800"
-				>
+				</Link>
+				<Link to="/sign-up" className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("signIn.switchToSignUp")}
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);

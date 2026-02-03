@@ -1,10 +1,9 @@
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
-import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -79,13 +78,9 @@ export function SignUpForm() {
 			</form>
 
 			<div className="mt-4 text-center">
-				<Button
-					variant="link"
-					onClick={() => navigate({ to: "/login" })}
-					className="text-indigo-600 hover:text-indigo-800"
-				>
+				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("signUp.switchToSignIn")}
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);
