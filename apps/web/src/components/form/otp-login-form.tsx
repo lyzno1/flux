@@ -25,7 +25,7 @@ export function OtpLoginForm({ email }: { email?: string }) {
 				return;
 			}
 			toast.success(t("otpLogin.codeSent"));
-			navigate({ to: "/otp", search: { email: value.email }, replace: true });
+			navigate({ to: "/otp", search: (prev) => ({ ...prev, email: value.email }), replace: true });
 		},
 	});
 
@@ -49,7 +49,7 @@ export function OtpLoginForm({ email }: { email?: string }) {
 		<AuthFormLayout
 			title={t("otpLogin.title")}
 			footer={
-				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("otpLogin.back")}
 				</Link>
 			}

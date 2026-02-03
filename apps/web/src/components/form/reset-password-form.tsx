@@ -26,7 +26,7 @@ export function ResetPasswordForm({ email }: { email: string }) {
 				return;
 			}
 			toast.success(t("resetPassword.success"));
-			navigate({ to: "/login" });
+			navigate({ to: "/login", search: true });
 		},
 	});
 
@@ -34,7 +34,7 @@ export function ResetPasswordForm({ email }: { email: string }) {
 		<AuthFormLayout
 			title={t("resetPassword.title")}
 			footer={
-				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("resetPassword.back")}
 				</Link>
 			}

@@ -22,7 +22,7 @@ export function ForgotPasswordForm() {
 				return;
 			}
 			toast.success(t("forgotPassword.success"));
-			navigate({ to: "/reset-password", search: { email: value.email } });
+			navigate({ to: "/reset-password", search: (prev) => ({ ...prev, email: value.email }) });
 		},
 	});
 
@@ -30,7 +30,7 @@ export function ForgotPasswordForm() {
 		<AuthFormLayout
 			title={t("forgotPassword.title")}
 			footer={
-				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("forgotPassword.back")}
 				</Link>
 			}

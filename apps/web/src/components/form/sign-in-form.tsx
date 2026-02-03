@@ -45,10 +45,10 @@ export function SignInForm() {
 			title={t("signIn.title")}
 			footer={
 				<div className="flex flex-col items-center gap-1">
-					<Link to="/otp" className="text-indigo-600 text-sm hover:text-indigo-800">
+					<Link to="/otp" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
 						{t("signIn.otpLogin")}
 					</Link>
-					<Link to="/sign-up" className="text-indigo-600 text-sm hover:text-indigo-800">
+					<Link to="/sign-up" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
 						{t("signIn.switchToSignUp")}
 					</Link>
 				</div>
@@ -74,7 +74,7 @@ export function SignInForm() {
 				</form.AppField>
 
 				<div className="flex justify-end">
-					<Link to="/forgot-password" className="text-sm hover:underline">
+					<Link to="/forgot-password" search={true} className="text-sm hover:underline">
 						{t("signIn.forgotPassword")}
 					</Link>
 				</div>

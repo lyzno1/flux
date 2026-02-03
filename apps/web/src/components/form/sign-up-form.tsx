@@ -32,7 +32,7 @@ export function SignUpForm() {
 				{
 					onSuccess: () => {
 						toast.success(t("signUp.success"));
-						navigate({ to: "/verify-email", search: { email: value.email } });
+						navigate({ to: "/verify-email", search: (prev) => ({ ...prev, email: value.email }) });
 					},
 					onError: (error) => {
 						toast.error(error.error.message || error.error.statusText);
@@ -46,7 +46,7 @@ export function SignUpForm() {
 		<AuthFormLayout
 			title={t("signUp.title")}
 			footer={
-				<Link to="/login" className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
 					{t("signUp.switchToSignIn")}
 				</Link>
 			}
