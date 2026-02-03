@@ -1,5 +1,4 @@
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -9,12 +8,10 @@ import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
 
-export function OtpLoginForm() {
+export function OtpLoginForm({ email }: { email?: string }) {
 	const { redirect } = authRoute.useSearch();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
-	const [email, setEmail] = useState("");
-	const [codeSent, setCodeSent] = useState(false);
 
 	const emailForm = useAppForm({
 		defaultValues: { email: "" },
@@ -27,9 +24,8 @@ export function OtpLoginForm() {
 				toast.error(result.error.message || result.error.statusText);
 				return;
 			}
-			setEmail(value.email);
-			setCodeSent(true);
 			toast.success(t("otpLogin.codeSent"));
+			navigate({ to: "/otp", search: { email: value.email }, replace: true });
 		},
 	});
 
@@ -37,7 +33,7 @@ export function OtpLoginForm() {
 		defaultValues: { otp: "" },
 		onSubmit: async ({ value }) => {
 			const result = await authClient.signIn.emailOtp({
-				email,
+				email: email ?? "",
 				otp: value.otp,
 			});
 			if (result.error) {
@@ -53,7 +49,7 @@ export function OtpLoginForm() {
 		<div className="mx-auto mt-10 w-full max-w-md p-6">
 			<h1 className="mb-6 text-pretty text-center font-bold text-3xl">{t("otpLogin.title")}</h1>
 
-			{!codeSent ? (
+			{!email ? (
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
