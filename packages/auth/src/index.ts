@@ -3,7 +3,8 @@ import * as schema from "@flux/db/schema/auth.sql";
 import { env } from "@flux/env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { emailOTP, username } from "better-auth/plugins";
+import { emailOTP } from "better-auth/plugins/email-otp";
+import { username } from "better-auth/plugins/username";
 import { Resend } from "resend";
 
 const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
