@@ -1,3 +1,4 @@
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -6,15 +7,11 @@ import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
-export function SignUpForm({
-	onSwitchToSignIn,
-	onVerifyEmail,
-	redirect,
-}: {
-	onSwitchToSignIn: () => void;
-	onVerifyEmail: (email: string) => void;
-	redirect: string;
-}) {
+const authRoute = getRouteApi("/_auth");
+
+export function SignUpForm() {
+	const { redirect } = authRoute.useSearch();
+	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 
 	const form = useAppForm({
@@ -35,7 +32,7 @@ export function SignUpForm({
 				{
 					onSuccess: () => {
 						toast.success(t("signUp.success"));
-						onVerifyEmail(value.email);
+						navigate({ to: "/verify-email", search: { email: value.email } });
 					},
 					onError: (error) => {
 						toast.error(error.error.message || error.error.statusText);
@@ -82,7 +79,11 @@ export function SignUpForm({
 			</form>
 
 			<div className="mt-4 text-center">
-				<Button variant="link" onClick={onSwitchToSignIn} className="text-indigo-600 hover:text-indigo-800">
+				<Button
+					variant="link"
+					onClick={() => navigate({ to: "/login" })}
+					className="text-indigo-600 hover:text-indigo-800"
+				>
 					{t("signUp.switchToSignIn")}
 				</Button>
 			</div>

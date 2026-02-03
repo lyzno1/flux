@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -6,7 +6,10 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
-export function VerifyEmailForm({ email, redirect }: { email: string; redirect: string }) {
+const authRoute = getRouteApi("/_auth");
+
+export function VerifyEmailForm({ email }: { email: string }) {
+	const { redirect } = authRoute.useSearch();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 

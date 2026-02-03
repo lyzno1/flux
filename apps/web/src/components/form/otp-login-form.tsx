@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -7,7 +7,10 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
-export function OtpLoginForm({ onBack, redirect }: { onBack: () => void; redirect: string }) {
+const authRoute = getRouteApi("/_auth");
+
+export function OtpLoginForm() {
+	const { redirect } = authRoute.useSearch();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 	const [email, setEmail] = useState("");
@@ -85,7 +88,11 @@ export function OtpLoginForm({ onBack, redirect }: { onBack: () => void; redirec
 			)}
 
 			<div className="mt-4 text-center">
-				<Button variant="link" onClick={onBack} className="text-indigo-600 hover:text-indigo-800">
+				<Button
+					variant="link"
+					onClick={() => navigate({ to: "/login" })}
+					className="text-indigo-600 hover:text-indigo-800"
+				>
 					{t("otpLogin.back")}
 				</Button>
 			</div>

@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -5,7 +6,8 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
 import { useAppForm } from "./use-app-form";
 
-export function ResetPasswordForm({ email, onBack }: { email: string; onBack: () => void }) {
+export function ResetPasswordForm({ email }: { email: string }) {
+	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 
 	const form = useAppForm({
@@ -24,7 +26,7 @@ export function ResetPasswordForm({ email, onBack }: { email: string; onBack: ()
 				return;
 			}
 			toast.success(t("resetPassword.success"));
-			onBack();
+			navigate({ to: "/login" });
 		},
 	});
 
@@ -52,7 +54,11 @@ export function ResetPasswordForm({ email, onBack }: { email: string; onBack: ()
 			</form>
 
 			<div className="mt-4 text-center">
-				<Button variant="link" onClick={onBack} className="text-indigo-600 hover:text-indigo-800">
+				<Button
+					variant="link"
+					onClick={() => navigate({ to: "/login" })}
+					className="text-indigo-600 hover:text-indigo-800"
+				>
 					{t("resetPassword.back")}
 				</Button>
 			</div>
