@@ -15,7 +15,7 @@ const authSearchSchema = z.object({
 export const Route = createFileRoute("/_auth")({
 	validateSearch: authSearchSchema,
 	beforeLoad: async ({ context, search }) => {
-		const session = context.auth.data ?? (await authClient.getSession()).data;
+		const session = context.auth.data ?? (await authClient.getSession().catch(() => ({ data: null }))).data;
 		if (session) {
 			throw redirect({ to: search.redirect });
 		}

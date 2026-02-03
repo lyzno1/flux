@@ -62,9 +62,10 @@ export const auth = betterAuth({
 						subject: subjectMap[type],
 						html: `<p>Your verification code: <strong>${otp}</strong></p><p>Expires in 5 minutes.</p>`,
 					});
+				} else if (env.NODE_ENV === "development") {
+					console.warn(`[auth] Email provider not configured. OTP for ${email} (${type}): ${otp}`);
 				} else {
 					console.error("[auth] Cannot send OTP: RESEND_API_KEY or RESEND_FROM_EMAIL is not configured");
-					throw new Error("Unable to send verification email. Please contact support.");
 				}
 			},
 		}),
