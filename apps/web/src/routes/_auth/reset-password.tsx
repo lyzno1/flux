@@ -1,14 +1,10 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import * as z from "zod";
 
 import { ResetPasswordForm } from "@/components/form/reset-password-form";
-
-const searchSchema = z.object({
-	email: z.string().email().catch(""),
-});
+import { emailSearchSchema } from "@/lib/auth-search-schema";
 
 export const Route = createFileRoute("/_auth/reset-password")({
-	validateSearch: searchSchema,
+	validateSearch: emailSearchSchema,
 	beforeLoad: ({ search }) => {
 		if (!search.email) {
 			throw redirect({ to: "/forgot-password" });

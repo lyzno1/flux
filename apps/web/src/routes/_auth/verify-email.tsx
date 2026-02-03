@@ -1,14 +1,10 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import * as z from "zod";
 
 import { VerifyEmailForm } from "@/components/form/verify-email-form";
-
-const searchSchema = z.object({
-	email: z.string().email().catch(""),
-});
+import { emailSearchSchema } from "@/lib/auth-search-schema";
 
 export const Route = createFileRoute("/_auth/verify-email")({
-	validateSearch: searchSchema,
+	validateSearch: emailSearchSchema,
 	beforeLoad: ({ search }) => {
 		if (!search.email) {
 			throw redirect({ to: "/login" });
