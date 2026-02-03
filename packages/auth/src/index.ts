@@ -36,6 +36,11 @@ export const auth = betterAuth({
 	},
 	advanced: {
 		cookiePrefix: "flux",
+		backgroundTasks: {
+			handler: (promise) => {
+				promise.catch(console.error);
+			},
+		},
 		defaultCookieAttributes: {
 			sameSite: "none",
 			secure: true,
