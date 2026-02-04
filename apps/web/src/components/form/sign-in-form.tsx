@@ -34,12 +34,20 @@ export function SignInForm() {
 			if (result.error) {
 				const status = (result.error as { status?: number }).status;
 				const isForbidden = status === 403 || result.error.statusText === "Forbidden";
-				if (isForbidden && isEmail) {
-					toast.error(t("signIn.verifyEmailRequired"));
-					navigate({
-						to: "/verify-email",
-						search: (prev) => ({ ...prev, email: value.identifier }),
-					});
+				if (isForbidden) {
+					if (isEmail) {
+						void authClient.emailOtp.sendVerificationOtp({
+							email: value.identifier,
+							type: "email-verification",
+						});
+						toast.error(t("signIn.verifyEmailRequired"));
+						navigate({
+							to: "/verify-email",
+							search: (prev) => ({ ...prev, email: value.identifier }),
+						});
+					} else {
+						toast.error(t("signIn.verifyEmailRequiredUsername"));
+					}
 					return;
 				}
 				toast.error(result.error.message || result.error.statusText);

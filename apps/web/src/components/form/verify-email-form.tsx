@@ -1,4 +1,5 @@
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -9,10 +10,19 @@ import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
 
+const RESEND_COOLDOWN = 60;
+
 export function VerifyEmailForm({ email }: { email: string }) {
 	const { redirect } = authRoute.useSearch();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
+	const [cooldown, setCooldown] = useState(0);
+
+	useEffect(() => {
+		if (cooldown <= 0) return;
+		const timer = setTimeout(() => setCooldown((c) => c - 1), 1000);
+		return () => clearTimeout(timer);
+	}, [cooldown]);
 
 	const form = useAppForm({
 		defaultValues: { otp: "" },
@@ -39,16 +49,22 @@ export function VerifyEmailForm({ email }: { email: string }) {
 			toast.error(result.error.message || result.error.statusText);
 			return;
 		}
+		setCooldown(RESEND_COOLDOWN);
 		toast.success(t("verifyEmail.resent"));
 	}
 
 	return (
 		<AuthFormLayout
 			title={t("verifyEmail.title")}
-			description={t("verifyEmail.description")}
+			description={t("verifyEmail.description", { email })}
 			footer={
-				<Button variant="link" onClick={handleResend} className="text-indigo-600 hover:text-indigo-800">
-					{t("verifyEmail.resend")}
+				<Button
+					variant="link"
+					onClick={handleResend}
+					disabled={cooldown > 0}
+					className="text-indigo-600 hover:text-indigo-800"
+				>
+					{cooldown > 0 ? t("verifyEmail.cooldown", { seconds: cooldown }) : t("verifyEmail.resend")}
 				</Button>
 			}
 		>

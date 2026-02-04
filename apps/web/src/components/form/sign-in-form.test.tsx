@@ -8,6 +8,7 @@ import { SignInForm } from "./sign-in-form";
 vi.mock("@/lib/auth-client", () => ({
 	authClient: {
 		signIn: { email: vi.fn(), username: vi.fn(), social: vi.fn() },
+		emailOtp: { sendVerificationOtp: vi.fn() },
 	},
 }));
 
@@ -22,6 +23,7 @@ beforeEach(() => {
 	vi.mocked(authClient.signIn.email).mockReset();
 	vi.mocked(authClient.signIn.username).mockReset();
 	vi.mocked(authClient.signIn.social).mockReset();
+	vi.mocked(authClient.emailOtp.sendVerificationOtp).mockReset();
 	vi.mocked(toast.success).mockReset();
 	vi.mocked(toast.error).mockReset();
 });
@@ -108,9 +110,12 @@ describe("SignInForm", () => {
 			expect(router.state.location.pathname).toBe("/login");
 		});
 
-		it("redirects to verify-email on 403 for email identifier", async () => {
+		it("redirects to verify-email and sends OTP on 403 for email identifier", async () => {
 			vi.mocked(authClient.signIn.email).mockResolvedValue({
 				error: { message: "", statusText: "Forbidden", status: 403 },
+			});
+			vi.mocked(authClient.emailOtp.sendVerificationOtp).mockResolvedValue({
+				error: null,
 			});
 			const { user, router } = renderAuthRoute(SignInForm, {
 				path: "/login",
@@ -119,11 +124,33 @@ describe("SignInForm", () => {
 			await fillAndSubmit(user, "user@example.com", "password123");
 
 			await waitFor(() => {
+				expect(authClient.emailOtp.sendVerificationOtp).toHaveBeenCalledWith({
+					email: "user@example.com",
+					type: "email-verification",
+				});
+			});
+			await waitFor(() => {
 				expect(toast.error).toHaveBeenCalledWith("signIn.verifyEmailRequired");
 			});
 			await waitFor(() => {
 				expect(router.state.location.pathname).toBe("/verify-email");
 			});
+		});
+
+		it("shows username-specific message on 403 for username identifier", async () => {
+			vi.mocked(authClient.signIn.username).mockResolvedValue({
+				error: { message: "", statusText: "Forbidden", status: 403 },
+			});
+			const { user, router } = renderAuthRoute(SignInForm, {
+				path: "/login",
+			});
+
+			await fillAndSubmit(user, "myusername", "password123");
+
+			await waitFor(() => {
+				expect(toast.error).toHaveBeenCalledWith("signIn.verifyEmailRequiredUsername");
+			});
+			expect(router.state.location.pathname).toBe("/login");
 		});
 
 		it("falls back to statusText when message is empty", async () => {
