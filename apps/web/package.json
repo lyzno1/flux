@@ -5,6 +5,7 @@
 		"@flux/auth": "workspace:*",
 		"@flux/env": "workspace:*",
 		"@flux/utils": "workspace:*",
+		"@fontsource-variable/inter": "catalog:frontend",
 		"@orpc/client": "catalog:prod",
 		"@orpc/contract": "catalog:prod",
 		"@orpc/tanstack-query": "catalog:prod",
