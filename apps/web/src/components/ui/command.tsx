@@ -9,10 +9,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
 	return (
 		<CommandPrimitive
 			data-slot="command"
-			className={cn(
-				"flex size-full flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground",
-				className,
-			)}
+			className={cn("flex size-full flex-col overflow-hidden rounded-xl bg-popover text-popover-foreground", className)}
 			{...props}
 		/>
 	);
@@ -39,7 +36,7 @@ function CommandDialog({
 				<DialogDescription>{description}</DialogDescription>
 			</DialogHeader>
 			<DialogContent
-				className={cn("top-1/3 translate-y-0 overflow-hidden rounded-2xl p-0", className)}
+				className={cn("top-1/3 translate-y-0 overflow-hidden rounded-xl p-0", className)}
 				showCloseButton={showCloseButton}
 			>
 				{children}
@@ -79,7 +76,7 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
 	return (
 		<CommandPrimitive.List
 			data-slot="command-list"
-			className={cn("no-scrollbar max-h-72 scroll-py-0 overflow-y-auto overflow-x-hidden outline-none", className)}
+			className={cn("no-scrollbar max-h-72 scroll-py-0 overflow-y-auto overflow-x-hidden p-1 outline-none", className)}
 			{...props}
 		/>
 	);
@@ -112,7 +109,7 @@ function CommandSeparator({ className, ...props }: React.ComponentProps<typeof C
 	return (
 		<CommandPrimitive.Separator
 			data-slot="command-separator"
-			className={cn("-mx-1 h-px bg-border", className)}
+			className={cn("-mx-1 my-1 h-px bg-border", className)}
 			{...props}
 		/>
 	);
