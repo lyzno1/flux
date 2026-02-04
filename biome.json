@@ -126,6 +126,7 @@
 				},
 				"noEmptyBlockStatements": "error",
 				"noEvolvingTypes": "error",
+				"noExplicitAny": "error",
 				"useAwait": "error",
 				"useErrorMessage": "error"
 			}

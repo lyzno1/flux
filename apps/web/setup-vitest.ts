@@ -8,6 +8,21 @@ vi.mock("zustand/traditional");
 // @ts-expect-error -- required for React Testing Library
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
+Object.defineProperty(window, "matchMedia", {
+	writable: true,
+	value: (query: string): MediaQueryList =>
+		({
+			matches: false,
+			media: query,
+			onchange: null,
+			addListener: vi.fn(),
+			removeListener: vi.fn(),
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			dispatchEvent: vi.fn(() => false),
+		}) as MediaQueryList,
+});
+
 i18next.use(initReactI18next).init({
 	lng: "en-US",
 	fallbackLng: "en-US",

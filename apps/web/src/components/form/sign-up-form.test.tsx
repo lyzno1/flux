@@ -76,8 +76,8 @@ describe("SignUpForm", () => {
 	});
 
 	it("calls authClient.signUp.email with form values on submit", async () => {
-		vi.mocked(authClient.signUp.email).mockImplementation((_data: unknown, callbacks: any) => {
-			callbacks?.onSuccess?.();
+		vi.mocked(authClient.signUp.email).mockImplementation((_data, callbacks) => {
+			callbacks?.onSuccess?.(undefined as never);
 			return Promise.resolve(undefined as never);
 		});
 
@@ -104,8 +104,8 @@ describe("SignUpForm", () => {
 	it("shows success toast and navigates to /verify-email on success", async () => {
 		const { toast } = await import("sonner");
 
-		vi.mocked(authClient.signUp.email).mockImplementation((_data: unknown, callbacks: any) => {
-			callbacks?.onSuccess?.();
+		vi.mocked(authClient.signUp.email).mockImplementation((_data, callbacks) => {
+			callbacks?.onSuccess?.(undefined as never);
 			return Promise.resolve(undefined as never);
 		});
 
@@ -141,7 +141,7 @@ describe("SignUpForm", () => {
 	it("shows error toast with error message on failure", async () => {
 		const { toast } = await import("sonner");
 
-		vi.mocked(authClient.signUp.email).mockImplementation((_data: unknown, callbacks: any) => {
+		vi.mocked(authClient.signUp.email).mockImplementation((_data, callbacks) => {
 			callbacks?.onError?.({ error: { message: "Email already taken", statusText: "Conflict" } } as never);
 			return Promise.resolve(undefined as never);
 		});
@@ -158,7 +158,7 @@ describe("SignUpForm", () => {
 	it("falls back to statusText when error message is empty", async () => {
 		const { toast } = await import("sonner");
 
-		vi.mocked(authClient.signUp.email).mockImplementation((_data: unknown, callbacks: any) => {
+		vi.mocked(authClient.signUp.email).mockImplementation((_data, callbacks) => {
 			callbacks?.onError?.({ error: { message: "", statusText: "Conflict" } } as never);
 			return Promise.resolve(undefined as never);
 		});
@@ -173,8 +173,8 @@ describe("SignUpForm", () => {
 	});
 
 	it("preserves redirect search param when navigating to /verify-email", async () => {
-		vi.mocked(authClient.signUp.email).mockImplementation((_data: unknown, callbacks: any) => {
-			callbacks?.onSuccess?.();
+		vi.mocked(authClient.signUp.email).mockImplementation((_data, callbacks) => {
+			callbacks?.onSuccess?.(undefined as never);
 			return Promise.resolve(undefined as never);
 		});
 
