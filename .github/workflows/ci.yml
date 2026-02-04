@@ -50,6 +50,19 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
 
+  i18n:
+    name: i18n Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter web i18n:ci
+
   test:
     name: Test
     runs-on: ubuntu-latest
