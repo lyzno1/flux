@@ -74,6 +74,7 @@ catalogs:
     zustand: 5.0.10
   prod:
     '@fastify/cors': 11.2.0
+    '@fastify/helmet': 13.0.2
     '@orpc/client': 1.13.4
     '@orpc/contract': 1.13.4
     '@orpc/openapi': 1.13.4

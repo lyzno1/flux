@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@fastify/cors": "catalog:prod",
+		"@fastify/helmet": "catalog:prod",
 		"@flux/api": "workspace:*",
 		"@flux/auth": "workspace:*",
 		"@flux/db": "workspace:*",

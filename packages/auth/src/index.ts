@@ -15,6 +15,16 @@ export const auth = betterAuth({
 		schema: schema,
 	}),
 	trustedOrigins: [env.CORS_ORIGIN],
+	rateLimit: {
+		window: 60,
+		max: 100,
+		storage: "memory",
+		customRules: {
+			"/sign-in/email": { window: 60, max: 5 },
+			"/sign-up/email": { window: 60, max: 3 },
+			"/email-otp/send-verification-otp": { window: 60, max: 5 },
+		},
+	},
 	emailAndPassword: {
 		enabled: true,
 		requireEmailVerification: true,
