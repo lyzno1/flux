@@ -1,6 +1,6 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DevtoolsLoader } from "@/components/devtools/loader";
@@ -13,6 +13,8 @@ import type { authClient } from "@/lib/auth-client";
 import type { orpc } from "@/utils/orpc";
 
 import "../index.css";
+
+const GoogleOneTap = lazy(() => import("@/components/google-one-tap").then((m) => ({ default: m.GoogleOneTap })));
 
 export interface RouterAppContext {
 	orpc: typeof orpc;
@@ -66,6 +68,7 @@ function RootComponent() {
 					</div>
 				</div>
 				<Toaster richColors />
+				<GoogleOneTap />
 			</ThemeProvider>
 			<DevtoolsLoader />
 		</>

@@ -1,5 +1,5 @@
 import { env } from "@flux/env/web";
-import { emailOTPClient, usernameClient } from "better-auth/client/plugins";
+import { emailOTPClient, oneTapClient, usernameClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
@@ -7,5 +7,11 @@ export const authClient = createAuthClient({
 	fetchOptions: {
 		credentials: "include",
 	},
-	plugins: [usernameClient(), emailOTPClient()],
+	plugins: [
+		usernameClient(),
+		emailOTPClient(),
+		...(import.meta.env.PROD && env.VITE_GOOGLE_CLIENT_ID
+			? [oneTapClient({ clientId: env.VITE_GOOGLE_CLIENT_ID })]
+			: []),
+	],
 });
