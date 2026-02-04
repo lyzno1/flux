@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createOtpSchema, createPasswordSchema } from "@/lib/auth-validation";
 import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
@@ -47,9 +48,11 @@ export function ResetPasswordForm({ email }: { email: string }) {
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="otp">{(field) => <field.OTPField label={t("resetPassword.otp")} />}</form.AppField>
+				<form.AppField name="otp" validators={{ onBlur: createOtpSchema(t("validation.otpLength")) }}>
+					{(field) => <field.OTPField label={t("resetPassword.otp")} />}
+				</form.AppField>
 
-				<form.AppField name="password">
+				<form.AppField name="password" validators={{ onBlur: createPasswordSchema(t("validation.passwordMin")) }}>
 					{(field) => <field.PasswordField label={t("resetPassword.password")} autoComplete="new-password" />}
 				</form.AppField>
 

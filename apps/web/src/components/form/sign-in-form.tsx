@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createRequiredSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
 import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
@@ -83,11 +84,11 @@ export function SignInForm() {
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="identifier">
+				<form.AppField name="identifier" validators={{ onBlur: createRequiredSchema(t("validation.required")) }}>
 					{(field) => <field.TextField label={t("signIn.email")} autoComplete="username" />}
 				</form.AppField>
 
-				<form.AppField name="password">
+				<form.AppField name="password" validators={{ onBlur: createRequiredSchema(t("validation.required")) }}>
 					{(field) => <field.PasswordField label={t("signIn.password")} autoComplete="current-password" />}
 				</form.AppField>
 

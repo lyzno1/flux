@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createEmailSchema, createNameSchema, createPasswordSchema, createUsernameSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
 import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
@@ -62,19 +63,24 @@ export function SignUpForm() {
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="name">
+				<form.AppField name="name" validators={{ onBlur: createNameSchema(t("validation.nameMin")) }}>
 					{(field) => <field.TextField label={t("signUp.name")} autoComplete="name" />}
 				</form.AppField>
 
-				<form.AppField name="username">
+				<form.AppField
+					name="username"
+					validators={{
+						onBlur: createUsernameSchema(t("validation.usernameMin"), t("validation.usernamePattern")),
+					}}
+				>
 					{(field) => <field.TextField label={t("signUp.username")} autoComplete="username" />}
 				</form.AppField>
 
-				<form.AppField name="email">
+				<form.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
 					{(field) => <field.EmailField label={t("signUp.email")} autoComplete="email" />}
 				</form.AppField>
 
-				<form.AppField name="password">
+				<form.AppField name="password" validators={{ onBlur: createPasswordSchema(t("validation.passwordMin")) }}>
 					{(field) => <field.PasswordField label={t("signUp.password")} autoComplete="new-password" />}
 				</form.AppField>
 

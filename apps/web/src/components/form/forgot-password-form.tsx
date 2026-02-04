@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createEmailSchema } from "@/lib/auth-validation";
 import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
@@ -43,7 +44,7 @@ export function ForgotPasswordForm() {
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="email">
+				<form.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
 					{(field) => <field.EmailField label={t("forgotPassword.email")} autoComplete="email" />}
 				</form.AppField>
 

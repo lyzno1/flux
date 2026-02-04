@@ -152,6 +152,7 @@ function OTPField({ label, length = 6, className }: { label: string; length?: nu
 				inputMode="numeric"
 				pattern="[0-9]*"
 				value={field.state.value}
+				onBlur={field.handleBlur}
 				onChange={(value) => field.handleChange(value)}
 			>
 				<InputOTPGroup>

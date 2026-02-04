@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createOtpSchema } from "@/lib/auth-validation";
 import { Button } from "../ui/button";
 import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
@@ -76,7 +77,9 @@ export function VerifyEmailForm({ email }: { email: string }) {
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="otp">{(field) => <field.OTPField label={t("verifyEmail.otp")} />}</form.AppField>
+				<form.AppField name="otp" validators={{ onBlur: createOtpSchema(t("validation.otpLength")) }}>
+					{(field) => <field.OTPField label={t("verifyEmail.otp")} />}
+				</form.AppField>
 
 				<form.AppForm>
 					<form.SubmitButton label={t("verifyEmail.submit")} submittingLabel={t("verifyEmail.submitting")} />

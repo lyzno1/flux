@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createEmailSchema, createOtpSchema } from "@/lib/auth-validation";
 import { Button } from "../ui/button";
 import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
@@ -100,7 +101,7 @@ export function OtpLoginForm({ email }: { email?: string }) {
 					}}
 					className="space-y-4"
 				>
-					<emailForm.AppField name="email">
+					<emailForm.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
 						{(field) => <field.EmailField label={t("otpLogin.email")} autoComplete="email" />}
 					</emailForm.AppField>
 
@@ -128,7 +129,9 @@ export function OtpLoginForm({ email }: { email?: string }) {
 						}}
 						className="space-y-4"
 					>
-						<otpForm.AppField name="otp">{(field) => <field.OTPField label={t("otpLogin.otp")} />}</otpForm.AppField>
+						<otpForm.AppField name="otp" validators={{ onBlur: createOtpSchema(t("validation.otpLength")) }}>
+							{(field) => <field.OTPField label={t("otpLogin.otp")} />}
+						</otpForm.AppField>
 
 						<otpForm.AppForm>
 							<otpForm.SubmitButton label={t("otpLogin.submit")} submittingLabel={t("otpLogin.submitting")} />
