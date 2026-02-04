@@ -1,50 +1,78 @@
-import { useNavigate } from "@tanstack/react-router";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
+import { createRequiredSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
-import { PageLoading } from "../page-loading";
-import { Button } from "../ui/button";
+import { AuthFormLayout } from "./auth-form-layout";
 import { useAppForm } from "./use-app-form";
 
-export function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToSignUp: () => void; redirect: string }) {
+const authRoute = getRouteApi("/_auth");
+
+export function SignInForm() {
+	const { redirect } = authRoute.useSearch();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
-	const { isPending } = authClient.useSession();
 
 	const form = useAppForm({
 		defaultValues: {
-			email: "",
+			identifier: "",
 			password: "",
 		},
 		onSubmit: async ({ value }) => {
-			await authClient.signIn.email(
-				{
-					email: value.email,
-					password: value.password,
-				},
-				{
-					onSuccess: () => {
-						navigate({ to: redirect });
-						toast.success(t("signIn.success"));
-					},
-					onError: (error) => {
-						toast.error(error.error.message || error.error.statusText);
-					},
-				},
-			);
+			const isEmail = value.identifier.includes("@");
+			const result = isEmail
+				? await authClient.signIn.email({
+						email: value.identifier,
+						password: value.password,
+					})
+				: await authClient.signIn.username({
+						username: value.identifier,
+						password: value.password,
+					});
+
+			if (result.error) {
+				const status = (result.error as { status?: number }).status;
+				const isForbidden = status === 403 || result.error.statusText === "Forbidden";
+				if (isForbidden) {
+					if (isEmail) {
+						void authClient.emailOtp.sendVerificationOtp({
+							email: value.identifier,
+							type: "email-verification",
+						});
+						toast.error(t("signIn.verifyEmailRequired"));
+						navigate({
+							to: "/verify-email",
+							search: (prev) => ({ ...prev, email: value.identifier }),
+						});
+					} else {
+						toast.error(t("signIn.verifyEmailRequiredUsername"));
+					}
+					return;
+				}
+				toast.error(result.error.message || result.error.statusText);
+				return;
+			}
+			navigate({ to: redirect });
+			toast.success(t("signIn.success"));
 		},
 	});
 
-	if (isPending) {
-		return <PageLoading />;
-	}
-
 	return (
-		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-pretty text-center font-bold text-3xl">{t("signIn.title")}</h1>
-
+		<AuthFormLayout
+			title={t("signIn.title")}
+			footer={
+				<div className="flex flex-col items-center gap-1">
+					<Link to="/otp" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+						{t("signIn.otpLogin")}
+					</Link>
+					<Link to="/sign-up" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+						{t("signIn.switchToSignUp")}
+					</Link>
+				</div>
+			}
+		>
 			<GoogleOAuthButton redirect={redirect} />
 			<OAuthDivider />
 
@@ -56,24 +84,24 @@ export function SignInForm({ onSwitchToSignUp, redirect }: { onSwitchToSignUp: (
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="email">
-					{(field) => <field.EmailField label={t("signIn.email")} autoComplete="email" />}
+				<form.AppField name="identifier" validators={{ onBlur: createRequiredSchema(t("validation.required")) }}>
+					{(field) => <field.TextField label={t("signIn.email")} autoComplete="username" />}
 				</form.AppField>
 
-				<form.AppField name="password">
+				<form.AppField name="password" validators={{ onBlur: createRequiredSchema(t("validation.required")) }}>
 					{(field) => <field.PasswordField label={t("signIn.password")} autoComplete="current-password" />}
 				</form.AppField>
+
+				<div className="flex justify-end">
+					<Link to="/forgot-password" search={true} className="text-sm hover:underline">
+						{t("signIn.forgotPassword")}
+					</Link>
+				</div>
 
 				<form.AppForm>
 					<form.SubmitButton label={t("signIn.submit")} submittingLabel={t("signIn.submitting")} />
 				</form.AppForm>
 			</form>
-
-			<div className="mt-4 text-center">
-				<Button variant="link" onClick={onSwitchToSignUp} className="text-indigo-600 hover:text-indigo-800">
-					{t("signIn.switchToSignUp")}
-				</Button>
-			</div>
-		</div>
+		</AuthFormLayout>
 	);
 }

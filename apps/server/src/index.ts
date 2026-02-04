@@ -1,4 +1,5 @@
 import fastifyCors from "@fastify/cors";
+import fastifyHelmet from "@fastify/helmet";
 import { createContext } from "@flux/api/context";
 import { appRouter } from "@flux/api/routers/index";
 import { auth } from "@flux/auth";
@@ -39,6 +40,11 @@ const apiHandler = new OpenAPIHandler(appRouter, {
 			fastify.log.error(error);
 		}),
 	],
+});
+
+// CSP disabled: this is a pure API server that does not serve HTML
+fastify.register(fastifyHelmet, {
+	contentSecurityPolicy: false,
 });
 
 fastify.register(fastifyCors, {

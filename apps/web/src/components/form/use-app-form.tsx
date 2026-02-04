@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import { Label } from "../ui/label";
 
 const { fieldContext, formContext, useFieldContext, useFormContext } = createFormHookContexts();
@@ -139,6 +140,31 @@ function EmailField({
 	);
 }
 
+const OTP_SLOT_KEYS = ["s0", "s1", "s2", "s3", "s4", "s5"] as const;
+
+function OTPField({ label, length = 6, className }: { label: string; length?: number; className?: string }) {
+	const field = useFieldContext<string>();
+	return (
+		<FieldWrapper label={label} htmlFor={field.name} errors={field.state.meta.errors} className={className}>
+			<InputOTP
+				id={field.name}
+				maxLength={length}
+				inputMode="numeric"
+				pattern="[0-9]*"
+				value={field.state.value}
+				onBlur={field.handleBlur}
+				onChange={(value) => field.handleChange(value)}
+			>
+				<InputOTPGroup>
+					{OTP_SLOT_KEYS.slice(0, length).map((key, index) => (
+						<InputOTPSlot key={key} index={index} />
+					))}
+				</InputOTPGroup>
+			</InputOTP>
+		</FieldWrapper>
+	);
+}
+
 function SubmitButton({
 	label,
 	submittingLabel,
@@ -165,6 +191,7 @@ export const { useAppForm, withForm } = createFormHook({
 		TextField,
 		PasswordField,
 		EmailField,
+		OTPField,
 	},
 	formComponents: {
 		SubmitButton,

@@ -1,25 +1,14 @@
-import { createFileRoute, isRedirect, Outlet, redirect } from "@tanstack/react-router";
-
-import { authClient } from "@/lib/auth-client";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated")({
-	beforeLoad: async ({ context, location }) => {
-		try {
-			const session = context.auth.data ?? (await authClient.getSession()).data;
-			if (!session) {
-				throw redirect({
-					to: "/login",
-					search: { redirect: location.href },
-				});
-			}
-			return { session };
-		} catch (error) {
-			if (isRedirect(error)) throw error;
+	beforeLoad: ({ context, location }) => {
+		if (!context.auth.data) {
 			throw redirect({
 				to: "/login",
 				search: { redirect: location.href },
 			});
 		}
+		return { session: context.auth.data };
 	},
 	component: () => <Outlet />,
 });

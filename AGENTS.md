@@ -52,7 +52,7 @@ Turborepo monorepo with two apps and six shared packages. All packages use ESM (
 
 **ORPC end-to-end typing:** `@flux/api` defines `appRouter` in `packages/api/src/routers/index.ts`. The server mounts it via `RPCHandler`. The web client creates a typed `ContractRouterClient` in `apps/web/src/utils/orpc.ts` and wraps it with `createTanstackQueryUtils` for React Query integration. Context is created from request headers in `packages/api/src/context.ts`.
 
-**TanStack Router:** File-based routes under `apps/web/src/routes/`. The root route injects `orpc` and `queryClient` into router context via `RouterAppContext`. Route tree is auto-generated (`routeTree.gen.ts` — do not edit).
+**TanStack Router:** File-based routes under `apps/web/src/routes/`. The root route injects `orpc` and `queryClient` into router context via `RouterAppContext`. Route tree is auto-generated (`routeTree.gen.ts` — do not edit). When navigating between pages that share search params (e.g. auth pages sharing `redirect`), use `<Link search={true}>` to preserve all current search params, or `navigate({ search: (prev) => ({ ...prev, newKey }) })` to merge new params. Never omit the `search` prop on cross-page `<Link>` — the router defaults to `{}` which drops existing params and lets `validateSearch` defaults overwrite them.
 
 **Auth flow:** Better-Auth handles sessions. The ORPC context extracts the session from request headers. `protectedProcedure` middleware enforces authentication. Client uses `better-auth/react`'s `createAuthClient`.
 
