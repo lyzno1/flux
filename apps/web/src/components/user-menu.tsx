@@ -35,9 +35,9 @@ export function UserMenu() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="outline" />}>{session.user.name}</DropdownMenuTrigger>
-			<DropdownMenuContent className="bg-card">
+			<DropdownMenuContent className="w-auto min-w-(--anchor-width) bg-card">
 				<DropdownMenuGroup>
-					<DropdownMenuLabel>{t("user.myAccount")}</DropdownMenuLabel>
+					<DropdownMenuLabel className="font-semibold text-foreground">{t("user.myAccount")}</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem>{session.user.email}</DropdownMenuItem>
 					<DropdownMenuItem
