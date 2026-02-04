@@ -1,5 +1,6 @@
 import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import type userEvent from "@testing-library/user-event";
+import type * as React from "react";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { renderAuthRoute } from "@/test/auth-test-utils";
@@ -16,6 +17,45 @@ beforeAll(() => {
 		disconnect() {}
 	};
 	document.elementFromPoint = () => null;
+});
+
+vi.mock("@/components/ui/input-otp", () => {
+	function InputOTP({
+		children,
+		value,
+		onChange,
+		...props
+	}: {
+		children?: React.ReactNode;
+		value?: string;
+		onChange?: (value: string) => void;
+	} & React.ComponentProps<"input">) {
+		return (
+			<div>
+				<input
+					{...props}
+					data-input-otp=""
+					value={value ?? ""}
+					onChange={(event) => onChange?.(event.currentTarget.value)}
+				/>
+				{children}
+			</div>
+		);
+	}
+
+	function InputOTPGroup({ children, ...props }: React.ComponentProps<"div">) {
+		return <div {...props}>{children}</div>;
+	}
+
+	function InputOTPSlot({ ...props }: React.ComponentProps<"div">) {
+		return <div {...props} />;
+	}
+
+	function InputOTPSeparator({ ...props }: React.ComponentProps<"span">) {
+		return <span {...props} />;
+	}
+
+	return { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
 });
 
 vi.mock("@/lib/auth-client", () => ({
