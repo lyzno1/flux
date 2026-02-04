@@ -21,6 +21,7 @@ catalogs:
     '@vitejs/plugin-react': 5.1.2
     '@vitest/coverage-v8': 4.0.18
     drizzle-kit: 0.31.8
+    i18next-cli: 1.41.4
     jsdom: 27.4.0
     knip: 5.82.1
     lint-staged: 16.2.7
@@ -88,4 +89,5 @@ catalogs:
     zod: 4.3.6
 
 onlyBuiltDependencies:
+  - '@swc/core'
   - simple-git-hooks

@@ -108,7 +108,7 @@ export const Reasoning = memo(
 	},
 );
 
-type TranslateFunction = (
+export type TranslateFunction = (
 	key: "reasoning.thinking" | "reasoning.thoughtFewSeconds" | "reasoning.thoughtForSeconds",
 	options?: Record<string, unknown>,
 ) => string;
@@ -117,40 +117,38 @@ export type ReasoningTriggerProps = ComponentProps<typeof CollapsibleTrigger> & 
 	getThinkingMessage?: (isStreaming: boolean, duration: number | undefined, t: TranslateFunction) => ReactNode;
 };
 
-const defaultGetThinkingMessage = (isStreaming: boolean, duration: number | undefined, t: TranslateFunction) => {
-	if (isStreaming || duration === 0) {
-		return <Shimmer duration={1}>{t("reasoning.thinking")}</Shimmer>;
-	}
-	if (duration === undefined) {
-		return <p>{t("reasoning.thoughtFewSeconds")}</p>;
-	}
-	return <p>{t("reasoning.thoughtForSeconds", { duration })}</p>;
-};
+export const ReasoningTrigger = memo(({ className, children, getThinkingMessage, ...props }: ReasoningTriggerProps) => {
+	const { isStreaming, isOpen, duration } = useReasoning();
+	const { t } = useTranslation("ai");
 
-export const ReasoningTrigger = memo(
-	({ className, children, getThinkingMessage = defaultGetThinkingMessage, ...props }: ReasoningTriggerProps) => {
-		const { isStreaming, isOpen, duration } = useReasoning();
-		const { t } = useTranslation("ai");
+	const defaultThinkingMessage = (() => {
+		if (isStreaming || duration === 0) {
+			return <Shimmer duration={1}>{t("reasoning.thinking")}</Shimmer>;
+		}
+		if (duration === undefined) {
+			return <p>{t("reasoning.thoughtFewSeconds")}</p>;
+		}
+		return <p>{t("reasoning.thoughtForSeconds", { duration })}</p>;
+	})();
 
-		return (
-			<CollapsibleTrigger
-				className={cn(
-					"flex w-full items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground",
-					className,
-				)}
-				{...props}
-			>
-				{children ?? (
-					<>
-						<BrainIcon className="size-4" />
-						{getThinkingMessage(isStreaming, duration, t)}
-						<ChevronDownIcon className={cn("size-4 transition-transform", isOpen ? "rotate-180" : "rotate-0")} />
-					</>
-				)}
-			</CollapsibleTrigger>
-		);
-	},
-);
+	return (
+		<CollapsibleTrigger
+			className={cn(
+				"flex w-full items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground",
+				className,
+			)}
+			{...props}
+		>
+			{children ?? (
+				<>
+					<BrainIcon className="size-4" />
+					{getThinkingMessage ? getThinkingMessage(isStreaming, duration, t) : defaultThinkingMessage}
+					<ChevronDownIcon className={cn("size-4 transition-transform", isOpen ? "rotate-180" : "rotate-0")} />
+				</>
+			)}
+		</CollapsibleTrigger>
+	);
+});
 
 export type ReasoningContentProps = ComponentProps<typeof CollapsibleContent> & {
 	children: string;
