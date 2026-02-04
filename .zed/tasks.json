@@ -1,0 +1,64 @@
+[
+	{
+		"label": "dev",
+		"command": "pnpm dev",
+		"use_new_terminal": true,
+		"allow_concurrent_runs": false,
+		"reveal": "always"
+	},
+	{
+		"label": "dev:web",
+		"command": "pnpm dev:web",
+		"use_new_terminal": true,
+		"allow_concurrent_runs": false,
+		"reveal": "always"
+	},
+	{
+		"label": "dev:server",
+		"command": "pnpm dev:server",
+		"use_new_terminal": true,
+		"allow_concurrent_runs": false,
+		"reveal": "always"
+	},
+	{
+		"label": "build",
+		"command": "pnpm build",
+		"reveal": "always"
+	},
+	{
+		"label": "check",
+		"command": "pnpm check",
+		"reveal": "always"
+	},
+	{
+		"label": "check-types",
+		"command": "pnpm check-types",
+		"reveal": "always"
+	},
+	{
+		"label": "db:push",
+		"command": "pnpm db:push",
+		"reveal": "always"
+	},
+	{
+		"label": "db:studio",
+		"command": "pnpm db:studio",
+		"use_new_terminal": true,
+		"reveal": "always"
+	},
+	{
+		"label": "db:migrate",
+		"command": "pnpm db:migrate",
+		"reveal": "always"
+	},
+	{
+		"label": "test",
+		"command": "pnpm test",
+		"reveal": "always"
+	},
+	{
+		"label": "test current file",
+		"command": "pnpm vitest run $ZED_FILE",
+		"reveal": "always"
+	}
+]

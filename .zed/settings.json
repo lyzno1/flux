@@ -1,0 +1,102 @@
+{
+	"languages": {
+		"JavaScript": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"TypeScript": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"TSX": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"JSON": {
+			"formatter": { "language_server": { "name": "biome" } }
+		},
+		"JSONC": {
+			"formatter": { "language_server": { "name": "biome" } }
+		},
+		"CSS": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"language_servers": ["tailwindcss-intellisense-css", "!vscode-css-language-server", "..."]
+		}
+	},
+
+	"format_on_save": "on",
+
+	"lsp": {
+		"biome": {
+			"settings": {
+				"require_config_file": true
+			}
+		},
+		"vtsls": {
+			"settings": {
+				"typescript": {
+					"inlayHints": {
+						"parameterNames": { "enabled": "all", "suppressWhenArgumentMatchesName": true },
+						"parameterTypes": { "enabled": true },
+						"variableTypes": { "enabled": true, "suppressWhenTypeMatchesName": true },
+						"propertyDeclarationTypes": { "enabled": true },
+						"functionLikeReturnTypes": { "enabled": true },
+						"enumMemberValues": { "enabled": true }
+					}
+				},
+				"javascript": {
+					"inlayHints": {
+						"parameterNames": { "enabled": "all", "suppressWhenArgumentMatchesName": true },
+						"parameterTypes": { "enabled": true },
+						"variableTypes": { "enabled": true, "suppressWhenTypeMatchesName": true },
+						"propertyDeclarationTypes": { "enabled": true },
+						"functionLikeReturnTypes": { "enabled": true },
+						"enumMemberValues": { "enabled": true }
+					}
+				}
+			}
+		},
+		"tailwindcss-language-server": {
+			"settings": {
+				"classFunctions": ["clsx", "cva", "cn"]
+			}
+		}
+	},
+
+	"inlay_hints": {
+		"enabled": true,
+		"show_type_hints": true,
+		"show_parameter_hints": true,
+		"show_other_hints": true
+	},
+
+	"file_scan_exclusions": [
+		"**/.git",
+		"**/.svn",
+		"**/.hg",
+		"**/.jj",
+		"**/.sl",
+		"**/.DS_Store",
+		"**/Thumbs.db",
+		"**/CVS",
+		"**/.classpath",
+		"**/.settings",
+		"**/node_modules",
+		"**/dist",
+		"**/.turbo",
+		"**/.next",
+		"**/coverage",
+		"**/*.tsbuildinfo",
+		"**/routeTree.gen.ts",
+		"**/.tanstack"
+	]
+}
