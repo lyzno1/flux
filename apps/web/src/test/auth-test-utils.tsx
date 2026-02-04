@@ -11,6 +11,8 @@ import userEvent from "@testing-library/user-event";
 import type * as React from "react";
 import * as z from "zod";
 
+import { createMockContext } from "./mock-context";
+
 const authSearchSchema = z.object({
 	redirect: z
 		.string()
@@ -61,9 +63,12 @@ export function renderAuthRoute(Component: React.ComponentType, options: RenderA
 	const searchStr = searchParams.toString();
 	const initialUrl = options.path + (searchStr ? `?${searchStr}` : "");
 
+	const mockContext = createMockContext();
+
 	const router = createRouter({
 		routeTree,
 		history: createMemoryHistory({ initialEntries: [initialUrl] }),
+		context: mockContext,
 		defaultPendingMinMs: 0,
 	});
 
