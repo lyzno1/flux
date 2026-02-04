@@ -41,30 +41,7 @@
 				"require_config_file": true
 			}
 		},
-		"vtsls": {
-			"settings": {
-				"typescript": {
-					"inlayHints": {
-						"parameterNames": { "enabled": "all", "suppressWhenArgumentMatchesName": true },
-						"parameterTypes": { "enabled": true },
-						"variableTypes": { "enabled": true, "suppressWhenTypeMatchesName": true },
-						"propertyDeclarationTypes": { "enabled": true },
-						"functionLikeReturnTypes": { "enabled": true },
-						"enumMemberValues": { "enabled": true }
-					}
-				},
-				"javascript": {
-					"inlayHints": {
-						"parameterNames": { "enabled": "all", "suppressWhenArgumentMatchesName": true },
-						"parameterTypes": { "enabled": true },
-						"variableTypes": { "enabled": true, "suppressWhenTypeMatchesName": true },
-						"propertyDeclarationTypes": { "enabled": true },
-						"functionLikeReturnTypes": { "enabled": true },
-						"enumMemberValues": { "enabled": true }
-					}
-				}
-			}
-		},
+		"vtsls": {},
 		"tailwindcss-language-server": {
 			"settings": {
 				"classFunctions": ["clsx", "cva", "cn"]
@@ -73,10 +50,7 @@
 	},
 
 	"inlay_hints": {
-		"enabled": true,
-		"show_type_hints": true,
-		"show_parameter_hints": true,
-		"show_other_hints": true
+		"enabled": false
 	},
 
 	"file_scan_exclusions": [
