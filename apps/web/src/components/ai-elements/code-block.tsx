@@ -413,7 +413,7 @@ export type CodeBlockLanguageSelectorTriggerProps = ComponentProps<typeof Select
 
 export const CodeBlockLanguageSelectorTrigger = ({
 	className,
-	["aria-label"]: ariaLabel,
+	"aria-label": ariaLabel,
 	...props
 }: CodeBlockLanguageSelectorTriggerProps) => (
 	<SelectTrigger

@@ -41,7 +41,7 @@ export const SnippetText = ({ className, ...props }: SnippetTextProps) => (
 
 export type SnippetInputProps = Omit<ComponentProps<typeof InputGroupInput>, "readOnly" | "value">;
 
-export const SnippetInput = ({ className, ["aria-label"]: ariaLabel, ...props }: SnippetInputProps) => {
+export const SnippetInput = ({ className, "aria-label": ariaLabel, ...props }: SnippetInputProps) => {
 	const { code } = useContext(SnippetContext);
 
 	return (

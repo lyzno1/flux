@@ -700,7 +700,7 @@ export const PromptInputTextarea = ({
 	onKeyDown,
 	className,
 	placeholder: placeholderProp,
-	["aria-label"]: ariaLabel,
+	"aria-label": ariaLabel,
 	...props
 }: PromptInputTextareaProps) => {
 	const { t } = useTranslation("ai");
@@ -909,7 +909,7 @@ export type PromptInputSelectTriggerProps = ComponentProps<typeof SelectTrigger>
 
 export const PromptInputSelectTrigger = ({
 	className,
-	["aria-label"]: ariaLabel,
+	"aria-label": ariaLabel,
 	...props
 }: PromptInputSelectTriggerProps) => (
 	<SelectTrigger

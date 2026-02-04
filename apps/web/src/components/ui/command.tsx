@@ -47,7 +47,7 @@ function CommandDialog({
 
 function CommandInput({
 	className,
-	["aria-label"]: ariaLabel,
+	"aria-label": ariaLabel,
 	...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
 	const resolvedAriaLabel = ariaLabel ?? "Search";

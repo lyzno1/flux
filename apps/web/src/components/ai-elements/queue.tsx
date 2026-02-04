@@ -95,7 +95,7 @@ export type QueueItemActionProps = Omit<ComponentProps<typeof Button>, "variant"
 export const QueueItemAction = ({
 	className,
 	children,
-	["aria-label"]: ariaLabel,
+	"aria-label": ariaLabel,
 	title,
 	...props
 }: QueueItemActionProps) => {
