@@ -1,4 +1,4 @@
-import { cleanup, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, screen, waitFor } from "@testing-library/react";
 import type * as React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -81,9 +81,13 @@ async function fillOtpAndSubmit(
 	await user.click(submitButton);
 }
 
+function getResendButton() {
+	return screen.getAllByRole("button").find((btn) => btn.getAttribute("type") !== "submit");
+}
+
 async function clickResendButton(user: ReturnType<typeof import("@testing-library/user-event")["default"]["setup"]>) {
 	await screen.findByTestId("otp-input");
-	const resendButton = screen.getAllByRole("button").find((btn) => btn.getAttribute("type") !== "submit");
+	const resendButton = getResendButton();
 	if (!resendButton) throw new Error("resend button not found");
 	await user.click(resendButton);
 }
@@ -213,6 +217,63 @@ describe("VerifyEmailForm", () => {
 
 			await waitFor(() => {
 				expect(toast.error).toHaveBeenCalledWith("Too Many Requests");
+			});
+		});
+
+		it("disables resend button after successful resend", async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+			mockSendOtp.mockResolvedValue({ error: null } as never);
+			const { user } = renderForm();
+
+			await clickResendButton(user);
+
+			await waitFor(() => {
+				expect(getResendButton()).toBeDisabled();
+			});
+
+			vi.useRealTimers();
+		});
+
+		it("re-enables resend button after cooldown expires", async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+			mockSendOtp.mockResolvedValue({ error: null } as never);
+			const { user } = renderForm();
+
+			await clickResendButton(user);
+			await waitFor(() => {
+				expect(getResendButton()).toBeDisabled();
+			});
+
+			for (let i = 0; i < 60; i++) {
+				await act(() => vi.advanceTimersByTime(1000));
+			}
+
+			expect(getResendButton()).toBeEnabled();
+
+			vi.useRealTimers();
+		});
+
+		it("does not disable resend button on error", async () => {
+			mockSendOtp.mockResolvedValue({
+				error: { message: "Error", statusText: "Error" },
+			} as never);
+			const { user } = renderForm();
+
+			await clickResendButton(user);
+
+			await waitFor(() => {
+				expect(toast.error).toHaveBeenCalled();
+			});
+			expect(getResendButton()).toBeEnabled();
+		});
+	});
+
+	describe("email display", () => {
+		it("shows email address in description", async () => {
+			renderForm();
+
+			await waitFor(() => {
+				expect(screen.getByText("verifyEmail.description")).toBeInTheDocument();
 			});
 		});
 	});

@@ -1,6 +1,6 @@
-import { fireEvent, screen, waitFor, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { toast } from "sonner";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import * as z from "zod";
 import { authClient } from "@/lib/auth-client";
 import { renderAuthRoute } from "@/test/auth-test-utils";
@@ -87,7 +87,19 @@ async function waitForOtpForm() {
 	});
 }
 
+function getResendButton() {
+	return screen.getByRole("button", { name: /otpLogin\.resend|otpLogin\.cooldown/ });
+}
+
 describe("OtpLoginForm", () => {
+	afterEach(() => {
+		cleanup();
+	});
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
+
 	describe("email phase (no email prop)", () => {
 		it("renders email input and submit button", async () => {
 			renderEmail();
@@ -151,6 +163,13 @@ describe("OtpLoginForm", () => {
 
 			expect(getOtpInput()).toBeInTheDocument();
 			expect(otpForm().getByRole("button", { name: "otpLogin.submit" })).toBeInTheDocument();
+		});
+
+		it("displays the target email address", async () => {
+			renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			expect(screen.getByText(/otpLogin\.sendingTo/)).toBeInTheDocument();
 		});
 
 		it("calls signIn.emailOtp and shows success toast on success", async () => {
@@ -218,6 +237,106 @@ describe("OtpLoginForm", () => {
 
 			await waitFor(() => {
 				expect(toast.error).toHaveBeenCalledWith("Unauthorized");
+			});
+		});
+	});
+
+	describe("resend button", () => {
+		it("calls sendVerificationOtp on resend click", async () => {
+			sendOtp.mockResolvedValue({ error: null });
+			const { user } = renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			await user.click(getResendButton());
+
+			await waitFor(() => {
+				expect(sendOtp).toHaveBeenCalledWith({
+					email: "user@test.com",
+					type: "sign-in",
+				});
+			});
+		});
+
+		it("shows success toast on resend success", async () => {
+			sendOtp.mockResolvedValue({ error: null });
+			const { user } = renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			await user.click(getResendButton());
+
+			await waitFor(() => {
+				expect(toast.success).toHaveBeenCalled();
+			});
+		});
+
+		it("disables resend button after successful resend", async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+			sendOtp.mockResolvedValue({ error: null });
+			const { user } = renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			await user.click(getResendButton());
+
+			await waitFor(() => {
+				expect(getResendButton()).toBeDisabled();
+			});
+
+			vi.useRealTimers();
+		});
+
+		it("re-enables resend button after cooldown expires", async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+			sendOtp.mockResolvedValue({ error: null });
+			const { user } = renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			await user.click(getResendButton());
+			await waitFor(() => {
+				expect(getResendButton()).toBeDisabled();
+			});
+
+			for (let i = 0; i < 60; i++) {
+				await act(() => vi.advanceTimersByTime(1000));
+			}
+
+			expect(getResendButton()).toBeEnabled();
+
+			vi.useRealTimers();
+		});
+
+		it("shows error toast and stays enabled on resend failure", async () => {
+			sendOtp.mockResolvedValue({ error: { message: "Error", statusText: "Error" } });
+			const { user } = renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			await user.click(getResendButton());
+
+			await waitFor(() => {
+				expect(toast.error).toHaveBeenCalledWith("Error");
+			});
+			expect(getResendButton()).toBeEnabled();
+		});
+	});
+
+	describe("change email", () => {
+		it("renders change email button in OTP phase", async () => {
+			renderOtp("user@test.com");
+			await waitForOtpForm();
+
+			expect(screen.getByRole("button", { name: /otpLogin\.changeEmail/ })).toBeInTheDocument();
+		});
+
+		it("navigates back to email phase when change email is clicked", async () => {
+			const { user, router } = renderOtp("user@test.com", {
+				initialSearch: { email: "user@test.com" },
+			});
+			await waitForOtpForm();
+
+			await user.click(screen.getByRole("button", { name: /otpLogin\.changeEmail/ }));
+
+			await waitFor(() => {
+				const search = router.state.location.search;
+				expect(search).not.toContain("email");
 			});
 		});
 	});
