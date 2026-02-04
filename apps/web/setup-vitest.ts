@@ -10,6 +10,10 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
 i18next.use(initReactI18next).init({
 	lng: "en-US",
+	fallbackLng: "en-US",
+	supportedLngs: ["en-US", "zh-CN"],
+	defaultNS: "common",
+	ns: [],
 	resources: {},
 	keySeparator: false,
 	interpolation: { escapeValue: false },
