@@ -1,9 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import * as z from "zod";
 
-import { PageLoading } from "@/components/page-loading";
-import { authClient } from "@/lib/auth-client";
-
 const authSearchSchema = z.object({
 	redirect: z
 		.string()
@@ -14,21 +11,10 @@ const authSearchSchema = z.object({
 
 export const Route = createFileRoute("/_auth")({
 	validateSearch: authSearchSchema,
-	beforeLoad: async ({ context, search }) => {
-		const session = context.auth.data ?? (await authClient.getSession().catch(() => ({ data: null }))).data;
-		if (session) {
+	beforeLoad: ({ context, search }) => {
+		if (context.auth.data) {
 			throw redirect({ to: search.redirect });
 		}
 	},
-	component: AuthLayout,
+	component: () => <Outlet />,
 });
-
-function AuthLayout() {
-	const { isPending } = authClient.useSession();
-
-	if (isPending) {
-		return <PageLoading />;
-	}
-
-	return <Outlet />;
-}

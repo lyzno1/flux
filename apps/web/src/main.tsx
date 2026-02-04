@@ -1,6 +1,7 @@
 import { RouterProvider } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 
+import { PageLoading } from "./components/page-loading";
 import "./i18n";
 import { authClient } from "./lib/auth-client";
 import { router } from "./router";
@@ -13,6 +14,11 @@ if (!rootElement) {
 
 function InnerApp() {
 	const auth = authClient.useSession();
+
+	if (auth.isPending) {
+		return <PageLoading />;
+	}
+
 	return <RouterProvider router={router} context={{ auth }} />;
 }
 
