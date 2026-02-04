@@ -108,6 +108,24 @@ describe("SignInForm", () => {
 			expect(router.state.location.pathname).toBe("/login");
 		});
 
+		it("redirects to verify-email on 403 for email identifier", async () => {
+			vi.mocked(authClient.signIn.email).mockResolvedValue({
+				error: { message: "", statusText: "Forbidden", status: 403 },
+			});
+			const { user, router } = renderAuthRoute(SignInForm, {
+				path: "/login",
+			});
+
+			await fillAndSubmit(user, "user@example.com", "password123");
+
+			await waitFor(() => {
+				expect(toast.error).toHaveBeenCalledWith("signIn.verifyEmailRequired");
+			});
+			await waitFor(() => {
+				expect(router.state.location.pathname).toBe("/verify-email");
+			});
+		});
+
 		it("falls back to statusText when message is empty", async () => {
 			vi.mocked(authClient.signIn.username).mockResolvedValue({
 				error: { message: "", statusText: "Bad Request" },

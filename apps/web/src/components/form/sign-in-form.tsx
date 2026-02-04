@@ -32,6 +32,16 @@ export function SignInForm() {
 					});
 
 			if (result.error) {
+				const status = (result.error as { status?: number }).status;
+				const isForbidden = status === 403 || result.error.statusText === "Forbidden";
+				if (isForbidden && isEmail) {
+					toast.error(t("signIn.verifyEmailRequired"));
+					navigate({
+						to: "/verify-email",
+						search: (prev) => ({ ...prev, email: value.identifier }),
+					});
+					return;
+				}
 				toast.error(result.error.message || result.error.statusText);
 				return;
 			}

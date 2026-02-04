@@ -54,6 +54,7 @@ export const auth = betterAuth({
 			expiresIn: 300,
 			sendVerificationOnSignUp: true,
 			disableSignUp: true,
+			// biome-ignore lint/suspicious/useAwait: must return Promise<void> per Better-Auth plugin interface, but we intentionally fire-and-forget the email send
 			async sendVerificationOTP({ email, otp, type }) {
 				if (resend && env.RESEND_FROM_EMAIL) {
 					const subjectMap = {
@@ -61,12 +62,16 @@ export const auth = betterAuth({
 						"email-verification": "Verify your email",
 						"forget-password": "Reset your password",
 					} as const;
-					await resend.emails.send({
-						from: env.RESEND_FROM_EMAIL,
-						to: email,
-						subject: subjectMap[type],
-						html: `<p>Your verification code: <strong>${otp}</strong></p><p>Expires in 5 minutes.</p>`,
-					});
+					void resend.emails
+						.send({
+							from: env.RESEND_FROM_EMAIL,
+							to: email,
+							subject: subjectMap[type],
+							html: `<p>Your verification code: <strong>${otp}</strong></p><p>Expires in 5 minutes.</p>`,
+						})
+						.catch((error) => {
+							console.error("[auth] Failed to send OTP email", error);
+						});
 				} else if (env.NODE_ENV === "development") {
 					console.warn(`[auth] Email provider not configured. OTP for ${email} (${type}): ${otp}`);
 				} else {
