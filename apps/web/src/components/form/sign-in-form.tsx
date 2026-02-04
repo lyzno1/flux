@@ -84,11 +84,11 @@ export function SignInForm() {
 				}}
 				className="space-y-4"
 			>
-				<form.AppField name="identifier" validators={{ onBlur: createRequiredSchema(t("validation.required")) }}>
+				<form.AppField name="identifier" validators={{ onSubmit: createRequiredSchema(t("validation.required")) }}>
 					{(field) => <field.TextField label={t("signIn.email")} autoComplete="username" />}
 				</form.AppField>
 
-				<form.AppField name="password" validators={{ onBlur: createRequiredSchema(t("validation.required")) }}>
+				<form.AppField name="password" validators={{ onSubmit: createRequiredSchema(t("validation.required")) }}>
 					{(field) => <field.PasswordField label={t("signIn.password")} autoComplete="current-password" />}
 				</form.AppField>
 
