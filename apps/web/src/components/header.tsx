@@ -5,26 +5,24 @@ import { LanguageToggle } from "./language-toggle";
 import { ModeToggle } from "./mode-toggle";
 import { UserMenu } from "./user-menu";
 
-const HEADER_LINKS = [
-	{ to: "/", labelKey: "nav.home" },
-	{ to: "/dashboard", labelKey: "nav.dashboard" },
-	{ to: "/dify", labelKey: "nav.dify" },
-] as const;
-
 export function Header() {
 	const { t } = useTranslation();
+
+	const headerLinks = [
+		{ to: "/", label: t("nav.home") },
+		{ to: "/dashboard", label: t("nav.dashboard") },
+		{ to: "/dify", label: t("nav.dify") },
+	] as const;
 
 	return (
 		<div>
 			<div className="flex flex-row items-center justify-between px-2 py-1">
 				<nav className="flex gap-4 text-lg">
-					{HEADER_LINKS.map(({ to, labelKey }) => {
-						return (
-							<Link key={to} to={to}>
-								{t(labelKey)}
-							</Link>
-						);
-					})}
+					{headerLinks.map(({ to, label }) => (
+						<Link key={to} to={to}>
+							{label}
+						</Link>
+					))}
 				</nav>
 				<div className="flex items-center gap-2">
 					<LanguageToggle />

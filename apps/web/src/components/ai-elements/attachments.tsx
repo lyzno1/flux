@@ -46,17 +46,14 @@ export const getMediaCategory = (data: AttachmentData): AttachmentMediaCategory 
 
 export const getAttachmentLabel = (
 	data: AttachmentData,
-	t?: (key: "attachments.source" | "attachments.image" | "attachments.attachment") => string,
+	labels?: { source: string; image: string; attachment: string },
 ): string => {
 	if (data.type === "source-document") {
-		return data.title || data.filename || t?.("attachments.source") || "Source";
+		return data.title || data.filename || labels?.source || "Source";
 	}
 
 	const category = getMediaCategory(data);
-	return (
-		data.filename ||
-		(category === "image" ? t?.("attachments.image") || "Image" : t?.("attachments.attachment") || "Attachment")
-	);
+	return data.filename || (category === "image" ? labels?.image || "Image" : labels?.attachment || "Attachment");
 };
 
 // ============================================================================
@@ -232,7 +229,11 @@ export type AttachmentInfoProps = HTMLAttributes<HTMLDivElement> & {
 export const AttachmentInfo = ({ showMediaType = false, className, ...props }: AttachmentInfoProps) => {
 	const { data, variant } = useAttachmentContext();
 	const { t } = useTranslation("ai");
-	const label = getAttachmentLabel(data, t);
+	const label = getAttachmentLabel(data, {
+		source: t("attachments.source"),
+		image: t("attachments.image"),
+		attachment: t("attachments.attachment"),
+	});
 
 	if (variant === "grid") {
 		return null;
