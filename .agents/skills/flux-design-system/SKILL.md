@@ -12,6 +12,7 @@ Minimalist monochrome design language for AI-native product interfaces. Pure gra
 1. **Monochrome-first** — All structural elements use pure grayscale `oklch(L 0 0)`. Chromatic color is reserved for semantic states only (destructive, success, warning, info).
 2. **Shape = function** — Fully rounded (`rounded-full`) = interactive. Large radius (`rounded-xl`) = container. This creates instant visual grammar.
 3. **Depth via luminance** — Elevation is conveyed through stacked lightness levels, not heavy shadows. Surface tokens provide three progressive tiers.
+4. **No `dark:` prefix** — All color switching is handled via CSS custom properties that auto-switch between `:root` and `.dark`. Components should never use the `dark:` Tailwind variant for colors. Exceptions: visual effects like `mix-blend-mode` or third-party integrations (e.g., Shiki syntax highlighting).
 
 ## Color Tokens
 
@@ -63,9 +64,26 @@ All tokens use oklch with chroma `0` for perceptual grayscale. `L` ranges 0 (bla
 
 Dark mode elevation stack: `bg 0.10 → surface-1 0.14 → popover 0.16 → surface-2 0.18 → surface-3 0.22`
 
+### Subtle Tokens (auto-switch light/dark)
+
+These tokens replace `dark:` prefix patterns. They provide reduced-opacity or variant fills that auto-switch.
+
+| Token | Light | Dark | Usage |
+|---|---|---|---|
+| `--input-subtle` | transparent | `oklch(1 0 0 / 12%)` | Input/select/checkbox background fill |
+| `--input-subtle-hover` | `oklch(0.955 0 0)` | `oklch(1 0 0 / 20%)` | Hover state for outline buttons, select triggers |
+| `--input-subtle-disabled` | `oklch(0.91 0 0 / 50%)` | `oklch(1 0 0 / 32%)` | Disabled input/switch unchecked fill |
+| `--muted-subtle` | `oklch(0.955 0 0 / 50%)` | `oklch(0.18 0 0 / 50%)` | Ghost button/badge hover |
+| `--accent-subtle` | `oklch(0.95 0 0 / 50%)` | `oklch(0.22 0 0 / 50%)` | Attachment hover, subtle accent |
+| `--destructive-muted` | `oklch(0.58 0.22 27 / 10%)` | `oklch(0.704 0.191 22.216 / 20%)` | Destructive button/badge/dropdown bg |
+| `--destructive-muted-hover` | `oklch(0.58 0.22 27 / 20%)` | `oklch(0.704 0.191 22.216 / 30%)` | Destructive hover state |
+| `--destructive-border` | `oklch(0.58 0.22 27)` | `oklch(0.704 0.191 22.216 / 50%)` | Invalid input border |
+| `--destructive-ring` | `oklch(0.58 0.22 27 / 20%)` | `oklch(0.704 0.191 22.216 / 40%)` | Invalid input ring |
+| `--overlay` | `oklch(0 0 0 / 40%)` | `oklch(0 0 0 / 60%)` | Dialog/sheet backdrop |
+
 ### Semantic Colors (only non-grayscale tokens)
 
-- **Destructive**: hue 27 (red) — `oklch(0.58 0.22 27)`
+- **Destructive**: hue 27 (red) — `oklch(0.58 0.22 27)` + muted/border/ring tiers
 - **Success**: hue 145 (green) — base + foreground + muted tiers
 - **Warning**: hue 85 (yellow) — base + foreground + muted tiers
 - **Info**: hue 250 (blue) — base + foreground + muted tiers
@@ -80,13 +98,15 @@ Base `--radius: 0.75rem` (12px). Tailwind derives:
 
 | Class | Value | Assigned to |
 |---|---|---|
-| `rounded-full` | 9999px | Button, Badge, Progress, ScrollArea thumb, ButtonGroup |
+| `rounded-full` | 9999px | Button, Badge, Progress, ScrollArea thumb, ButtonGroup, Switch |
 | `rounded-xl` | 16px | Card, Dialog, Popover, Dropdown, HoverCard, Select, Command, Input, Textarea, InputGroup, InputOTP, Tabs list, Alert |
 | `rounded-lg` | 12px | Dropdown/Select/Command items, Tabs trigger, Accordion trigger, Nav links |
 | `rounded-md` | 10px | Tooltip, Skeleton |
-| `rounded-[5px]` | 5px | Checkbox (soft square) |
+| `rounded-sm` | 8px | Checkbox (soft square) |
 
 **Rule: never use `rounded-2xl` for popup containers.** It clips items near edges. All floating panels use `rounded-xl` with `p-1` inner padding for list-style containers.
+
+**Rule: never use `rounded-[Xpx]` arbitrary values.** Always use the token-derived classes above.
 
 ## Typography
 
@@ -159,6 +179,24 @@ First-child images: `rounded-t-xl`. Last-child: `rounded-b-xl`.
 
 Flush with page background in dark mode (`--sidebar` = `--background`). Light mode: `oklch(0.985 0 0)`.
 
+### Invalid state pattern (inputs, checkboxes, switches)
+
+```
+aria-invalid:border-destructive-border
+aria-invalid:ring-1
+aria-invalid:ring-destructive-ring
+```
+
+Never use `dark:aria-invalid:*` — the tokens auto-switch.
+
+### Destructive variant pattern (buttons, badges, dropdown items)
+
+```
+bg-destructive-muted text-destructive
+hover:bg-destructive-muted-hover
+focus-visible:ring-destructive-ring
+```
+
 ## Accessibility
 
 - All light mode text pairs pass WCAG AA 4.5:1
@@ -171,6 +209,8 @@ Flush with page background in dark mode (`--sidebar` = `--background`). Light mo
 
 - Never use chromatic colors for structural/decorative purposes
 - Never use `rounded-2xl` on popup containers
+- Never use `dark:` prefix for color-related classes — use auto-switching CSS tokens instead
+- Never use hardcoded Tailwind colors (e.g., `gray-500`, `blue-600`, `indigo-700`) — use semantic tokens
 - Always pair foreground tokens with their background counterparts
 - Always include `motion-reduce:` variants on animated elements
 - Always use `focus-visible:` not `focus:` for focus rings

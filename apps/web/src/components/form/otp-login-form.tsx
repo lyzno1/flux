@@ -87,7 +87,7 @@ export function OtpLoginForm({ email }: { email?: string }) {
 		<AuthFormLayout
 			title={t("otpLogin.title")}
 			footer={
-				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
 					{t("otpLogin.back")}
 				</Link>
 			}
@@ -116,7 +116,7 @@ export function OtpLoginForm({ email }: { email?: string }) {
 						<Button
 							variant="link"
 							onClick={handleChangeEmail}
-							className="h-auto p-0 text-indigo-600 text-sm hover:text-indigo-800"
+							className="h-auto p-0 text-primary text-sm hover:text-primary/80"
 						>
 							{t("otpLogin.changeEmail")}
 						</Button>
@@ -142,7 +142,7 @@ export function OtpLoginForm({ email }: { email?: string }) {
 							variant="link"
 							onClick={handleResend}
 							disabled={cooldown > 0}
-							className="text-indigo-600 text-sm hover:text-indigo-800"
+							className="text-primary text-sm hover:text-primary/80"
 						>
 							{cooldown > 0 ? t("otpLogin.cooldown", { seconds: cooldown }) : t("otpLogin.resend")}
 						</Button>

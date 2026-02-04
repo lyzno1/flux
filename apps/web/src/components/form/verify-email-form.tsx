@@ -63,7 +63,7 @@ export function VerifyEmailForm({ email }: { email: string }) {
 					variant="link"
 					onClick={handleResend}
 					disabled={cooldown > 0}
-					className="text-indigo-600 hover:text-indigo-800"
+					className="text-primary hover:text-primary/80"
 				>
 					{cooldown > 0 ? t("verifyEmail.cooldown", { seconds: cooldown }) : t("verifyEmail.resend")}
 				</Button>

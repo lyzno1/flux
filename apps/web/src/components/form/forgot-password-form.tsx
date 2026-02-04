@@ -31,7 +31,7 @@ export function ForgotPasswordForm() {
 		<AuthFormLayout
 			title={t("forgotPassword.title")}
 			footer={
-				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
 					{t("forgotPassword.back")}
 				</Link>
 			}

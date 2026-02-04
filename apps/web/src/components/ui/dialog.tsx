@@ -25,7 +25,7 @@ function DialogOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) 
 		<DialogPrimitive.Backdrop
 			data-slot="dialog-overlay"
 			className={cn(
-				"data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 isolate z-50 bg-black/40 duration-100 data-closed:animate-out data-open:animate-in supports-backdrop-filter:backdrop-blur-sm motion-reduce:animate-none motion-reduce:transition-none",
+				"data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 isolate z-50 bg-overlay duration-100 data-closed:animate-out data-open:animate-in supports-backdrop-filter:backdrop-blur-sm motion-reduce:animate-none motion-reduce:transition-none",
 				className,
 			)}
 			{...props}
