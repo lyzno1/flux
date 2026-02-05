@@ -49,7 +49,7 @@ All tokens use oklch with chroma `0` for perceptual grayscale. `L` ranges 0 (bla
 --primary-foreground:  oklch(0.10 0 0)      /* text on primary */
 --secondary:           oklch(0.18 0 0)      /* deeper fill */
 --muted:               oklch(0.18 0 0)      /* subdued bg */
---muted-foreground:    oklch(0.55 0 0)      /* subdued text */
+--muted-foreground:    oklch(0.58 0 0)      /* subdued text (AA on muted) */
 --accent:              oklch(0.22 0 0)      /* subtle accent */
 --card:                oklch(0.14 0 0)      /* elevated from bg */
 --popover:             oklch(0.16 0 0)      /* above card level */
@@ -111,8 +111,8 @@ Base `--radius: 0.75rem` (12px). Tailwind derives:
 ## Typography
 
 - Font: `"Inter Variable", sans-serif` (variable font, 100-900 weights)
-- Base size: `text-xs` (12px)
-- Body line-height: `text-xs/relaxed` (~1.625)
+- Base size: `text-sm` (14px) on desktop, `text-base` (16px) on small screens
+- Body line-height: `text-sm/relaxed` (~1.6)
 - Heading weight: `font-medium` (500)
 - Smoothing: `antialiased` on body
 
@@ -200,7 +200,7 @@ focus-visible:ring-destructive-ring
 ## Accessibility
 
 - All light mode text pairs pass WCAG AA 4.5:1
-- Dark `muted-foreground` on `muted` is borderline (~3.9:1) — bump to `oklch(0.58 0 0)` if strict AA needed
+- Dark `muted-foreground` is set to `oklch(0.58 0 0)` to clear AA on muted surfaces
 - All animations respect `prefers-reduced-motion`
 - Focus uses `focus-visible:` (keyboard only, not mouse)
 - No hardcoded colors — always use design tokens

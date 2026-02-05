@@ -17,7 +17,7 @@
 | `--secondary` | `oklch(0.955 0 0)` | `oklch(0.18 0 0)` |
 | `--secondary-foreground` | `oklch(0.15 0 0)` | `oklch(0.93 0 0)` |
 | `--muted` | `oklch(0.955 0 0)` | `oklch(0.18 0 0)` |
-| `--muted-foreground` | `oklch(0.50 0 0)` | `oklch(0.55 0 0)` |
+| `--muted-foreground` | `oklch(0.50 0 0)` | `oklch(0.58 0 0)` |
 | `--accent` | `oklch(0.95 0 0)` | `oklch(0.22 0 0)` |
 | `--accent-foreground` | `oklch(0.15 0 0)` | `oklch(0.93 0 0)` |
 | `--destructive` | `oklch(0.58 0.22 27)` | `oklch(0.704 0.191 22.216)` |
@@ -84,8 +84,8 @@
 | Text | Background | Light | Dark | WCAG AA |
 |---|---|---|---|---|
 | foreground | background | ~18:1 | ~12:1 | Pass |
-| muted-foreground | background | ~5.5:1 | ~4.2:1 | Pass |
-| muted-foreground | muted | ~5.2:1 | ~3.9:1 | Borderline |
+| muted-foreground | background | ~5.5:1 | ~4.6:1 | Pass |
+| muted-foreground | muted | ~5.2:1 | ~4.3:1 | Pass |
 | primary-foreground | primary | ~14:1 | ~12:1 | Pass |
 | destructive-foreground | destructive | ~12:1 | ~8:1 | Pass |
 
