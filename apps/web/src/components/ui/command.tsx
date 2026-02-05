@@ -9,10 +9,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
 	return (
 		<CommandPrimitive
 			data-slot="command"
-			className={cn(
-				"flex size-full flex-col overflow-hidden rounded-none bg-popover text-popover-foreground",
-				className,
-			)}
+			className={cn("flex size-full flex-col overflow-hidden rounded-xl bg-popover text-popover-foreground", className)}
 			{...props}
 		/>
 	);
@@ -39,7 +36,7 @@ function CommandDialog({
 				<DialogDescription>{description}</DialogDescription>
 			</DialogHeader>
 			<DialogContent
-				className={cn("top-1/3 translate-y-0 overflow-hidden rounded-none p-0", className)}
+				className={cn("top-1/3 translate-y-0 overflow-hidden rounded-xl p-0", className)}
 				showCloseButton={showCloseButton}
 			>
 				{children}
@@ -50,7 +47,7 @@ function CommandDialog({
 
 function CommandInput({
 	className,
-	["aria-label"]: ariaLabel,
+	"aria-label": ariaLabel,
 	...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
 	const resolvedAriaLabel = ariaLabel ?? "Search";
@@ -63,7 +60,10 @@ function CommandInput({
 					autoComplete="off"
 					data-command-input
 					data-slot="input-group-control"
-					className={cn("w-full text-xs outline-hidden disabled:cursor-not-allowed disabled:opacity-50", className)}
+					className={cn(
+						"w-full text-base outline-hidden disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
+						className,
+					)}
 					spellCheck={false}
 					{...props}
 				/>
@@ -79,7 +79,7 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
 	return (
 		<CommandPrimitive.List
 			data-slot="command-list"
-			className={cn("no-scrollbar max-h-72 scroll-py-0 overflow-y-auto overflow-x-hidden outline-none", className)}
+			className={cn("no-scrollbar max-h-72 scroll-py-0 overflow-y-auto overflow-x-hidden p-1 outline-none", className)}
 			{...props}
 		/>
 	);
@@ -89,7 +89,7 @@ function CommandEmpty({ className, ...props }: React.ComponentProps<typeof Comma
 	return (
 		<CommandPrimitive.Empty
 			data-slot="command-empty"
-			className={cn("py-6 text-center text-xs", className)}
+			className={cn("py-6 text-center text-base sm:text-sm", className)}
 			{...props}
 		/>
 	);
@@ -100,7 +100,7 @@ function CommandGroup({ className, ...props }: React.ComponentProps<typeof Comma
 		<CommandPrimitive.Group
 			data-slot="command-group"
 			className={cn(
-				"overflow-hidden text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs",
+				"overflow-hidden text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-sm",
 				className,
 			)}
 			{...props}
@@ -112,7 +112,7 @@ function CommandSeparator({ className, ...props }: React.ComponentProps<typeof C
 	return (
 		<CommandPrimitive.Separator
 			data-slot="command-separator"
-			className={cn("-mx-1 h-px bg-border", className)}
+			className={cn("-mx-1 my-1 h-px bg-border", className)}
 			{...props}
 		/>
 	);
@@ -123,7 +123,7 @@ function CommandItem({ className, children, ...props }: React.ComponentProps<typ
 		<CommandPrimitive.Item
 			data-slot="command-item"
 			className={cn(
-				"group/command-item relative flex cursor-default select-none items-center gap-2 rounded-none px-2 py-2 text-xs outline-hidden data-[disabled=true]:pointer-events-none data-selected:bg-muted data-selected:text-foreground data-[disabled=true]:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 [[data-slot=dialog-content]_&]:rounded-none! data-selected:*:[svg]:text-foreground",
+				"group/command-item relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-2 py-2 text-base outline-hidden data-[disabled=true]:pointer-events-none data-selected:bg-muted data-selected:text-foreground data-[disabled=true]:opacity-50 sm:text-sm [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 [[data-slot=dialog-content]_&]:rounded-lg! data-selected:*:[svg]:text-foreground",
 				className,
 			)}
 			{...props}
@@ -139,7 +139,7 @@ function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) 
 		<span
 			data-slot="command-shortcut"
 			className={cn(
-				"ml-auto text-muted-foreground text-xs tracking-widest group-data-selected/command-item:text-foreground",
+				"ml-auto text-muted-foreground text-sm tracking-widest group-data-selected/command-item:text-foreground",
 				className,
 			)}
 			{...props}

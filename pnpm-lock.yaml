@@ -100,6 +100,9 @@ catalogs:
     '@base-ui/react':
       specifier: 1.1.0
       version: 1.1.0
+    '@fontsource-variable/inter':
+      specifier: 5.2.8
+      version: 5.2.8
     '@rive-app/react-webgl2':
       specifier: 4.26.2
       version: 4.26.2
@@ -371,6 +374,9 @@ importers:
       '@flux/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@fontsource-variable/inter':
+        specifier: catalog:frontend
+        version: 5.2.8
       '@orpc/client':
         specifier: catalog:prod
         version: 1.13.4(@opentelemetry/api@1.9.0)
@@ -1573,6 +1579,9 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource-variable/inter@5.2.8':
+    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
 
   '@hono/node-server@1.19.9':
     resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
@@ -7357,6 +7366,8 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fontsource-variable/inter@5.2.8': {}
 
   '@hono/node-server@1.19.9(hono@4.11.7)':
     dependencies:

@@ -58,6 +58,16 @@ Turborepo monorepo with two apps and six shared packages. All packages use ESM (
 
 **Environment variables:** Validated via `@flux/env` using T3 Env + Zod. Server env requires `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `CORS_ORIGIN`. Web env uses `VITE_` prefixed vars. When adding a new environment variable, always update both `packages/env/src/server.ts` (or `web.ts`) and the corresponding `.env.example` file (`apps/server/.env.example` or `apps/web/.env.example`).
 
+**ORPC mutations:** When implementing mutations, place cache invalidation in the mutation's `onSuccess` callback using ORPC's `.key()` helper:
+```typescript
+const mutation = useMutation(orpc.resource.create.mutationOptions({
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: orpc.resource.key() })
+  }
+}))
+```
+Use `.key()` for partial matching (invalidate all), `.key({ input: {...} })` for specific entries.
+
 ## Code Style
 
 - **Formatter/Linter:** Biome (not ESLint/Prettier). Tab indentation, double quotes. Run `pnpm check` to auto-fix.
@@ -65,3 +75,4 @@ Turborepo monorepo with two apps and six shared packages. All packages use ESM (
 - **Key Biome rules:** No barrel files (`noBarrelFile`), no re-export all (`noReExportAll`), no `console.*` (error, allows `console.error`/`console.warn`), `noNonNullAssertion`, `useNodejsImportProtocol` for node builtins, sorted Tailwind classes (`useSortedClasses` with `cn`/`clsx`/`cva`).
 - **Export conventions:** Prefer named exports (`export function Foo`) over default exports (`export default function Foo`). This enables consistent import names and better refactoring support.
 - **Import conventions:** Use namespace imports for modules without a real default export. Write `import * as z from "zod"` (not `import z from "zod"` or `import { z } from "zod"`). For React, use named imports (`import { useState } from "react"`) and `import type * as React from "react"` when the `React` namespace type is needed.
+- **Design system:** When modifying design tokens (`apps/web/src/index.css`), component border-radius, color tokens, spacing, or any visual design pattern, also update the `flux-design-system` skill at `.agents/skills/flux-design-system/` to keep the specification in sync.

@@ -18,7 +18,7 @@ function AccordionTrigger({ className, children, ...props }: AccordionPrimitive.
 			<AccordionPrimitive.Trigger
 				data-slot="accordion-trigger"
 				className={cn(
-					"group/accordion-trigger relative flex flex-1 items-start justify-between rounded-none border border-transparent py-2.5 text-left font-medium text-xs outline-none transition-[color,background-color,border-color,box-shadow] hover:underline focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground motion-reduce:transition-none",
+					"group/accordion-trigger relative flex flex-1 items-start justify-between rounded-lg border border-transparent py-2.5 text-left font-medium text-sm outline-none transition-[color,background-color,border-color,box-shadow] hover:underline focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground motion-reduce:transition-none",
 					className,
 				)}
 				{...props}
@@ -43,7 +43,7 @@ function AccordionContent({ className, children, ...props }: AccordionPrimitive.
 	return (
 		<AccordionPrimitive.Panel
 			data-slot="accordion-content"
-			className="overflow-hidden text-xs data-closed:animate-accordion-up data-open:animate-accordion-down motion-reduce:animate-none"
+			className="overflow-hidden text-base/relaxed data-closed:animate-accordion-up data-open:animate-accordion-down motion-reduce:animate-none sm:text-sm/relaxed"
 			{...props}
 		>
 			<div

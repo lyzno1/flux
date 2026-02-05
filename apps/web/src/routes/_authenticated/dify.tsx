@@ -20,21 +20,21 @@ interface StreamEntry {
 }
 
 const EVENT_COLORS: Record<string, string> = {
-	message: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
-	agent_message: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400",
-	agent_thought: "bg-purple-500/10 text-purple-700 dark:text-purple-400",
-	message_end: "bg-green-500/10 text-green-700 dark:text-green-400",
-	message_file: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
-	message_replace: "bg-orange-500/10 text-orange-700 dark:text-orange-400",
-	workflow_started: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400",
-	workflow_finished: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400",
-	node_started: "bg-teal-500/10 text-teal-700 dark:text-teal-400",
-	node_finished: "bg-teal-500/10 text-teal-700 dark:text-teal-400",
-	node_retry: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
-	error: "bg-red-500/10 text-red-700 dark:text-red-400",
+	message: "bg-info-muted text-info-foreground",
+	agent_message: "bg-info-muted text-info-foreground",
+	agent_thought: "bg-muted text-muted-foreground",
+	message_end: "bg-success-muted text-success-foreground",
+	message_file: "bg-warning-muted text-warning-foreground",
+	message_replace: "bg-warning-muted text-warning-foreground",
+	workflow_started: "bg-info-muted text-info-foreground",
+	workflow_finished: "bg-success-muted text-success-foreground",
+	node_started: "bg-info-muted text-info-foreground",
+	node_finished: "bg-success-muted text-success-foreground",
+	node_retry: "bg-warning-muted text-warning-foreground",
+	error: "bg-destructive-muted text-destructive",
 	ping: "bg-muted text-muted-foreground",
-	text_chunk: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
-	agent_log: "bg-violet-500/10 text-violet-700 dark:text-violet-400",
+	text_chunk: "bg-info-muted text-info-foreground",
+	agent_log: "bg-muted text-muted-foreground",
 };
 
 function EventBadge({ event }: { event: string }) {

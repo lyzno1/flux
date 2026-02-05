@@ -64,10 +64,10 @@ export function SignInForm() {
 			title={t("signIn.title")}
 			footer={
 				<div className="flex flex-col items-center gap-1">
-					<Link to="/otp" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+					<Link to="/otp" search={true} className="text-primary text-sm hover:text-primary/80">
 						{t("signIn.otpLogin")}
 					</Link>
-					<Link to="/sign-up" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+					<Link to="/sign-up" search={true} className="text-primary text-sm hover:text-primary/80">
 						{t("signIn.switchToSignUp")}
 					</Link>
 				</div>

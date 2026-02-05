@@ -35,7 +35,7 @@ export function ResetPasswordForm({ email }: { email: string }) {
 		<AuthFormLayout
 			title={t("resetPassword.title")}
 			footer={
-				<Link to="/login" search={true} className="text-indigo-600 text-sm hover:text-indigo-800">
+				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
 					{t("resetPassword.back")}
 				</Link>
 			}
