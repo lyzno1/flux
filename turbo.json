@@ -7,14 +7,14 @@
 			"outputs": ["dist/**"]
 		},
 		"check-types": {
-			"dependsOn": ["transit"]
+			"dependsOn": ["transit"],
+			"outputs": ["**/*.tsbuildinfo"]
 		},
 		"db:generate": {
 			"cache": false
 		},
 		"db:migrate": {
-			"cache": false,
-			"persistent": true
+			"cache": false
 		},
 		"db:push": {
 			"cache": false
@@ -28,10 +28,10 @@
 			"persistent": true
 		},
 		"test": {
-			"dependsOn": ["^build"]
+			"dependsOn": ["transit"]
 		},
 		"test:coverage": {
-			"dependsOn": ["^build"],
+			"dependsOn": ["transit"],
 			"outputs": ["coverage/**"]
 		},
 		"transit": {
