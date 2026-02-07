@@ -915,9 +915,12 @@
                   "type": "frame",
                   "id": "QRzwy",
                   "name": "Brand Content",
-                  "height": 0,
                   "layout": "vertical",
                   "gap": 16,
+                  "padding": [
+                    24,
+                    0
+                  ],
                   "alignItems": "center",
                   "children": [
                     {
@@ -19540,6 +19543,2962 @@
                   "fontFamily": "Inter",
                   "fontSize": 13,
                   "fontWeight": "semibold"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "4bB3i",
+      "x": 4200,
+      "y": 0,
+      "name": "Home",
+      "clip": true,
+      "width": 1280,
+      "height": 800,
+      "fill": [
+        "$bg-deep",
+        {
+          "type": "gradient",
+          "gradientType": "radial",
+          "enabled": true,
+          "rotation": 0,
+          "size": {
+            "width": 0.92,
+            "height": 0.92
+          },
+          "colors": [
+            {
+              "color": "#FAFAFA0D",
+              "position": 0
+            },
+            {
+              "color": "#FAFAFA00",
+              "position": 0.72
+            }
+          ],
+          "center": {
+            "y": 0.42
+          }
+        }
+      ],
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "0ohZt",
+          "name": "Top Bar",
+          "width": "fill_container",
+          "height": 48,
+          "padding": [
+            0,
+            48
+          ],
+          "justifyContent": "end",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "2PUaI",
+              "name": "Auth Actions",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "K9ppG",
+                  "name": "Sign in",
+                  "height": 42,
+                  "fill": "$cta-bg",
+                  "cornerRadius": "$pill",
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "38uA3",
+                      "name": "topSignInText",
+                      "fill": "$cta-text",
+                      "content": "Sign in",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "VDYPW",
+          "name": "brandWrapper",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            40,
+            60
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "0fjwi",
+              "name": "dotRow",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "XM2aU",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BFpaw",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "9MuT7",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WOPbF",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8hqkk",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "biTZz",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VKoNP",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RbIEr",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "qKLMF",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GXSmv",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VNW7C",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "HPM36",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "PENg3",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BXf7e",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Uky8h",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VBfd8",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RGNMW",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "rPWNS",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "0t8H2",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "6Jf2b",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "F6FSj",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Rvqib",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "y2LxD",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "w15qm",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "790ws",
+              "name": "r2",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "u7BhF",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "KHAY7",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "LsvMW",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "d1O5N",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "xIUUB",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GoIci",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "qJTsF",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "0wSrH",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "TAyIP",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "a1bEp",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "6HyXg",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VGRV8",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kzSTv",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Fv5QJ",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pk4Bn",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "bGnAR",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "yFwby",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XR3vy",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "LCE3T",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XRcv4",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DVwYa",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "eME15",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2lIbi",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5RaV2",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "8lyye",
+              "name": "r3",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "zQAgx",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WviRV",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "z6V2w",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VXrWj",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "3daoX",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WJ8MB",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VHlX6",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "KcOAv",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aSgFb",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XMpI1",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "6BT7i",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pdlSU",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "NuUKU",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "YsJtv",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "6cOI0",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5TZwZ",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "H33X9",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kgblC",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "PfkpS",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "wgTSY",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "wqOs2",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "57tjo",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "rxgQE",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "9aprl",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "7zJ3w",
+              "name": "r4",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "EdzvQ",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "UHKiV",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "omSLW",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BtoA7",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jgy19",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "nHmZC",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "A5g8n",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "bCPfQ",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "LJn8u",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "7KIM1",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XYkSL",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "dcA7i",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AcGao",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CCqLb",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "KHyH7",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hDUV8",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "IW2q9",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "69eOf",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hRere",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Y3Iuv",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "p06S9",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RPJwn",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4nog3",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "7n2Ma",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k2wkx",
+              "name": "r5",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "Xk8Eo",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "x2Hcm",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5yGDW",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "sDP10",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "u5qr5",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "6saBy",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "nQvgy",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DFRCR",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "KxrGn",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "krw1G",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aPrz9",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "uEhXm",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Po9hF",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "xQU9x",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WLjeM",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8ldIJ",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "zJ8Br",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "9qhjU",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "qgdiN",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "MlNJA",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "YzLis",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4OrI5",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "UzmUf",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kML44",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ugf4Q",
+              "name": "r6",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "3ckVT",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BpPSd",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ZPUce",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kaTp4",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "NEaTG",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "iQANI",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "y75dN",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aGmVf",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VP4Eo",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DFkQ0",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "sQp7d",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4a0Lw",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "YGgKz",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "vMbl4",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "HfWyX",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "wQ59O",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "w5vXi",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DM57s",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "0YUgk",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "SK47F",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "IBukM",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4r6tX",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "vaf7x",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AymnE",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "75jNi",
+              "name": "r7",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "Z1twW",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RJwfv",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "7UAEu",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Ini8H",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "nRnBF",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hoIQO",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "gxITV",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "inCfx",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "JMWqm",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Ma2yt",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ZCUqU",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4ITkp",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "img6Y",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Exr7a",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AHeWx",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ZNVKp",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hbygw",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CIJhO",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "xosKv",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "0Fc9r",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tLcoA",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pMOSl",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "y0MbT",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "J4zce",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZBIap",
+              "name": "Brand Content",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                24,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "pbs7n",
+                  "name": "fluxT",
+                  "fill": "$text-primary",
+                  "content": "Flux",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "bold",
+                  "letterSpacing": -2
+                },
+                {
+                  "type": "text",
+                  "id": "sRCOO",
+                  "name": "tagT",
+                  "fill": "$text-muted",
+                  "content": "Build something extraordinary.",
+                  "fontFamily": "Inter",
+                  "fontSize": 17,
+                  "fontWeight": "normal",
+                  "letterSpacing": 0.2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pUhKZ",
+              "name": "r8",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "y2mKP",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "I6Tde",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "sH1uq",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "NeZjv",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Bqs16",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "OpW5Z",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jwhVX",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "byx6Y",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "dS3yx",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8JOKU",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "NO2Xn",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "cHsSV",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jfyUE",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5z77x",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "yJnbi",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GIruw",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "qPajU",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "MXFcW",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tH3gW",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DDJy8",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "84bPH",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "h2SmK",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8FITq",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "SNoHa",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "JxukY",
+              "name": "r9",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "c1EB1",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "FqmXJ",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Wo5NL",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "zQBis",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "oqMlE",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "3HHOq",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aPiKf",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aiLyK",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8iDiM",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RAahL",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "zL6BE",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Az7qR",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "nO2tx",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "41nzX",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "b368T",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "lKSw4",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "TEafm",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ri6tn",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "N7Cfx",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Jb2Lt",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "F3DTd",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "W8hbI",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Yyh2M",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "S8RMI",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "vuhH4",
+              "name": "r10",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "ABi3L",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2g6kd",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pUWH0",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jgEzK",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ELRK2",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2FyFn",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hP1M5",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "UW648",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "xLFLM",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hS2Mm",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4h2dQ",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "uS3wv",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RuU67",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "fnzgR",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "o6l9F",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RBwR2",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kEbzt",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ZvWTY",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ABZDM",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Yu0XX",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2Ae9z",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WPkSX",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jw7p9",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8IK6z",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ED8Cq",
+              "name": "r11",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "xqkyy",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "oRDtY",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XnCcY",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VkOwr",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "s1IxA",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "u6YbW",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WueNp",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "UVdxZ",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "n2WmS",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "rZY0W",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "JIPcm",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kpQkF",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "J3Qmo",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "w0vuF",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "A9NUh",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2ZN1g",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AaOv7",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WSMhP",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "YBvOd",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Q2ETh",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "FITNd",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "7CAuk",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "WwXDM",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "rtnrK",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IQ35p",
+              "name": "r12",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "O93Lk",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "9vXdy",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "fZUHO",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "S5qDE",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tohhd",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "uc0xS",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "W69NY",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "uZTZJ",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ykJHJ",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Blk6P",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "JUAuC",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "TxTzW",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "O2DAt",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "dvUju",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "C7FbJ",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tR83w",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5vFGz",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5xkL0",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "UmYnv",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "abkIN",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aNUlw",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Za2ft",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "yzMi5",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "1a1Rq",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zwfGC",
+              "name": "r13",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "kU3ZJ",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "cJLt2",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Pq3b9",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GjSFP",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "q4POA",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "qs3Fv",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "q6SjK",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "FX4DC",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "3LpSz",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "t6R8F",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AAfOJ",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ARfhB",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4C0Nk",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ta1rt",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "TnY7B",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "TqDqb",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "3kr87",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ovH5s",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "rIGfb",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "l4NOS",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5Cel5",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "dLZXl",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "eAjen",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "rcWr1",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "deRbE",
+              "name": "r14",
+              "opacity": 0.06,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "iXAJa",
+                  "name": "d01",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8tYOc",
+                  "name": "d02",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "kA14s",
+                  "name": "d03",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ReS0B",
+                  "name": "d04",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "lDZAU",
+                  "name": "d05",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "cKBZp",
+                  "name": "d06",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5ImCj",
+                  "name": "d07",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "nTtY6",
+                  "name": "d08",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Uum7o",
+                  "name": "d09",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "L697v",
+                  "name": "d10",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "o3A7f",
+                  "name": "d11",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jVLGz",
+                  "name": "d12",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Gine4",
+                  "name": "d13",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "sphc5",
+                  "name": "d14",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "QbpE6",
+                  "name": "d15",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2pnuz",
+                  "name": "d16",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hYAgV",
+                  "name": "d17",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XpKjK",
+                  "name": "d18",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "04Ngn",
+                  "name": "d19",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "UUjCO",
+                  "name": "d20",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "fhcNt",
+                  "name": "d21",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "xCosY",
+                  "name": "d22",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "XdYxS",
+                  "name": "d23",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "veioz",
+                  "name": "d24",
+                  "fill": "$text-primary",
+                  "width": 3,
+                  "height": 3
                 }
               ]
             }
