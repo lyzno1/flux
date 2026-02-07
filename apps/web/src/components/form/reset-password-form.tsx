@@ -54,6 +54,7 @@ export function ResetPasswordForm({ email }: { email: string }) {
 					{(field) => (
 						<field.IconPasswordField
 							label={t("resetPassword.password")}
+							placeholder="At least 8 characters"
 							autoComplete="new-password"
 							toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
 						/>

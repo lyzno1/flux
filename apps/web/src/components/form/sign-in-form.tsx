@@ -98,6 +98,7 @@ export function SignInForm() {
 						{(field) => (
 							<field.IconPasswordField
 								label={t("signIn.password")}
+								placeholder="Enter your password"
 								autoComplete="current-password"
 								toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
 								labelExtra={

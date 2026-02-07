@@ -62,7 +62,7 @@ export function SignUpForm() {
 				className="space-y-4"
 			>
 				<form.AppField name="name" validators={{ onBlur: createNameSchema(t("validation.nameMin")) }}>
-					{(field) => <field.TextField label={t("signUp.name")} autoComplete="name" />}
+					{(field) => <field.TextField label={t("signUp.name")} placeholder="John Doe" autoComplete="name" />}
 				</form.AppField>
 
 				<form.AppField
@@ -71,7 +71,7 @@ export function SignUpForm() {
 						onBlur: createUsernameSchema(t("validation.usernameMin"), t("validation.usernamePattern")),
 					}}
 				>
-					{(field) => <field.TextField label={t("signUp.username")} autoComplete="username" />}
+					{(field) => <field.TextField label={t("signUp.username")} placeholder="johndoe" autoComplete="username" />}
 				</form.AppField>
 
 				<form.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
@@ -84,6 +84,7 @@ export function SignUpForm() {
 					{(field) => (
 						<field.IconPasswordField
 							label={t("signUp.password")}
+							placeholder="At least 8 characters"
 							autoComplete="new-password"
 							toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
 						/>
