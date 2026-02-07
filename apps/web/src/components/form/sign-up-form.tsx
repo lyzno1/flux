@@ -1,4 +1,4 @@
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -6,6 +6,7 @@ import { authClient } from "@/lib/auth-client";
 import { createEmailSchema, createNameSchema, createPasswordSchema, createUsernameSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
 import { AuthFormLayout } from "./auth-form-layout";
+import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -46,11 +47,8 @@ export function SignUpForm() {
 	return (
 		<AuthFormLayout
 			title={t("signUp.title")}
-			footer={
-				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
-					{t("signUp.switchToSignIn")}
-				</Link>
-			}
+			description={t("signUp.description")}
+			footer={<AuthFooterLinkRow prefix={t("signUp.hasAccount")} to="/login" label={t("signUp.switchToSignIn")} />}
 		>
 			<GoogleOAuthButton redirect={redirect} />
 			<OAuthDivider />
@@ -64,7 +62,7 @@ export function SignUpForm() {
 				className="space-y-4"
 			>
 				<form.AppField name="name" validators={{ onBlur: createNameSchema(t("validation.nameMin")) }}>
-					{(field) => <field.TextField label={t("signUp.name")} autoComplete="name" />}
+					{(field) => <field.TextField label={t("signUp.name")} placeholder="John Doe" autoComplete="name" />}
 				</form.AppField>
 
 				<form.AppField
@@ -73,19 +71,32 @@ export function SignUpForm() {
 						onBlur: createUsernameSchema(t("validation.usernameMin"), t("validation.usernamePattern")),
 					}}
 				>
-					{(field) => <field.TextField label={t("signUp.username")} autoComplete="username" />}
+					{(field) => <field.TextField label={t("signUp.username")} placeholder="johndoe" autoComplete="username" />}
 				</form.AppField>
 
 				<form.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
-					{(field) => <field.EmailField label={t("signUp.email")} autoComplete="email" />}
+					{(field) => (
+						<field.IconEmailField label={t("signUp.email")} placeholder="name@example.com" autoComplete="email" />
+					)}
 				</form.AppField>
 
 				<form.AppField name="password" validators={{ onBlur: createPasswordSchema(t("validation.passwordMin")) }}>
-					{(field) => <field.PasswordField label={t("signUp.password")} autoComplete="new-password" />}
+					{(field) => (
+						<field.IconPasswordField
+							label={t("signUp.password")}
+							placeholder="At least 8 characters"
+							autoComplete="new-password"
+							toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
+						/>
+					)}
 				</form.AppField>
 
 				<form.AppForm>
-					<form.SubmitButton label={t("signUp.submit")} submittingLabel={t("signUp.submitting")} />
+					<form.SubmitButton
+						label={t("signUp.submit")}
+						submittingLabel={t("signUp.submitting")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+					/>
 				</form.AppForm>
 			</form>
 		</AuthFormLayout>

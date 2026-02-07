@@ -1,4 +1,5 @@
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -7,11 +8,23 @@ import { authClient } from "@/lib/auth-client";
 import { createEmailSchema, createOtpSchema } from "@/lib/auth-validation";
 import { Button } from "../ui/button";
 import { AuthFormLayout } from "./auth-form-layout";
+import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
 
 const RESEND_COOLDOWN = 60;
+
+function handleChangeEmail(navigate: ReturnType<typeof useNavigate>) {
+	navigate({
+		to: "/otp",
+		search: (prev) => {
+			const { email: _email, ...rest } = prev as Record<string, unknown>;
+			return rest;
+		},
+		replace: true,
+	});
+}
 
 export function OtpLoginForm({ email }: { email?: string }) {
 	const { redirect } = authRoute.useSearch();
@@ -72,83 +85,90 @@ export function OtpLoginForm({ email }: { email?: string }) {
 		toast.success(t("otpLogin.resent"));
 	}
 
-	function handleChangeEmail() {
-		navigate({
-			to: "/otp",
-			search: (prev) => {
-				const { email: _email, ...rest } = prev as Record<string, unknown>;
-				return rest;
-			},
-			replace: true,
-		});
+	if (email) {
+		return (
+			<AuthFormLayout
+				title={t("otpLogin.title")}
+				footer={<AuthFooterLinkRow prefix={t("otpLogin.backPrefix")} to="/login" label={t("otpLogin.back")} />}
+			>
+				<div className="flex items-center justify-between">
+					<p className="text-[13px] text-muted-foreground">{t("otpLogin.sendingTo", { email })}</p>
+					<Button
+						variant="link"
+						onClick={() => handleChangeEmail(navigate)}
+						className="h-auto p-0 font-semibold text-[13px] hover:underline"
+					>
+						{t("otpLogin.changeEmail")}
+					</Button>
+				</div>
+
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						otpForm.handleSubmit();
+					}}
+					className="space-y-5"
+				>
+					<otpForm.AppField name="otp" validators={{ onBlur: createOtpSchema(t("validation.otpLength")) }}>
+						{(field) => <field.OTPField label={t("otpLogin.otp")} />}
+					</otpForm.AppField>
+
+					<otpForm.AppForm>
+						<otpForm.SubmitButton
+							label={t("otpLogin.submit")}
+							submittingLabel={t("otpLogin.submitting")}
+							className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+						>
+							<ArrowRight />
+						</otpForm.SubmitButton>
+					</otpForm.AppForm>
+				</form>
+
+				<div className="text-center">
+					<Button
+						variant="link"
+						onClick={handleResend}
+						disabled={cooldown > 0}
+						className="h-auto p-0 font-semibold text-[13px] hover:underline disabled:text-muted-foreground disabled:no-underline"
+					>
+						{cooldown > 0 ? t("otpLogin.cooldown", { seconds: cooldown }) : t("otpLogin.resend")}
+					</Button>
+				</div>
+			</AuthFormLayout>
+		);
 	}
 
 	return (
 		<AuthFormLayout
 			title={t("otpLogin.title")}
-			footer={
-				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
-					{t("otpLogin.back")}
-				</Link>
-			}
+			description={t("otpLogin.description")}
+			footer={<AuthFooterLinkRow prefix={t("otpLogin.backPrefix")} to="/login" label={t("otpLogin.back")} />}
 		>
-			{!email ? (
-				<form
-					onSubmit={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						emailForm.handleSubmit();
-					}}
-					className="space-y-4"
-				>
-					<emailForm.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
-						{(field) => <field.EmailField label={t("otpLogin.email")} autoComplete="email" />}
-					</emailForm.AppField>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					emailForm.handleSubmit();
+				}}
+				className="space-y-5"
+			>
+				<emailForm.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
+					{(field) => (
+						<field.IconEmailField label={t("otpLogin.email")} placeholder="name@example.com" autoComplete="email" />
+					)}
+				</emailForm.AppField>
 
-					<emailForm.AppForm>
-						<emailForm.SubmitButton label={t("otpLogin.sendCode")} submittingLabel={t("otpLogin.sendingCode")} />
-					</emailForm.AppForm>
-				</form>
-			) : (
-				<>
-					<div className="mb-4 flex items-center justify-between">
-						<p className="text-muted-foreground text-sm">{t("otpLogin.sendingTo", { email })}</p>
-						<Button
-							variant="link"
-							onClick={handleChangeEmail}
-							className="h-auto p-0 text-primary text-sm hover:text-primary/80"
-						>
-							{t("otpLogin.changeEmail")}
-						</Button>
-					</div>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							otpForm.handleSubmit();
-						}}
-						className="space-y-4"
+				<emailForm.AppForm>
+					<emailForm.SubmitButton
+						label={t("otpLogin.sendCode")}
+						submittingLabel={t("otpLogin.sendingCode")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
 					>
-						<otpForm.AppField name="otp" validators={{ onBlur: createOtpSchema(t("validation.otpLength")) }}>
-							{(field) => <field.OTPField label={t("otpLogin.otp")} />}
-						</otpForm.AppField>
-
-						<otpForm.AppForm>
-							<otpForm.SubmitButton label={t("otpLogin.submit")} submittingLabel={t("otpLogin.submitting")} />
-						</otpForm.AppForm>
-					</form>
-					<div className="mt-3 text-center">
-						<Button
-							variant="link"
-							onClick={handleResend}
-							disabled={cooldown > 0}
-							className="text-primary text-sm hover:text-primary/80"
-						>
-							{cooldown > 0 ? t("otpLogin.cooldown", { seconds: cooldown }) : t("otpLogin.resend")}
-						</Button>
-					</div>
-				</>
-			)}
+						<ArrowRight />
+					</emailForm.SubmitButton>
+				</emailForm.AppForm>
+			</form>
 		</AuthFormLayout>
 	);
 }

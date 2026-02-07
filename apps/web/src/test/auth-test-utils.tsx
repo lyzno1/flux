@@ -16,9 +16,9 @@ import { createMockContext } from "./mock-context";
 const authSearchSchema = z.object({
 	redirect: z
 		.string()
-		.default("/dashboard")
-		.catch("/dashboard")
-		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dashboard")),
+		.default("/dify")
+		.catch("/dify")
+		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dify")),
 });
 
 const AUTH_PATHS = ["/login", "/sign-up", "/otp", "/verify-email", "/forgot-password", "/reset-password"] as const;

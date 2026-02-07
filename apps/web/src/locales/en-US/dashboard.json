@@ -1,5 +1,0 @@
-{
-	"apiMessage": "API: {{message}}",
-	"title": "Dashboard",
-	"welcome": "Welcome {{name}}"
-}

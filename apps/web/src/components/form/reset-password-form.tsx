@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { createOtpSchema, createPasswordSchema } from "@/lib/auth-validation";
 import { AuthFormLayout } from "./auth-form-layout";
+import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 export function ResetPasswordForm({ email }: { email: string }) {
@@ -34,11 +35,8 @@ export function ResetPasswordForm({ email }: { email: string }) {
 	return (
 		<AuthFormLayout
 			title={t("resetPassword.title")}
-			footer={
-				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
-					{t("resetPassword.back")}
-				</Link>
-			}
+			description={t("resetPassword.description")}
+			footer={<AuthFooterLinkRow prefix={t("resetPassword.backPrefix")} to="/login" label={t("resetPassword.back")} />}
 		>
 			<form
 				onSubmit={(e) => {
@@ -53,11 +51,22 @@ export function ResetPasswordForm({ email }: { email: string }) {
 				</form.AppField>
 
 				<form.AppField name="password" validators={{ onBlur: createPasswordSchema(t("validation.passwordMin")) }}>
-					{(field) => <field.PasswordField label={t("resetPassword.password")} autoComplete="new-password" />}
+					{(field) => (
+						<field.IconPasswordField
+							label={t("resetPassword.password")}
+							placeholder="At least 8 characters"
+							autoComplete="new-password"
+							toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
+						/>
+					)}
 				</form.AppField>
 
 				<form.AppForm>
-					<form.SubmitButton label={t("resetPassword.submit")} submittingLabel={t("resetPassword.submitting")} />
+					<form.SubmitButton
+						label={t("resetPassword.submit")}
+						submittingLabel={t("resetPassword.submitting")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+					/>
 				</form.AppForm>
 			</form>
 		</AuthFormLayout>

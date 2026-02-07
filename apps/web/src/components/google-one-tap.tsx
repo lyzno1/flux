@@ -17,7 +17,7 @@ export function GoogleOneTap() {
 		authClient.oneTap({
 			fetchOptions: {
 				onSuccess: () => {
-					navigate({ to: "/dashboard" });
+					navigate({ to: "/dify" });
 				},
 			},
 		});

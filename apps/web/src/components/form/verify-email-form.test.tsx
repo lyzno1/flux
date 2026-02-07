@@ -135,7 +135,7 @@ describe("VerifyEmailForm", () => {
 			await fillOtpAndSubmit(user, "123456");
 
 			await waitFor(() => {
-				expect(router.state.location.pathname).toBe("/dashboard");
+				expect(router.state.location.pathname).toBe("/dify");
 			});
 		});
 

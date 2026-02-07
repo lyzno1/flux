@@ -1,4 +1,5 @@
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { ArrowRight, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -6,6 +7,11 @@ import { authClient } from "@/lib/auth-client";
 import { createRequiredSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
 import { AuthFormLayout } from "./auth-form-layout";
+import {
+	AUTH_MUTED_TEXT_LINK_CLASS,
+	AUTH_PRIMARY_SUBMIT_BUTTON_CLASS,
+	AuthFooterLinkRow,
+} from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -62,16 +68,8 @@ export function SignInForm() {
 	return (
 		<AuthFormLayout
 			title={t("signIn.title")}
-			footer={
-				<div className="flex flex-col items-center gap-1">
-					<Link to="/otp" search={true} className="text-primary text-sm hover:text-primary/80">
-						{t("signIn.otpLogin")}
-					</Link>
-					<Link to="/sign-up" search={true} className="text-primary text-sm hover:text-primary/80">
-						{t("signIn.switchToSignUp")}
-					</Link>
-				</div>
-			}
+			description={t("signIn.description")}
+			footer={<AuthFooterLinkRow prefix={t("signIn.noAccount")} to="/sign-up" label={t("signIn.switchToSignUp")} />}
 		>
 			<GoogleOAuthButton redirect={redirect} />
 			<OAuthDivider />
@@ -82,24 +80,50 @@ export function SignInForm() {
 					e.stopPropagation();
 					form.handleSubmit();
 				}}
-				className="space-y-4"
+				className="space-y-5"
 			>
 				<form.AppField name="identifier" validators={{ onSubmit: createRequiredSchema(t("validation.required")) }}>
-					{(field) => <field.TextField label={t("signIn.email")} autoComplete="username" />}
+					{(field) => (
+						<field.IconTextField
+							label={t("signIn.email")}
+							placeholder="name@example.com"
+							autoComplete="username"
+							icon={<Mail />}
+						/>
+					)}
 				</form.AppField>
 
-				<form.AppField name="password" validators={{ onSubmit: createRequiredSchema(t("validation.required")) }}>
-					{(field) => <field.PasswordField label={t("signIn.password")} autoComplete="current-password" />}
-				</form.AppField>
-
-				<div className="flex justify-end">
-					<Link to="/forgot-password" search={true} className="text-sm hover:underline">
-						{t("signIn.forgotPassword")}
-					</Link>
+				<div className="space-y-1.5">
+					<form.AppField name="password" validators={{ onSubmit: createRequiredSchema(t("validation.required")) }}>
+						{(field) => (
+							<field.IconPasswordField
+								label={t("signIn.password")}
+								placeholder="Enter your password"
+								autoComplete="current-password"
+								toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
+								labelExtra={
+									<Link to="/forgot-password" search={true} className={AUTH_MUTED_TEXT_LINK_CLASS}>
+										{t("signIn.forgotPassword")}
+									</Link>
+								}
+							/>
+						)}
+					</form.AppField>
+					<div className="flex justify-end">
+						<Link to="/otp" search={true} className={AUTH_MUTED_TEXT_LINK_CLASS}>
+							{t("signIn.otpLogin")}
+						</Link>
+					</div>
 				</div>
 
 				<form.AppForm>
-					<form.SubmitButton label={t("signIn.submit")} submittingLabel={t("signIn.submitting")} />
+					<form.SubmitButton
+						label={t("signIn.submit")}
+						submittingLabel={t("signIn.submitting")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+					>
+						<ArrowRight />
+					</form.SubmitButton>
 				</form.AppForm>
 			</form>
 		</AuthFormLayout>

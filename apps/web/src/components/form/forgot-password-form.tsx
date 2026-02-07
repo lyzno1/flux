@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { createEmailSchema } from "@/lib/auth-validation";
 import { AuthFormLayout } from "./auth-form-layout";
+import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 export function ForgotPasswordForm() {
@@ -30,10 +31,9 @@ export function ForgotPasswordForm() {
 	return (
 		<AuthFormLayout
 			title={t("forgotPassword.title")}
+			description={t("forgotPassword.description")}
 			footer={
-				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
-					{t("forgotPassword.back")}
-				</Link>
+				<AuthFooterLinkRow prefix={t("forgotPassword.backPrefix")} to="/login" label={t("forgotPassword.back")} />
 			}
 		>
 			<form
@@ -45,11 +45,21 @@ export function ForgotPasswordForm() {
 				className="space-y-4"
 			>
 				<form.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
-					{(field) => <field.EmailField label={t("forgotPassword.email")} autoComplete="email" />}
+					{(field) => (
+						<field.IconEmailField
+							label={t("forgotPassword.email")}
+							placeholder="name@example.com"
+							autoComplete="email"
+						/>
+					)}
 				</form.AppField>
 
 				<form.AppForm>
-					<form.SubmitButton label={t("forgotPassword.submit")} submittingLabel={t("forgotPassword.submitting")} />
+					<form.SubmitButton
+						label={t("forgotPassword.submit")}
+						submittingLabel={t("forgotPassword.submitting")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+					/>
 				</form.AppForm>
 			</form>
 		</AuthFormLayout>

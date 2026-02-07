@@ -18,7 +18,7 @@
 | `--secondary-foreground` | `oklch(0.15 0 0)` | `oklch(0.93 0 0)` |
 | `--muted` | `oklch(0.955 0 0)` | `oklch(0.18 0 0)` |
 | `--muted-foreground` | `oklch(0.50 0 0)` | `oklch(0.58 0 0)` |
-| `--accent` | `oklch(0.95 0 0)` | `oklch(0.22 0 0)` |
+| `--accent` | `oklch(0.95 0 0)` | `oklch(0.35 0 0)` |
 | `--accent-foreground` | `oklch(0.15 0 0)` | `oklch(0.93 0 0)` |
 | `--destructive` | `oklch(0.58 0.22 27)` | `oklch(0.704 0.191 22.216)` |
 | `--destructive-foreground` | `oklch(0.985 0 0)` | `oklch(0.985 0 0)` |

@@ -13,7 +13,6 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDifyRouteImport } from './routes/_authenticated/dify'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthVerifyEmailRouteImport } from './routes/_auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthResetPasswordRouteImport } from './routes/_auth/reset-password'
@@ -37,11 +36,6 @@ const IndexRoute = IndexRouteImport.update({
 const AuthenticatedDifyRoute = AuthenticatedDifyRouteImport.update({
   id: '/dify',
   path: '/dify',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
@@ -83,7 +77,6 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof AuthResetPasswordRoute
   '/sign-up': typeof AuthSignUpRoute
   '/verify-email': typeof AuthVerifyEmailRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
   '/dify': typeof AuthenticatedDifyRoute
 }
 export interface FileRoutesByTo {
@@ -94,7 +87,6 @@ export interface FileRoutesByTo {
   '/reset-password': typeof AuthResetPasswordRoute
   '/sign-up': typeof AuthSignUpRoute
   '/verify-email': typeof AuthVerifyEmailRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
   '/dify': typeof AuthenticatedDifyRoute
 }
 export interface FileRoutesById {
@@ -108,7 +100,6 @@ export interface FileRoutesById {
   '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_auth/verify-email': typeof AuthVerifyEmailRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/dify': typeof AuthenticatedDifyRoute
 }
 export interface FileRouteTypes {
@@ -121,7 +112,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-up'
     | '/verify-email'
-    | '/dashboard'
     | '/dify'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,7 +122,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-up'
     | '/verify-email'
-    | '/dashboard'
     | '/dify'
   id:
     | '__root__'
@@ -145,7 +134,6 @@ export interface FileRouteTypes {
     | '/_auth/reset-password'
     | '/_auth/sign-up'
     | '/_auth/verify-email'
-    | '/_authenticated/dashboard'
     | '/_authenticated/dify'
   fileRoutesById: FileRoutesById
 }
@@ -183,13 +171,6 @@ declare module '@tanstack/react-router' {
       path: '/dify'
       fullPath: '/dify'
       preLoaderRoute: typeof AuthenticatedDifyRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_auth/verify-email': {
@@ -258,12 +239,10 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDifyRoute: typeof AuthenticatedDifyRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDifyRoute: AuthenticatedDifyRoute,
 }
 
