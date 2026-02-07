@@ -1,4 +1,5 @@
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -7,6 +8,7 @@ import { authClient } from "@/lib/auth-client";
 import { createOtpSchema } from "@/lib/auth-validation";
 import { Button } from "../ui/button";
 import { AuthFormLayout } from "./auth-form-layout";
+import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -63,7 +65,7 @@ export function VerifyEmailForm({ email }: { email: string }) {
 					variant="link"
 					onClick={handleResend}
 					disabled={cooldown > 0}
-					className="text-primary hover:text-primary/80"
+					className="h-auto p-0 font-semibold text-[13px] hover:underline disabled:text-muted-foreground disabled:no-underline"
 				>
 					{cooldown > 0 ? t("verifyEmail.cooldown", { seconds: cooldown }) : t("verifyEmail.resend")}
 				</Button>
@@ -75,14 +77,20 @@ export function VerifyEmailForm({ email }: { email: string }) {
 					e.stopPropagation();
 					form.handleSubmit();
 				}}
-				className="space-y-4"
+				className="space-y-5"
 			>
 				<form.AppField name="otp" validators={{ onBlur: createOtpSchema(t("validation.otpLength")) }}>
 					{(field) => <field.OTPField label={t("verifyEmail.otp")} />}
 				</form.AppField>
 
 				<form.AppForm>
-					<form.SubmitButton label={t("verifyEmail.submit")} submittingLabel={t("verifyEmail.submitting")} />
+					<form.SubmitButton
+						label={t("verifyEmail.submit")}
+						submittingLabel={t("verifyEmail.submitting")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+					>
+						<ArrowRight />
+					</form.SubmitButton>
 				</form.AppForm>
 			</form>
 		</AuthFormLayout>

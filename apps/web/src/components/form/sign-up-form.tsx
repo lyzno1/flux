@@ -1,4 +1,4 @@
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -6,6 +6,7 @@ import { authClient } from "@/lib/auth-client";
 import { createEmailSchema, createNameSchema, createPasswordSchema, createUsernameSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
 import { AuthFormLayout } from "./auth-form-layout";
+import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
 const authRoute = getRouteApi("/_auth");
@@ -46,11 +47,8 @@ export function SignUpForm() {
 	return (
 		<AuthFormLayout
 			title={t("signUp.title")}
-			footer={
-				<Link to="/login" search={true} className="text-primary text-sm hover:text-primary/80">
-					{t("signUp.switchToSignIn")}
-				</Link>
-			}
+			description={t("signUp.description")}
+			footer={<AuthFooterLinkRow prefix={t("signUp.hasAccount")} to="/login" label={t("signUp.switchToSignIn")} />}
 		>
 			<GoogleOAuthButton redirect={redirect} />
 			<OAuthDivider />
@@ -77,15 +75,27 @@ export function SignUpForm() {
 				</form.AppField>
 
 				<form.AppField name="email" validators={{ onBlur: createEmailSchema(t("validation.emailInvalid")) }}>
-					{(field) => <field.EmailField label={t("signUp.email")} autoComplete="email" />}
+					{(field) => (
+						<field.IconEmailField label={t("signUp.email")} placeholder="name@example.com" autoComplete="email" />
+					)}
 				</form.AppField>
 
 				<form.AppField name="password" validators={{ onBlur: createPasswordSchema(t("validation.passwordMin")) }}>
-					{(field) => <field.PasswordField label={t("signUp.password")} autoComplete="new-password" />}
+					{(field) => (
+						<field.IconPasswordField
+							label={t("signUp.password")}
+							autoComplete="new-password"
+							toggleLabels={{ show: t("password.show"), hide: t("password.hide") }}
+						/>
+					)}
 				</form.AppField>
 
 				<form.AppForm>
-					<form.SubmitButton label={t("signUp.submit")} submittingLabel={t("signUp.submitting")} />
+					<form.SubmitButton
+						label={t("signUp.submit")}
+						submittingLabel={t("signUp.submitting")}
+						className={AUTH_PRIMARY_SUBMIT_BUTTON_CLASS}
+					/>
 				</form.AppForm>
 			</form>
 		</AuthFormLayout>
