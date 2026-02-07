@@ -5,6 +5,7 @@
 	"elapsed": "耗时 {{val, duration}}",
 	"elapsedShort": "{{val, duration}}",
 	"emptyState": "发送消息以查看 SSE 事件。",
+	"eventsCount_one": "{{count}} 个事件",
 	"eventsCount_other": "{{count}} 个事件",
 	"eventTimestamp": "{{val, duration(maximumFractionDigits: 3)}}",
 	"query": "查询",
