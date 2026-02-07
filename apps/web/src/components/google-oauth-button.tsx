@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -51,7 +52,7 @@ export function GoogleOAuthButton({ redirect }: { redirect: string }) {
 
 	return (
 		<Button variant="outline" className="w-full gap-2" onClick={handleGoogleSignIn} disabled={isLoading}>
-			<GoogleIcon />
+			{isLoading ? <Loader2 className="animate-spin" /> : <GoogleIcon />}
 			{t("google.continue")}
 		</Button>
 	);
@@ -66,7 +67,7 @@ export function OAuthDivider() {
 				<div className="w-full border-border border-t" />
 			</div>
 			<div className="relative flex justify-center">
-				<span className="bg-background px-3 text-muted-foreground text-xs">{t("divider.or")}</span>
+				<span className="bg-surface-1 px-3 text-muted-foreground text-xs">{t("divider.or")}</span>
 			</div>
 		</div>
 	);
