@@ -50,7 +50,7 @@ All tokens use oklch with chroma `0` for perceptual grayscale. `L` ranges 0 (bla
 --secondary:           oklch(0.18 0 0)      /* deeper fill */
 --muted:               oklch(0.18 0 0)      /* subdued bg */
 --muted-foreground:    oklch(0.58 0 0)      /* subdued text (AA on muted) */
---accent:              oklch(0.22 0 0)      /* subtle accent */
+--accent:              oklch(0.35 0 0)      /* subtle accent */
 --card:                oklch(0.14 0 0)      /* elevated from bg */
 --popover:             oklch(0.16 0 0)      /* above card level */
 --border:              oklch(1 0 0 / 8%)    /* frosted borders */
