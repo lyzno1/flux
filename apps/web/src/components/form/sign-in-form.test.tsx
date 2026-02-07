@@ -183,7 +183,7 @@ describe("SignInForm", () => {
 			});
 			await waitFor(
 				() => {
-					expect(router.state.location.pathname).toBe("/dashboard");
+					expect(router.state.location.pathname).toBe("/dify");
 				},
 				{ timeout: 3000 },
 			);

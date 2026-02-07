@@ -4,9 +4,9 @@ import * as z from "zod";
 const authSearchSchema = z.object({
 	redirect: z
 		.string()
-		.default("/dashboard")
-		.catch("/dashboard")
-		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dashboard")),
+		.default("/dify")
+		.catch("/dify")
+		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dify")),
 });
 
 function AuthLayout() {
