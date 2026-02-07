@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useMatches, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -17,14 +17,26 @@ import { Skeleton } from "./ui/skeleton";
 
 export function UserMenu() {
 	const navigate = useNavigate();
+	const matches = useMatches();
 	const { t } = useTranslation();
 	const { data: session, isPending } = authClient.useSession();
+	const isAuthRoute = matches.some((match) => match.routeId === "/_auth" || match.routeId.startsWith("/_auth/"));
 
 	if (isPending) {
 		return <Skeleton className="h-9 w-24" />;
 	}
 
 	if (!session) {
+		if (isAuthRoute) {
+			return (
+				<Link to="/">
+					<Button variant="outline" className="cursor-pointer">
+						{t("user.close")}
+					</Button>
+				</Link>
+			);
+		}
+
 		return (
 			<Link to="/login">
 				<Button variant="outline" className="cursor-pointer">

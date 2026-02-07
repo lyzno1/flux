@@ -5,6 +5,7 @@
 	"theme.light": "Light",
 	"theme.system": "System",
 	"theme.toggle": "Toggle theme",
+	"user.close": "Close",
 	"user.myAccount": "My Account",
 	"user.signIn": "Sign In",
 	"user.signOut": "Sign Out"
