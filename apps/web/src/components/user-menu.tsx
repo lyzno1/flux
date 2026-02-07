@@ -1,4 +1,4 @@
-import { Link, useMatches, useNavigate } from "@tanstack/react-router";
+import { Link, useMatches, useRouter } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -16,10 +16,10 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 export function UserMenu() {
-	const navigate = useNavigate();
+	const router = useRouter();
 	const matches = useMatches();
 	const { t } = useTranslation();
-	const { data: session, isPending } = authClient.useSession();
+	const { data: session, isPending, refetch } = authClient.useSession();
 	const isAuthRoute = matches.some((match) => match.routeId === "/_auth" || match.routeId.startsWith("/_auth/"));
 
 	if (isPending) {
@@ -58,16 +58,19 @@ export function UserMenu() {
 					<DropdownMenuItem>{session.user.email}</DropdownMenuItem>
 					<DropdownMenuItem
 						variant="destructive"
-						onClick={() => {
-							authClient.signOut({
-								fetchOptions: {
-									onSuccess: () => {
-										navigate({
-											to: "/",
-										});
-									},
-								},
-							});
+						onClick={async () => {
+							await authClient.signOut();
+							await refetch();
+							try {
+								await router.invalidate({ sync: true });
+								await router.navigate({
+									to: "/login",
+									search: { redirect: "/dify" },
+									replace: true,
+								});
+							} catch {
+								window.location.assign("/login?redirect=%2Fdify");
+							}
 						}}
 					>
 						{t("user.signOut")}
