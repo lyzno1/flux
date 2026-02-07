@@ -14,9 +14,6 @@ export default defineConfig({
 		environment: "jsdom",
 		include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
 		setupFiles: ["./setup-vitest.ts"],
-		env: {
-			VITE_SERVER_URL: "http://localhost:3000",
-		},
 		clearMocks: true,
 		restoreMocks: true,
 	},
