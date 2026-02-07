@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect, useMatches } from "@tanstack/react-router";
 import * as z from "zod";
 
-const authSearchSchema = z.object({
+export const authSearchSchema = z.object({
 	redirect: z
 		.string()
 		.default("/dify")

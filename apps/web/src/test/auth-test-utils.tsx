@@ -9,17 +9,10 @@ import {
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type * as React from "react";
-import * as z from "zod";
+import type * as z from "zod";
 
+import { authSearchSchema } from "@/routes/_auth";
 import { createMockContext } from "./mock-context";
-
-const authSearchSchema = z.object({
-	redirect: z
-		.string()
-		.default("/dify")
-		.catch("/dify")
-		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dify")),
-});
 
 const AUTH_PATHS = ["/login", "/sign-up", "/otp", "/verify-email", "/forgot-password", "/reset-password"] as const;
 
