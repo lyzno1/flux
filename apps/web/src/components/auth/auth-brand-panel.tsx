@@ -115,7 +115,7 @@ export function AuthBrandPanel({ variant = "sidebar", className }: AuthBrandPane
 					variant === "fullscreen" ? "pt-18 xl:pt-22" : "pt-20 xl:pt-24",
 				)}
 			>
-				<div className="flex flex-1 flex-col items-center justify-start gap-4">
+				<div className="flex flex-1 translate-y-5 flex-col items-start justify-start gap-4 text-left">
 					<h1 className="font-bold text-[56px] text-foreground tracking-tight">{t("brand.title")}</h1>
 					<p className="text-[17px] text-muted-foreground tracking-wide">{t("brand.subtitle")}</p>
 				</div>
