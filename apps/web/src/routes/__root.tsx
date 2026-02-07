@@ -63,10 +63,12 @@ function BrandingViewport({
 }) {
 	if (variant === "auth") {
 		return (
-			<div className="grid h-full overflow-hidden lg:grid-cols-[minmax(24rem,36rem)_1px_1fr] xl:grid-cols-[minmax(26rem,40rem)_1px_1fr]">
-				<AuthBrandPanel />
-				<div className="hidden bg-border lg:block" />
-				<main id={contentId} className="min-h-0 overflow-y-auto bg-surface-1">
+			<div className="relative h-full overflow-hidden">
+				<AuthBrandPanel variant="fullscreen" className="absolute inset-0" />
+				<main
+					id={contentId}
+					className="relative z-10 ml-auto h-full w-full overflow-y-auto bg-surface-1/96 backdrop-blur-sm lg:w-[min(42rem,48vw)] lg:border-border lg:border-l xl:w-[min(46rem,50vw)]"
+				>
 					{children}
 				</main>
 			</div>
@@ -75,12 +77,10 @@ function BrandingViewport({
 
 	if (variant === "home") {
 		return (
-			<div className="relative h-full overflow-hidden">
+			<main id={contentId} className="relative h-full overflow-hidden">
 				<AuthBrandPanel variant="fullscreen" className="absolute inset-0" />
-				<main id={contentId} className="relative z-10 h-full overflow-y-auto">
-					{children}
-				</main>
-			</div>
+				<div className="relative z-10">{children}</div>
+			</main>
 		);
 	}
 
@@ -95,7 +95,7 @@ function RootComponent() {
 	const matches = useMatches();
 	const contentId = useId();
 	const isAuthRoute = matches.some((match) => match.routeId === "/_auth" || match.routeId.startsWith("/_auth/"));
-	const isHomeRoute = matches.some((match) => match.routeId === "/");
+	const isHomeRoute = matches[matches.length - 1]?.routeId === "/";
 	const brandingVariant: BrandingVariant = isAuthRoute ? "auth" : isHomeRoute ? "home" : "none";
 
 	return (
@@ -113,15 +113,13 @@ function RootComponent() {
 				>
 					Skip to content
 				</a>
-				<div className="relative grid h-svh grid-rows-[auto_1fr]">
+				<div className="relative h-svh overflow-hidden">
+					<BrandingViewport variant={brandingVariant} contentId={contentId}>
+						<Suspense fallback={<PageLoading />}>
+							<Outlet />
+						</Suspense>
+					</BrandingViewport>
 					<Header />
-					<div className="relative z-10 min-h-0 overflow-hidden">
-						<BrandingViewport variant={brandingVariant} contentId={contentId}>
-							<Suspense fallback={<PageLoading />}>
-								<Outlet />
-							</Suspense>
-						</BrandingViewport>
-					</div>
 				</div>
 				<Toaster richColors />
 				<GoogleOneTap />

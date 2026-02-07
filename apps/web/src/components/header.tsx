@@ -4,8 +4,8 @@ import { UserMenu } from "./user-menu";
 
 export function Header() {
 	return (
-		<header className="relative z-20 flex flex-row items-center justify-end bg-transparent px-4 py-2.5">
-			<div className="flex items-center gap-2">
+		<header className="pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-row items-center justify-end bg-transparent px-4 py-2.5">
+			<div className="pointer-events-auto flex items-center gap-2">
 				<LanguageToggle />
 				<ModeToggle />
 				<UserMenu />
