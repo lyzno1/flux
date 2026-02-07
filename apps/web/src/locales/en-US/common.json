@@ -1,12 +1,6 @@
 {
 	"error.generic": "Error: {{message}}",
 	"error.notFound": "404 - Not Found",
-	"nav.dashboard": "Dashboard",
-	"nav.dify": "Dify",
-	"nav.home": "Home",
-	"status.apiStatus": "API Status",
-	"status.connected": "Connected",
-	"status.disconnected": "Disconnected",
 	"theme.dark": "Dark",
 	"theme.light": "Light",
 	"theme.system": "System",

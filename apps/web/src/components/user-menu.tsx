@@ -27,14 +27,18 @@ export function UserMenu() {
 	if (!session) {
 		return (
 			<Link to="/login">
-				<Button variant="outline">{t("user.signIn")}</Button>
+				<Button variant="outline" className="cursor-pointer">
+					{t("user.signIn")}
+				</Button>
 			</Link>
 		);
 	}
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger render={<Button variant="outline" />}>{session.user.name}</DropdownMenuTrigger>
+			<DropdownMenuTrigger render={<Button variant="outline" className="cursor-pointer" />}>
+				{session.user.name}
+			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-auto min-w-(--anchor-width) bg-card">
 				<DropdownMenuGroup>
 					<DropdownMenuLabel className="font-semibold text-foreground">{t("user.myAccount")}</DropdownMenuLabel>

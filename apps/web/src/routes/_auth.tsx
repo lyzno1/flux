@@ -1,7 +1,5 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useMatches } from "@tanstack/react-router";
 import * as z from "zod";
-
-import { AuthBrandPanel } from "@/components/auth/auth-brand-panel";
 
 const authSearchSchema = z.object({
 	redirect: z
@@ -12,13 +10,15 @@ const authSearchSchema = z.object({
 });
 
 function AuthLayout() {
+	const matches = useMatches();
+	const leafId = matches[matches.length - 1]?.id;
+
 	return (
-		<div className="flex h-screen">
-			<AuthBrandPanel />
-			<div className="hidden w-px bg-border lg:block" />
-			<main className="flex-1 overflow-y-auto">
-				<Outlet />
-			</main>
+		<div
+			key={leafId}
+			className="fade-in slide-in-from-bottom-2 h-full animate-in duration-300 motion-reduce:animate-none"
+		>
+			<Outlet />
 		</div>
 	);
 }

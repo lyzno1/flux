@@ -1,6 +1,7 @@
 import type * as React from "react";
 import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const DOT_SIZE = 3;
 const GAP_X = 40;
@@ -12,7 +13,12 @@ const MASK_OFFSCREEN_X = -9999;
 const DOT_GRID = `radial-gradient(circle, currentColor ${DOT_SIZE / 2}px, transparent ${DOT_SIZE / 2}px)`;
 const GLOW_CENTER = "radial-gradient(circle at 50% 45%, oklch(0.93 0 0 / 0.024) 0%, transparent 70%)";
 
-export function AuthBrandPanel() {
+interface AuthBrandPanelProps {
+	variant?: "sidebar" | "fullscreen";
+	className?: string;
+}
+
+export function AuthBrandPanel({ variant = "sidebar", className }: AuthBrandPanelProps) {
 	const panelRef = useRef<HTMLDivElement>(null);
 	const panelRectRef = useRef<DOMRect | null>(null);
 	const pointerRef = useRef({ x: MASK_OFFSCREEN_X, y: 0 });
@@ -78,7 +84,11 @@ export function AuthBrandPanel() {
 			ref={panelRef}
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
-			className="relative hidden h-full shrink-0 overflow-hidden bg-background lg:flex lg:w-96 xl:w-md 2xl:w-220"
+			className={cn(
+				"relative overflow-hidden bg-background",
+				variant === "sidebar" ? "hidden h-full shrink-0 lg:flex lg:w-96 xl:w-md 2xl:w-220" : "flex h-full w-full",
+				className,
+			)}
 			style={{ "--mx": `${MASK_OFFSCREEN_X}px`, "--my": "0px" } as React.CSSProperties}
 		>
 			<div
@@ -99,9 +109,16 @@ export function AuthBrandPanel() {
 				}}
 			/>
 
-			<div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-15 py-10">
-				<h1 className="font-bold text-[56px] text-foreground tracking-tight">{t("brand.title")}</h1>
-				<p className="text-[17px] text-muted-foreground tracking-wide">{t("brand.subtitle")}</p>
+			<div
+				className={cn(
+					"relative z-10 flex flex-1 flex-col px-15 pb-10",
+					variant === "fullscreen" ? "pt-18 xl:pt-22" : "pt-20 xl:pt-24",
+				)}
+			>
+				<div className="flex flex-1 flex-col items-center justify-start gap-4">
+					<h1 className="font-bold text-[56px] text-foreground tracking-tight">{t("brand.title")}</h1>
+					<p className="text-[17px] text-muted-foreground tracking-wide">{t("brand.subtitle")}</p>
+				</div>
 			</div>
 		</div>
 	);
