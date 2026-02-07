@@ -5,8 +5,6 @@ import { vi } from "vitest";
 
 vi.mock("zustand/traditional");
 
-vi.stubEnv("VITE_SERVER_URL", process.env.VITE_SERVER_URL || "http://localhost:3000");
-
 // @ts-expect-error -- required for React Testing Library
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
