@@ -74,6 +74,11 @@ vi.mock("@/components/ui/tooltip", async () => {
 
 vi.mock("@/components/ui/dropdown-menu", async () => {
 	const React = await import("react");
+	const DropdownMenuRadioContext = React.createContext<{
+		onValueChange?: (value: string) => void;
+		value?: string;
+	}>({});
+
 	return {
 		DropdownMenu: ({ children }: { children: React.ReactNode }) => <div data-testid="dropdown-root">{children}</div>,
 		DropdownMenuTrigger: ({ children, render }: { children?: React.ReactNode; render?: React.ReactElement }) => {
@@ -103,6 +108,29 @@ vi.mock("@/components/ui/dropdown-menu", async () => {
 		DropdownMenuSub: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 		DropdownMenuSubContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 		DropdownMenuSubTrigger: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+		DropdownMenuRadioGroup: ({
+			children,
+			value,
+			onValueChange,
+		}: {
+			children: React.ReactNode;
+			onValueChange?: (value: string) => void;
+			value?: string;
+		}) => (
+			<DropdownMenuRadioContext.Provider value={{ value, onValueChange }}>
+				<div>{children}</div>
+			</DropdownMenuRadioContext.Provider>
+		),
+		DropdownMenuRadioItem: ({ children, value }: { children: React.ReactNode; value: string }) => {
+			const { value: selectedValue, onValueChange } = React.useContext(DropdownMenuRadioContext);
+			const isSelected = selectedValue === value;
+
+			return (
+				<button type="button" disabled={isSelected} onClick={() => !isSelected && onValueChange?.(value)}>
+					{children}
+				</button>
+			);
+		},
 		DropdownMenuItem: ({
 			children,
 			disabled,
