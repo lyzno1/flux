@@ -4,9 +4,11 @@
 	"theme.dark": "Dark",
 	"theme.light": "Light",
 	"theme.system": "System",
-	"theme.toggle": "Toggle theme",
+	"theme.toggle": "Theme",
 	"user.close": "Close",
+	"user.language": "Language",
 	"user.myAccount": "My Account",
+	"user.settings": "Settings",
 	"user.signIn": "Sign In",
-	"user.signOut": "Sign Out"
+	"user.signOut": "Log out"
 }

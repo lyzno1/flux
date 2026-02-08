@@ -1,7 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
 import { Home } from "lucide-react";
-import { LanguageToggle } from "@/components/language-toggle";
-import { ModeToggle } from "@/components/mode-toggle";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import { SidebarContent } from "@/components/sidebar/sidebar-content";
 import { SidebarFooter } from "@/components/sidebar/sidebar-footer";
@@ -10,8 +8,7 @@ import { SidebarHeader } from "@/components/sidebar/sidebar-header";
 import { SidebarMenu, SidebarMenuItem } from "@/components/sidebar/sidebar-menu";
 import { SidebarMenuButton } from "@/components/sidebar/sidebar-menu-button";
 import { SidebarRail } from "@/components/sidebar/sidebar-rail";
-import { SidebarSeparator } from "@/components/sidebar/sidebar-separator";
-import { UserMenu } from "@/components/user-menu";
+import { SidebarUserMenu } from "@/components/sidebar-user-menu";
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
 import { useAppStore } from "@/stores/app/store";
 
@@ -56,16 +53,9 @@ function AppSidebarNav() {
 }
 
 function AppSidebarFooter() {
-	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
-
 	return (
 		<SidebarFooter>
-			<div className={collapsed ? "flex flex-col items-center gap-2" : "flex items-center gap-2"}>
-				<ModeToggle />
-				<LanguageToggle />
-			</div>
-			<SidebarSeparator className="mx-0" />
-			<UserMenu />
+			<SidebarUserMenu />
 		</SidebarFooter>
 	);
 }
