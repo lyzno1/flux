@@ -1,4 +1,10 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { PanelLeftIcon } from "lucide-react";
+import { AppSidebar, toggleButtonStyles } from "@/components/app-sidebar";
+import { SidebarInset } from "@/components/ui/sidebar/sidebar-inset";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useGlobalKeyboardListener, useKeybinding } from "@/hooks/use-keybinding";
+import { getAppStoreState } from "@/stores/app/store";
 
 export const Route = createFileRoute("/_authenticated")({
 	beforeLoad: ({ context, location }) => {
@@ -10,5 +16,43 @@ export const Route = createFileRoute("/_authenticated")({
 		}
 		return { session: context.auth.data };
 	},
-	component: () => <Outlet />,
+	component: AuthenticatedLayout,
 });
+
+function MobileHeader() {
+	const isMobile = useIsMobile();
+
+	if (!isMobile) return null;
+
+	return (
+		<header className="flex h-12 shrink-0 items-center px-4">
+			<button
+				type="button"
+				aria-label="Open sidebar"
+				onClick={() => getAppStoreState().setSidebarOpen(true)}
+				className={toggleButtonStyles}
+			>
+				<PanelLeftIcon className="size-4" />
+			</button>
+		</header>
+	);
+}
+
+function AuthenticatedLayout() {
+	useGlobalKeyboardListener();
+
+	useKeybinding("toggle-sidebar", "b", () => getAppStoreState().toggleSidebar(), {
+		mod: true,
+		description: "Toggle sidebar",
+	});
+
+	return (
+		<div className="flex h-svh overflow-hidden">
+			<AppSidebar />
+			<SidebarInset>
+				<MobileHeader />
+				<Outlet />
+			</SidebarInset>
+		</div>
+	);
+}

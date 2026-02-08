@@ -48,13 +48,13 @@
 
 | Token | Light | Dark |
 |---|---|---|
-| `--sidebar` | `oklch(0.985 0 0)` | `oklch(0.10 0 0)` |
+| `--sidebar` | `oklch(0.985 0 0)` | `oklch(0.16 0 0)` |
 | `--sidebar-foreground` | `oklch(0.13 0 0)` | `oklch(0.93 0 0)` |
 | `--sidebar-primary` | `oklch(0.15 0 0)` | `oklch(0.93 0 0)` |
 | `--sidebar-primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.10 0 0)` |
 | `--sidebar-accent` | `oklch(0.95 0 0)` | `oklch(0.22 0 0)` |
 | `--sidebar-accent-foreground` | `oklch(0.15 0 0)` | `oklch(0.93 0 0)` |
-| `--sidebar-border` | `oklch(0.91 0 0)` | `oklch(1 0 0 / 8%)` |
+| `--sidebar-border` | `oklch(0.91 0 0)` | `oklch(1 0 0 / 14%)` |
 | `--sidebar-ring` | `oklch(0.65 0 0)` | `oklch(0.50 0 0)` |
 
 ### Chart Tokens (same both modes)

@@ -1,6 +1,8 @@
 # Store Creation & Slice Patterns
 
-## createStore Wrapper
+## createStore Wrapper (Simple Stores)
+
+For stores that only need `devtools` + `subscribeWithSelector`:
 
 ```ts
 // apps/web/src/lib/create-store.ts
@@ -26,89 +28,144 @@ export function createStore<T>(
 }
 ```
 
-## Store with Slices
+### Example: Keybindings Store (no persistence)
 
 ```ts
-// apps/web/src/stores/global/store.ts
+// apps/web/src/stores/keybindings/store.ts
 import type { StateCreator } from "zustand";
 import { createStore } from "@/lib/create-store";
-import type { GlobalState } from "./initial-state";
-import { initialState } from "./initial-state";
-import { type SidebarAction, createSidebarSlice } from "./slices/sidebar/action";
-import { type ModalAction, createModalSlice } from "./slices/modal/action";
+import { createKeybindingsActions, type KeybindingsAction } from "./action";
+import type { KeybindingsState } from "./initial-state";
+import { initialKeybindingsState } from "./initial-state";
 
-export type GlobalStore = GlobalState & SidebarAction & ModalAction;
+export type KeybindingsStore = KeybindingsState & KeybindingsAction;
 
-const createGlobalStore: StateCreator<GlobalStore, [["zustand/devtools", never]]> = (
-	...params
-) => ({
-	...initialState,
-	...createSidebarSlice(...params),
-	...createModalSlice(...params),
+const createKeybindingsStore: StateCreator<
+	KeybindingsStore,
+	[["zustand/devtools", never]]
+> = (...params) => ({
+	...initialKeybindingsState,
+	...createKeybindingsActions(...params),
 });
 
-export const useGlobalStore = createStore("global", createGlobalStore);
-export const getGlobalStoreState = () => useGlobalStore.getState();
+export const useKeybindingsStore = createStore("keybindings", createKeybindingsStore);
+export const getKeybindingsStoreState = () => useKeybindingsStore.getState();
 ```
+
+## Inline Creation (Stores with persist middleware)
+
+When `persist` is needed, create inline with `createWithEqualityFn`:
+
+```ts
+// apps/web/src/stores/app/store.ts
+import { isClient } from "@flux/utils/runtime";
+import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
+import { STORAGE_KEYS } from "@/config/storage-keys";
+import type { AppState } from "./initial-state";
+import { initialState } from "./initial-state";
+import { createSidebarSlice, type SidebarAction } from "./slices/sidebar/action";
+
+export type AppStore = AppState & SidebarAction;
+
+export const useAppStore = createWithEqualityFn<AppStore>()(
+	subscribeWithSelector(
+		devtools(
+			persist(
+				(...a) => ({
+					...initialState,
+					...createSidebarSlice(...a),
+				}),
+				{
+					name: STORAGE_KEYS.LOCAL.SIDEBAR_OPEN,
+					partialize: (state) => ({ sidebarOpen: state.sidebarOpen }),
+				},
+			),
+			{
+				name: "Flux_app",
+				enabled: import.meta.env.DEV && isClient,
+			},
+		),
+	),
+	shallow,
+);
+
+export const getAppStoreState = () => useAppStore.getState();
+```
+
+Middleware order (outer → inner): `subscribeWithSelector` → `devtools` → `persist`
+
+Key `persist` options:
+- `name` — storage key, use `STORAGE_KEYS` constants
+- `partialize` — only persist what's needed; exclude transient/derived state
 
 ## State Definition
 
 ```ts
-// apps/web/src/stores/global/initial-state.ts
+// apps/web/src/stores/app/initial-state.ts
 import type { SidebarState } from "./slices/sidebar/initial-state";
 import { initialSidebarState } from "./slices/sidebar/initial-state";
-import type { ModalState } from "./slices/modal/initial-state";
-import { initialModalState } from "./slices/modal/initial-state";
 
-export type GlobalState = SidebarState & ModalState;
+export type AppState = SidebarState;
 
-export const initialState: GlobalState = {
+export const initialState: AppState = {
 	...initialSidebarState,
-	...initialModalState,
 };
 ```
 
 ## Slice Definition
 
+### State
+
 ```ts
-// apps/web/src/stores/global/slices/sidebar/initial-state.ts
-export interface SidebarState {
+// apps/web/src/stores/app/slices/sidebar/initial-state.ts
+export type SidebarState = {
 	sidebarOpen: boolean;
-	sidebarTab: "nav" | "search" | "settings";
-}
+};
 
 export const initialSidebarState: SidebarState = {
 	sidebarOpen: true,
-	sidebarTab: "nav",
 };
 ```
 
-```ts
-// apps/web/src/stores/global/slices/sidebar/action.ts
-import type { StateCreator } from "zustand";
-import type { GlobalStore } from "../../store";
+### Actions
 
-export interface SidebarAction {
+Use the four-parameter `StateCreator` generic. The second parameter declares which middleware the store uses:
+
+```ts
+// apps/web/src/stores/app/slices/sidebar/action.ts
+import type { StateCreator } from "zustand";
+import type { AppStore } from "../../store";
+
+export type SidebarAction = {
 	toggleSidebar: () => void;
-	setSidebarTab: (tab: SidebarState["sidebarTab"]) => void;
-	internal_resetSidebar: () => void;
-}
+	setSidebarOpen: (open: boolean) => void;
+};
 
 export const createSidebarSlice: StateCreator<
-	GlobalStore,
-	[["zustand/devtools", never]],
-	[],
-	SidebarAction
+	AppStore,                                                    // 1. Full store type
+	[["zustand/devtools", never], ["zustand/persist", unknown]], // 2. Middleware array
+	[],                                                          // 3. Mutators (empty)
+	SidebarAction                                                // 4. This slice's exports
 > = (set) => ({
 	toggleSidebar: () =>
 		set((s) => ({ sidebarOpen: !s.sidebarOpen }), false, "toggleSidebar"),
 
-	setSidebarTab: (tab) =>
-		set({ sidebarTab: tab }, false, "setSidebarTab"),
-
-	internal_resetSidebar: () =>
-		set({ sidebarOpen: true, sidebarTab: "nav" }, false, "internal_resetSidebar"),
+	setSidebarOpen: (open) =>
+		set({ sidebarOpen: open }, false, "setSidebarOpen"),
 });
+```
+
+For stores without `persist`, the middleware array only includes devtools:
+
+```ts
+export const createKeybindingsActions: StateCreator<
+	KeybindingsStore,
+	[["zustand/devtools", never]], // devtools only
+	[],
+	KeybindingsAction
+> = (set, get) => ({ ... });
 ```
 
 ## Async Action Pattern
@@ -135,14 +192,4 @@ export const createSettingsSlice: StateCreator<
 		}
 	},
 });
-```
-
-## Store Index Exports
-
-```ts
-// apps/web/src/stores/global/index.ts
-export { useGlobalStore, getGlobalStoreState } from "./store";
-export type { GlobalStore } from "./store";
-export { sidebarSelectors } from "./slices/sidebar/selectors";
-export { modalSelectors } from "./slices/modal/selectors";
 ```

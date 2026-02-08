@@ -1,13 +1,13 @@
 import type { StateCreator } from "zustand";
+import { IS_MAC } from "@/utils/platform";
 import type { KeybindingEntry } from "./initial-state";
-import { IS_MAC } from "./initial-state";
 import type { KeybindingsStore } from "./store";
 
-export interface KeybindingsAction {
+export type KeybindingsAction = {
 	registerKeybinding: (id: string, entry: KeybindingEntry) => void;
 	unregisterKeybinding: (id: string) => void;
 	handleKeyDown: (event: KeyboardEvent) => void;
-}
+};
 
 function matchesEntry(event: KeyboardEvent, entry: KeybindingEntry): boolean {
 	if (event.key.toLowerCase() !== entry.key.toLowerCase()) return false;
@@ -16,6 +16,9 @@ function matchesEntry(event: KeyboardEvent, entry: KeybindingEntry): boolean {
 	if (!!entry.mod !== modPressed) return false;
 	if (!!entry.alt !== event.altKey) return false;
 	if (!!entry.shift !== event.shiftKey) return false;
+
+	const otherModPressed = IS_MAC ? event.ctrlKey : event.metaKey;
+	if (otherModPressed) return false;
 
 	return true;
 }
