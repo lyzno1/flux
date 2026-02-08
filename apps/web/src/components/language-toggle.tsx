@@ -8,7 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { languages } from "@/i18n";
+import { languages } from "@/i18n/config";
 
 export function LanguageToggle() {
 	const { i18n } = useTranslation();

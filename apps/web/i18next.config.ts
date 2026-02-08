@@ -1,21 +1,22 @@
 import { defineConfig } from "i18next-cli";
+import { defaultNS, fallbackLng, keySeparator, supportedLngs } from "./src/i18n/config";
 
 export default defineConfig({
-	locales: ["en-US", "zh-CN"],
+	locales: supportedLngs,
 
 	extract: {
 		input: ["src/**/*.{ts,tsx}"],
 		output: "src/locales/{{language}}/{{namespace}}.json",
 		ignore: ["src/**/*.test.*", "src/**/*.d.ts"],
 
-		defaultNS: "common",
-		keySeparator: false,
+		defaultNS,
+		keySeparator,
 
 		functions: ["t", "*.t"],
 		useTranslationNames: ["useTranslation"],
 		removeUnusedKeys: true,
 
-		primaryLanguage: "en-US",
+		primaryLanguage: fallbackLng,
 		defaultValue: "",
 
 		sort: true,

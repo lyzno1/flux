@@ -9,9 +9,10 @@ Type-safe i18n with flat keys, on-demand namespace loading, Intl-based formattin
 
 ## Architecture
 
-- **Config**: `apps/web/src/i18n/index.ts` — i18next init, language config, custom formatters
+- **Shared Config**: `apps/web/src/i18n/config.ts` — `defaultNS`, `fallbackLng`, `keySeparator`, language list shared by runtime + CLI
+- **Runtime Config**: `apps/web/src/i18n/index.ts` — i18next init, backend loader, language detector, custom formatters
 - **CLI Config**: `apps/web/i18next.config.ts` — i18next-cli extraction and validation settings
-- **Types**: `apps/web/src/i18n/i18next.d.ts` — module augmentation for type-safe `t()`
+- **Types**: `apps/web/src/i18n/i18next.d.ts` — module augmentation for type-safe `t()`; `defaultNS`/`keySeparator` inferred from shared config
 - **Locales**: `apps/web/src/locales/{en-US,zh-CN}/{namespace}.json`
 - **Loading**: `i18next-resources-to-backend` dynamic import, zero upfront cost (`ns: []`)
 
@@ -20,13 +21,13 @@ apps/web/
 ├── i18next.config.ts   # CLI config (extraction, validation)
 └── src/
     ├── i18n/
-    │   ├── index.ts        # config + custom formatters
+    │   ├── config.ts       # shared i18n constants (runtime + CLI + types)
+    │   ├── index.ts        # runtime init + custom formatters
     │   └── i18next.d.ts    # type augmentation (update when adding namespace)
     └── locales/
         ├── en-US/          # source of truth for types
         │   ├── common.json # default namespace
         │   ├── auth.json
-        │   ├── dashboard.json
         │   ├── ai.json
         │   └── dify.json
         └── zh-CN/          # must have same keys as en-US (except plural variants)

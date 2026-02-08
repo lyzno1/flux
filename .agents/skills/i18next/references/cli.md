@@ -8,25 +8,28 @@ i18next-cli (SWC-powered) handles key extraction, unused key removal, multi-lang
 
 ```typescript
 import { defineConfig } from "i18next-cli";
+import { defaultNS, fallbackLng, keySeparator, supportedLngs } from "./src/i18n/config";
 
 export default defineConfig({
-  locales: ["en-US", "zh-CN"],
+  locales: supportedLngs,
   extract: {
     input: ["src/**/*.{ts,tsx}"],
     output: "src/locales/{{language}}/{{namespace}}.json",
     ignore: ["src/**/*.test.*", "src/**/*.d.ts"],
-    defaultNS: "common",
-    keySeparator: false,       // flat keys — "nav.home" not { nav: { home } }
+    defaultNS,
+    keySeparator,              // flat keys — "nav.home" not { nav: { home } }
     functions: ["t", "*.t"],
     useTranslationNames: ["useTranslation"],
     removeUnusedKeys: true,    // delete keys not found in source code
-    primaryLanguage: "en-US",
+    primaryLanguage: fallbackLng,
     defaultValue: "",          // new keys get empty string
     sort: true,                // match Biome useSortedKeys
     indentation: "\t",         // match Biome tab indentation
   },
 });
 ```
+
+Importing from `src/i18n/config.ts` keeps runtime i18next and i18next-cli aligned.
 
 ### Key Configuration Options
 
@@ -37,7 +40,7 @@ export default defineConfig({
 | `sort` | `true` | Alphabetical key order (matches Biome rule) |
 | `indentation` | `"\t"` | Tab indentation (matches Biome formatter) |
 | `defaultValue` | `""` | New keys in secondary languages get empty string |
-| `primaryLanguage` | `"en-US"` | Source of truth language |
+| `primaryLanguage` | `fallbackLng` (`"en-US"`) | Source of truth language |
 
 ### Additional Options (not currently used)
 
