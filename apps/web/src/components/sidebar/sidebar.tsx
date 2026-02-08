@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
 import { getAppStoreState, useAppStore } from "@/stores/app/store";
 
+const INTERACTIVE_SELECTOR = "a, button, input, select, textarea, [role='button'], [tabindex]:not([tabindex='-1'])";
+
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
@@ -36,14 +38,23 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 		);
 	}
 
-	const handleSidebarExpand = (e: React.MouseEvent) => {
-		if (!open && !(e.target as HTMLElement).closest("button, a")) {
+	const handleSidebarExpand = (e: React.MouseEvent<HTMLElement>) => {
+		if (
+			!open &&
+			e.currentTarget.contains(e.target as Node) &&
+			!(e.target as HTMLElement).closest(INTERACTIVE_SELECTOR)
+		) {
 			setSidebarOpen(true);
 		}
 	};
 
-	const handleSidebarKeyDown = (e: React.KeyboardEvent) => {
-		if (!open && (e.key === "Enter" || e.key === " ") && !(e.target as HTMLElement).closest("button, a")) {
+	const handleSidebarKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (
+			!open &&
+			(e.key === "Enter" || e.key === " ") &&
+			e.currentTarget.contains(e.target as Node) &&
+			!(e.target as HTMLElement).closest(INTERACTIVE_SELECTOR)
+		) {
 			e.preventDefault();
 			setSidebarOpen(true);
 		}
