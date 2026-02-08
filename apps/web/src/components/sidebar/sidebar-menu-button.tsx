@@ -1,5 +1,6 @@
 import type * as React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import { cn } from "@/lib/utils";
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
 import { useAppStore } from "@/stores/app/store";
@@ -11,7 +12,7 @@ type SidebarMenuButtonProps = React.ComponentProps<"button"> & {
 
 function SidebarMenuButton({ isActive = false, tooltip, className, children, ...props }: SidebarMenuButtonProps) {
 	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
-	const isMobile = useAppStore(sidebarSelectors.isSidebarMobile);
+	const isMobile = useIsMobile();
 
 	const button = (
 		<button
