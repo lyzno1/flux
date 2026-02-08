@@ -8,7 +8,6 @@ import { SidebarHeader } from "@/components/sidebar/sidebar-header";
 import { SidebarMenu, SidebarMenuItem } from "@/components/sidebar/sidebar-menu";
 import { menuButtonStyles } from "@/components/sidebar/sidebar-menu-button";
 import { SidebarUserMenu } from "@/components/sidebar-user-menu";
-import { cn } from "@/lib/utils";
 import { getAppStoreState } from "@/stores/app/store";
 
 function AppSidebarHeader() {
@@ -16,17 +15,19 @@ function AppSidebarHeader() {
 
 	return (
 		<SidebarHeader className="border-none px-1">
-			<button
-				type="button"
-				aria-label="Toggle sidebar"
-				onClick={toggleSidebar}
-				className={cn(menuButtonStyles, "cursor-pointer gap-0")}
-			>
-				<span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-left font-semibold transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
+			<div className="flex w-full items-center gap-0 px-3 py-2">
+				<span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-left font-semibold text-sidebar-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
 					Flux
 				</span>
-				<PanelLeftIcon aria-hidden="true" />
-			</button>
+				<button
+					type="button"
+					aria-label="Toggle sidebar"
+					onClick={toggleSidebar}
+					className="-mx-3 -my-2 shrink-0 cursor-pointer rounded-lg px-3 py-2 text-sidebar-foreground outline-none transition-[color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-1 focus-visible:ring-sidebar-ring active:bg-sidebar-accent active:text-sidebar-accent-foreground motion-reduce:transition-none"
+				>
+					<PanelLeftIcon className="size-4" aria-hidden="true" />
+				</button>
+			</div>
 		</SidebarHeader>
 	);
 }
