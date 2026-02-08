@@ -3,19 +3,24 @@
 ## Basic Selector Object
 
 ```ts
-// apps/web/src/stores/global/slices/sidebar/selectors.ts
-import type { GlobalStore } from "../../store";
+// apps/web/src/stores/app/slices/sidebar/selectors.ts
+import type { AppStore } from "../../store";
 
-const isSidebarOpen = (s: GlobalStore) => s.sidebarOpen;
-const currentTab = (s: GlobalStore) => s.sidebarTab;
-const isSearchActive = (s: GlobalStore) => s.sidebarTab === "search";
+const isSidebarOpen = (s: AppStore) => s.sidebarOpen;
+const isSidebarMobile = (s: AppStore) => s.sidebarIsMobile;
+const isSidebarCollapsed = (s: AppStore) => !s.sidebarOpen;
+const sidebarState = (s: AppStore): "expanded" | "collapsed" =>
+	s.sidebarOpen ? "expanded" : "collapsed";
 
 export const sidebarSelectors = {
 	isSidebarOpen,
-	currentTab,
-	isSearchActive,
+	isSidebarMobile,
+	isSidebarCollapsed,
+	sidebarState,
 };
 ```
+
+Prefer derived booleans (`isSidebarCollapsed`) over raw values — components only re-render when the boolean flips. (Vercel: `rerender-derived-state`)
 
 ## Derived / Composed Selectors
 
@@ -51,18 +56,18 @@ export const listSelectors = {
 
 ```tsx
 // basic
-const isOpen = useGlobalStore(sidebarSelectors.isSidebarOpen);
+const isOpen = useAppStore(sidebarSelectors.isSidebarOpen);
 
 // curried
 const item = useListStore(listSelectors.getItemById(itemId));
 
 // multiple values (auto shallow compare)
-const [tab, isOpen] = useGlobalStore((s) => [
+const [tab, isOpen] = useAppStore((s) => [
 	sidebarSelectors.currentTab(s),
 	sidebarSelectors.isSidebarOpen(s),
 ]);
 
-// deep object - use isEqual
+// deep object — use isEqual
 import { isEqual } from "fast-deep-equal";
 const settings = useUserStore(settingsSelectors.currentSettings, isEqual);
 ```
@@ -72,5 +77,5 @@ const settings = useUserStore(settingsSelectors.currentSettings, isEqual);
 ```ts
 // for use in services, utils, or event handlers outside React
 export const getIsSidebarOpen = () =>
-	sidebarSelectors.isSidebarOpen(useGlobalStore.getState());
+	sidebarSelectors.isSidebarOpen(useAppStore.getState());
 ```

@@ -5,21 +5,52 @@
 Most stores are global singletons created at module scope:
 
 ```tsx
-import { useGlobalStore } from "@/stores/global";
-import { sidebarSelectors } from "@/stores/global";
+import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
+import { getAppStoreState, useAppStore } from "@/stores/app/store";
 
 function Sidebar() {
-	const isOpen = useGlobalStore(sidebarSelectors.isSidebarOpen);
-	const toggle = useGlobalStore((s) => s.toggleSidebar);
+	const isOpen = useAppStore(sidebarSelectors.isSidebarOpen);
+
+	// Access actions via getState() — no subscription created (Vercel: rerender-defer-reads)
+	const handleToggle = () => {
+		getAppStoreState().toggleSidebar();
+	};
 
 	if (!isOpen) return null;
-	return <aside><button onClick={toggle}>Close</button></aside>;
+	return <aside><button onClick={handleToggle}>Close</button></aside>;
+}
+```
+
+## Composition Hook Pattern
+
+Wrap store access in a custom hook for cohesive APIs:
+
+```ts
+// apps/web/src/hooks/use-sidebar.ts
+import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
+import { getAppStoreState, useAppStore } from "@/stores/app/store";
+import { useIsMobile } from "./use-is-mobile";
+
+export function useSidebar() {
+	// Subscribe to state that affects rendering
+	const open = useAppStore(sidebarSelectors.isSidebarOpen);
+	const state = useAppStore(sidebarSelectors.sidebarState);
+	const isMobile = useIsMobile();
+
+	return {
+		open,
+		state,
+		isMobile,
+		// Actions via getState() — no subscriptions (Vercel: rerender-defer-reads)
+		toggleSidebar: getAppStoreState().toggleSidebar,
+		setSidebarOpen: getAppStoreState().setSidebarOpen,
+	};
 }
 ```
 
 ## Context Store (Isolated Instances)
 
-Use React context when a store needs per-subtree isolation (e.g., editor instances, modals with local state):
+Use React context when a store needs per-subtree isolation (e.g. editor instances, modals with local state):
 
 ```tsx
 // apps/web/src/stores/editor/store.ts
@@ -28,11 +59,11 @@ import { useContext, createContext, useRef } from "react";
 import { useStoreWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
 
-interface EditorState {
+type EditorState = {
 	content: string;
 	dirty: boolean;
 	setContent: (content: string) => void;
-}
+};
 
 export const createEditorStore = (initialContent: string) =>
 	createZustandStore<EditorState>((set) => ({
@@ -70,23 +101,12 @@ export function useEditorStore<T>(selector: (s: EditorState) => T) {
 }
 ```
 
-```tsx
-// usage
-function EditorContainer({ initialContent }: { initialContent: string }) {
-	return (
-		<EditorProvider initialContent={initialContent}>
-			<EditorView />
-		</EditorProvider>
-	);
-}
-```
-
 ## Subscribe Outside React
 
 ```ts
-const unsub = useGlobalStore.subscribe(
+const unsub = useAppStore.subscribe(
 	(s) => s.sidebarOpen,
-	(open) => console.log("sidebar:", open),
+	(open) => { /* react to change */ },
 	{ fireImmediately: true },
 );
 ```

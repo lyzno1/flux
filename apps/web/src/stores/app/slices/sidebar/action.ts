@@ -1,11 +1,11 @@
 import type { StateCreator } from "zustand";
 import type { AppStore } from "../../store";
 
-export interface SidebarAction {
+export type SidebarAction = {
 	toggleSidebar: () => void;
 	setSidebarOpen: (open: boolean) => void;
 	setSidebarIsMobile: (isMobile: boolean) => void;
-}
+};
 
 export const createSidebarSlice: StateCreator<
 	AppStore,
