@@ -1,12 +1,16 @@
 {
 	"error.generic": "Error: {{message}}",
 	"error.notFound": "404 - Not Found",
+	"sidebar.close": "Close sidebar",
+	"sidebar.open": "Open sidebar",
 	"theme.dark": "Dark",
 	"theme.light": "Light",
 	"theme.system": "System",
-	"theme.toggle": "Toggle theme",
+	"theme.toggle": "Theme",
 	"user.close": "Close",
+	"user.language": "Language",
 	"user.myAccount": "My Account",
+	"user.settings": "Settings",
 	"user.signIn": "Sign In",
 	"user.signOut": "Sign Out"
 }

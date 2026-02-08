@@ -1,5 +1,5 @@
+import { formatShortcut } from "@/utils/format-shortcut";
 import type { KeybindingEntry } from "./initial-state";
-import { IS_MAC } from "./initial-state";
 import type { KeybindingsStore } from "./store";
 
 const getBindingById = (id: string) => (s: KeybindingsStore) => s.bindings[id];
@@ -11,10 +11,5 @@ export const keybindingsSelectors = {
 };
 
 export function formatKeybinding(entry: Pick<KeybindingEntry, "key" | "mod" | "alt" | "shift">): string {
-	const parts: string[] = [];
-	if (entry.mod) parts.push(IS_MAC ? "⌘" : "Ctrl");
-	if (entry.alt) parts.push(IS_MAC ? "⌥" : "Alt");
-	if (entry.shift) parts.push(IS_MAC ? "⇧" : "Shift");
-	parts.push(entry.key.toUpperCase());
-	return parts.join(IS_MAC ? "" : "+");
+	return formatShortcut(entry.key, entry);
 }

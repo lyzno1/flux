@@ -59,10 +59,11 @@ All tokens use oklch with chroma `0` for perceptual grayscale. `L` ranges 0 (bla
 --surface-1:           oklch(0.14 0 0)      /* card level */
 --surface-2:           oklch(0.18 0 0)      /* secondary level */
 --surface-3:           oklch(0.22 0 0)      /* accent level */
---sidebar:             oklch(0.10 0 0)      /* flush with bg */
+--sidebar:             oklch(0.16 0 0)      /* elevated nav panel */
+--sidebar-border:      oklch(1 0 0 / 14%)   /* stable panel edge */
 ```
 
-Dark mode elevation stack: `bg 0.10 → surface-1 0.14 → popover 0.16 → surface-2 0.18 → surface-3 0.22`
+Dark mode elevation stack: `bg 0.10 → surface-1 0.14 → sidebar/popover 0.16 → surface-2 0.18 → surface-3 0.22`
 
 ### Subtle Tokens (auto-switch light/dark)
 
@@ -177,7 +178,7 @@ First-child images: `rounded-t-xl`. Last-child: `rounded-b-xl`.
 
 ### Sidebar
 
-Flush with page background in dark mode (`--sidebar` = `--background`). Light mode: `oklch(0.985 0 0)`.
+Dark mode sidebar uses an elevated panel tone (`--sidebar: oklch(0.16 0 0)`) with a stronger edge (`--sidebar-border: oklch(1 0 0 / 14%)`) to remain visibly distinct from the page background (`--background: oklch(0.10 0 0)`). Light mode remains `oklch(0.985 0 0)`.
 
 ### Invalid state pattern (inputs, checkboxes, switches)
 
