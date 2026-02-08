@@ -2,10 +2,11 @@ import type * as React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-interface SidebarMenuActionProps extends React.ComponentProps<"button"> {
+type SidebarMenuActionProps = React.ComponentProps<"button"> & {
+	"aria-label": string;
 	tooltip?: string;
 	showOnHover?: boolean;
-}
+};
 
 function SidebarMenuAction({ tooltip, showOnHover = true, className, children, ...props }: SidebarMenuActionProps) {
 	const button = (

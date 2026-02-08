@@ -9,7 +9,7 @@ function SidebarTrigger({ className, ...props }: React.ComponentProps<typeof But
 
 	return (
 		<Button variant="ghost" size="icon" className={cn("size-8", className)} onClick={toggleSidebar} {...props}>
-			<PanelLeftIcon />
+			<PanelLeftIcon aria-hidden="true" />
 			<span className="sr-only">Toggle sidebar</span>
 		</Button>
 	);

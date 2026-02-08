@@ -1,4 +1,4 @@
-import { useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { Home } from "lucide-react";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import { SidebarContent } from "@/components/sidebar/sidebar-content";
@@ -6,9 +6,11 @@ import { SidebarFooter } from "@/components/sidebar/sidebar-footer";
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel } from "@/components/sidebar/sidebar-group";
 import { SidebarHeader } from "@/components/sidebar/sidebar-header";
 import { SidebarMenu, SidebarMenuItem } from "@/components/sidebar/sidebar-menu";
-import { SidebarMenuButton } from "@/components/sidebar/sidebar-menu-button";
+import { menuButtonStyles } from "@/components/sidebar/sidebar-menu-button";
 import { SidebarRail } from "@/components/sidebar/sidebar-rail";
 import { SidebarUserMenu } from "@/components/sidebar-user-menu";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { cn } from "@/lib/utils";
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
 import { useAppStore } from "@/stores/app/store";
 
@@ -28,6 +30,8 @@ function AppSidebarHeader() {
 function AppSidebarNav() {
 	const router = useRouter();
 	const currentPath = router.state.location.pathname;
+	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
+	const isMobile = useIsMobile();
 
 	return (
 		<SidebarContent>
@@ -36,14 +40,15 @@ function AppSidebarNav() {
 				<SidebarGroupContent>
 					<SidebarMenu>
 						<SidebarMenuItem>
-							<SidebarMenuButton
-								isActive={currentPath === "/dify"}
-								tooltip="Home"
-								onClick={() => router.navigate({ to: "/dify" })}
+							<Link
+								to="/dify"
+								data-sidebar="menu-button"
+								data-active={currentPath === "/dify"}
+								className={cn(menuButtonStyles, collapsed && !isMobile && "justify-center px-0")}
 							>
-								<Home />
+								<Home aria-hidden="true" />
 								<span className="group-data-[state=collapsed]/sidebar-wrapper:hidden">Home</span>
-							</SidebarMenuButton>
+							</Link>
 						</SidebarMenuItem>
 					</SidebarMenu>
 				</SidebarGroupContent>

@@ -23,7 +23,7 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 						data-sidebar="sidebar"
 						data-mobile="true"
 						className={cn(
-							"data-closed:slide-out-to-left data-open:slide-in-from-left fixed inset-y-0 left-0 z-50 flex h-svh flex-col bg-sidebar text-sidebar-foreground shadow-lg duration-200 data-closed:animate-out data-open:animate-in motion-reduce:animate-none motion-reduce:transition-none",
+							"data-closed:slide-out-to-left data-open:slide-in-from-left fixed inset-y-0 left-0 z-50 flex h-svh flex-col overscroll-contain bg-sidebar text-sidebar-foreground shadow-lg duration-200 data-closed:animate-out data-open:animate-in motion-reduce:animate-none motion-reduce:transition-none",
 							className,
 						)}
 						style={{ width: SIDEBAR_WIDTH_MOBILE }}

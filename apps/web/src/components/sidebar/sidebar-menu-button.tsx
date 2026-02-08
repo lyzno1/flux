@@ -10,6 +10,9 @@ type SidebarMenuButtonProps = React.ComponentProps<"button"> & {
 	tooltip?: string;
 };
 
+const menuButtonStyles =
+	"peer/menu-button flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sidebar-foreground text-sm outline-none transition-[color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-1 focus-visible:ring-sidebar-ring active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground motion-reduce:transition-none [&>svg]:size-4 [&>svg]:shrink-0";
+
 function SidebarMenuButton({ isActive = false, tooltip, className, children, ...props }: SidebarMenuButtonProps) {
 	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
 	const isMobile = useIsMobile();
@@ -19,11 +22,7 @@ function SidebarMenuButton({ isActive = false, tooltip, className, children, ...
 			type="button"
 			data-sidebar="menu-button"
 			data-active={isActive}
-			className={cn(
-				"peer/menu-button flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sidebar-foreground text-sm outline-none transition-[color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-1 focus-visible:ring-sidebar-ring active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground motion-reduce:transition-none [&>svg]:size-4 [&>svg]:shrink-0",
-				collapsed && !isMobile && "justify-center px-0",
-				className,
-			)}
+			className={cn(menuButtonStyles, collapsed && !isMobile && "justify-center px-0", className)}
 			{...props}
 		>
 			{children}
@@ -45,4 +44,4 @@ function SidebarMenuButton({ isActive = false, tooltip, className, children, ...
 	return button;
 }
 
-export { SidebarMenuButton };
+export { SidebarMenuButton, menuButtonStyles };
