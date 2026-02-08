@@ -3,14 +3,21 @@ import { getAppStoreState } from "@/stores/app/store";
 
 const MOBILE_BREAKPOINT = 1024;
 
+let mql: MediaQueryList | null = null;
+
+function getMql() {
+	if (!mql) mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+	return mql;
+}
+
 function subscribe(callback: () => void) {
-	const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-	mql.addEventListener("change", callback);
-	return () => mql.removeEventListener("change", callback);
+	const q = getMql();
+	q.addEventListener("change", callback);
+	return () => q.removeEventListener("change", callback);
 }
 
 function getSnapshot() {
-	return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches;
+	return getMql().matches;
 }
 
 function getServerSnapshot() {

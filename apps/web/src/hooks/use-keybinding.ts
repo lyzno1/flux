@@ -32,15 +32,22 @@ export function useKeybinding(
 	}, [id, key, mod, alt, shift, description]);
 }
 
-let globalListenerInit = false;
+let globalListener: ((event: KeyboardEvent) => void) | null = null;
 
 export function useGlobalKeyboardListener() {
 	useEffect(() => {
-		if (globalListenerInit) return;
-		globalListenerInit = true;
+		if (globalListener) return;
 
-		window.addEventListener("keydown", (event) => {
+		globalListener = (event: KeyboardEvent) => {
 			getKeybindingsStoreState().handleKeyDown(event);
-		});
+		};
+		window.addEventListener("keydown", globalListener);
+
+		return () => {
+			if (globalListener) {
+				window.removeEventListener("keydown", globalListener);
+				globalListener = null;
+			}
+		};
 	}, []);
 }

@@ -17,6 +17,9 @@ function matchesEntry(event: KeyboardEvent, entry: KeybindingEntry): boolean {
 	if (!!entry.alt !== event.altKey) return false;
 	if (!!entry.shift !== event.shiftKey) return false;
 
+	const otherModPressed = IS_MAC ? event.ctrlKey : event.metaKey;
+	if (otherModPressed) return false;
+
 	return true;
 }
 
