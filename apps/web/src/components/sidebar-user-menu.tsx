@@ -140,7 +140,7 @@ export function SidebarUserMenu() {
 				side={collapsed ? "right" : "top"}
 				align={collapsed ? "end" : "start"}
 				sideOffset={8}
-				className="w-56"
+				className="w-[15.5rem]"
 			>
 				<UserMenuContent name={name} email={email} />
 			</DropdownMenuContent>

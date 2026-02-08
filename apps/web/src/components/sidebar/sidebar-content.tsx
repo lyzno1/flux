@@ -5,7 +5,7 @@ function SidebarContent({ className, children, ...props }: React.ComponentProps<
 	return (
 		<div
 			data-sidebar="content"
-			className={cn("flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-2", className)}
+			className={cn("flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-1 py-2", className)}
 			{...props}
 		>
 			{children}
