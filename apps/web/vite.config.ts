@@ -28,7 +28,11 @@ export default defineConfig({
 		reactScanDev(),
 		tailwindcss(),
 		tanstackRouter({ target: "react", autoCodeSplitting: true }),
-		react(),
+		react({
+			babel: {
+				plugins: ["babel-plugin-react-compiler"],
+			},
+		}),
 	],
 	resolve: {
 		alias: {
