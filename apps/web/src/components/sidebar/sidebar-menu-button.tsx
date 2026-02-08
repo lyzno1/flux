@@ -1,16 +1,17 @@
 import type * as React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
+import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
+import { useAppStore } from "@/stores/app/store";
 
-interface SidebarMenuButtonProps extends React.ComponentProps<"button"> {
+type SidebarMenuButtonProps = React.ComponentProps<"button"> & {
 	isActive?: boolean;
 	tooltip?: string;
-}
+};
 
 function SidebarMenuButton({ isActive = false, tooltip, className, children, ...props }: SidebarMenuButtonProps) {
-	const { state, isMobile } = useSidebar();
-	const collapsed = state === "collapsed";
+	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
+	const isMobile = useAppStore(sidebarSelectors.isSidebarMobile);
 
 	const button = (
 		<button

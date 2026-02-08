@@ -1,14 +1,18 @@
 import { Dialog } from "@base-ui/react/dialog";
 import type * as React from "react";
-import { useSidebar } from "@/hooks/use-sidebar";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import { cn } from "@/lib/utils";
+import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
+import { getAppStoreState, useAppStore } from "@/stores/app/store";
 
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 
 function Sidebar({ className, children, ...props }: React.ComponentProps<"div">) {
-	const { open, isMobile, setSidebarOpen } = useSidebar();
+	const open = useAppStore(sidebarSelectors.isSidebarOpen);
+	const isMobile = useIsMobile();
+	const setSidebarOpen = getAppStoreState().setSidebarOpen;
 
 	if (isMobile) {
 		return (

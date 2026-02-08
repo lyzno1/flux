@@ -21,32 +21,30 @@ function Sidebar() {
 }
 ```
 
-## Composition Hook Pattern
+## Direct Store Access (Preferred)
 
-Wrap store access in a custom hook for cohesive APIs:
+Each component imports exactly the selectors and actions it needs — no facade hooks:
 
-```ts
-// apps/web/src/hooks/use-sidebar.ts
+```tsx
+// Action-only component — zero subscriptions (Vercel: rerender-defer-reads)
+import { getAppStoreState } from "@/stores/app/store";
+
+function SidebarTrigger() {
+	const toggleSidebar = getAppStoreState().toggleSidebar;
+	return <button onClick={toggleSidebar}>Toggle</button>;
+}
+
+// State-reading component — minimal subscriptions
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
-import { getAppStoreState, useAppStore } from "@/stores/app/store";
-import { useIsMobile } from "./use-is-mobile";
+import { useAppStore } from "@/stores/app/store";
 
-export function useSidebar() {
-	// Subscribe to state that affects rendering
-	const open = useAppStore(sidebarSelectors.isSidebarOpen);
-	const state = useAppStore(sidebarSelectors.sidebarState);
-	const isMobile = useIsMobile();
-
-	return {
-		open,
-		state,
-		isMobile,
-		// Actions via getState() — no subscriptions (Vercel: rerender-defer-reads)
-		toggleSidebar: getAppStoreState().toggleSidebar,
-		setSidebarOpen: getAppStoreState().setSidebarOpen,
-	};
+function AppSidebarHeader() {
+	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
+	return <div>{collapsed ? "F" : "Flux"}</div>;
 }
 ```
+
+Avoid creating "facade hooks" (like `useSidebar()`) that bundle unrelated state — they force every consumer to subscribe to everything, similar to barrel files for state.
 
 ## Context Store (Isolated Instances)
 

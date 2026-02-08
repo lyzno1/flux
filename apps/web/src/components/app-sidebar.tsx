@@ -12,11 +12,11 @@ import { SidebarMenuButton } from "@/components/sidebar/sidebar-menu-button";
 import { SidebarRail } from "@/components/sidebar/sidebar-rail";
 import { SidebarSeparator } from "@/components/sidebar/sidebar-separator";
 import { UserMenu } from "@/components/user-menu";
-import { useSidebar } from "@/hooks/use-sidebar";
+import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
+import { useAppStore } from "@/stores/app/store";
 
 function AppSidebarHeader() {
-	const { state } = useSidebar();
-	const collapsed = state === "collapsed";
+	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
 
 	return (
 		<SidebarHeader>
@@ -56,8 +56,7 @@ function AppSidebarNav() {
 }
 
 function AppSidebarFooter() {
-	const { state } = useSidebar();
-	const collapsed = state === "collapsed";
+	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
 
 	return (
 		<SidebarFooter>

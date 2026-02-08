@@ -52,3 +52,4 @@ apps/web/src/stores/
 9. Access actions via `getXxxStoreState()` in callbacks to avoid subscriptions (Vercel: `rerender-defer-reads`)
 10. Subscribe to derived booleans, not raw values (Vercel: `rerender-derived-state`)
 11. Use functional `set((s) => ...)` for state updates that depend on current state (Vercel: `rerender-functional-setstate`)
+12. No facade hooks — components import selectors and actions directly; don't bundle unrelated state into a single hook

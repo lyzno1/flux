@@ -1,9 +1,9 @@
 import type * as React from "react";
-import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
+import { getAppStoreState } from "@/stores/app/store";
 
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
-	const { toggleSidebar } = useSidebar();
+	const toggleSidebar = getAppStoreState().toggleSidebar;
 
 	return (
 		<button
