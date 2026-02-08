@@ -9,6 +9,8 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
 	DropdownMenuSeparator,
 	DropdownMenuSub,
 	DropdownMenuSubContent,
@@ -34,7 +36,7 @@ function UserAvatar({ name, image }: { name: string; image?: string | null }) {
 function UserMenuContent({ name, email }: { name: string; email: string }) {
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
-	const { setTheme } = useTheme();
+	const { theme, setTheme } = useTheme();
 	const { refetch } = authClient.useSession();
 
 	const handleSignOut = async () => {
@@ -72,15 +74,13 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 						{t("user.language")}
 					</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
-						{languages.map((lang) => (
-							<DropdownMenuItem
-								key={lang.code}
-								disabled={i18n.language === lang.code}
-								onClick={() => i18n.changeLanguage(lang.code)}
-							>
-								{lang.label}
-							</DropdownMenuItem>
-						))}
+						<DropdownMenuRadioGroup value={i18n.language} onValueChange={(value) => i18n.changeLanguage(value)}>
+							{languages.map((lang) => (
+								<DropdownMenuRadioItem key={lang.code} value={lang.code}>
+									{lang.label}
+								</DropdownMenuRadioItem>
+							))}
+						</DropdownMenuRadioGroup>
 					</DropdownMenuSubContent>
 				</DropdownMenuSub>
 				<DropdownMenuSub>
@@ -89,9 +89,11 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 						{t("theme.toggle")}
 					</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
-						<DropdownMenuItem onClick={() => setTheme("light")}>{t("theme.light")}</DropdownMenuItem>
-						<DropdownMenuItem onClick={() => setTheme("dark")}>{t("theme.dark")}</DropdownMenuItem>
-						<DropdownMenuItem onClick={() => setTheme("system")}>{t("theme.system")}</DropdownMenuItem>
+						<DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+							<DropdownMenuRadioItem value="light">{t("theme.light")}</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value="dark">{t("theme.dark")}</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value="system">{t("theme.system")}</DropdownMenuRadioItem>
+						</DropdownMenuRadioGroup>
 					</DropdownMenuSubContent>
 				</DropdownMenuSub>
 			</DropdownMenuGroup>
