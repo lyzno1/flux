@@ -98,7 +98,7 @@ Middleware order (outer → inner): `subscribeWithSelector` → `devtools` → `
 
 Key `persist` options:
 - `name` — storage key, use `STORAGE_KEYS` constants
-- `partialize` — only persist what's needed; exclude transient state (e.g. `sidebarIsMobile`)
+- `partialize` — only persist what's needed; exclude transient/derived state
 
 ## State Definition
 
@@ -122,12 +122,10 @@ export const initialState: AppState = {
 // apps/web/src/stores/app/slices/sidebar/initial-state.ts
 export type SidebarState = {
 	sidebarOpen: boolean;
-	sidebarIsMobile: boolean;
 };
 
 export const initialSidebarState: SidebarState = {
 	sidebarOpen: true,
-	sidebarIsMobile: false,
 };
 ```
 
@@ -143,7 +141,6 @@ import type { AppStore } from "../../store";
 export type SidebarAction = {
 	toggleSidebar: () => void;
 	setSidebarOpen: (open: boolean) => void;
-	setSidebarIsMobile: (isMobile: boolean) => void;
 };
 
 export const createSidebarSlice: StateCreator<
@@ -157,9 +154,6 @@ export const createSidebarSlice: StateCreator<
 
 	setSidebarOpen: (open) =>
 		set({ sidebarOpen: open }, false, "setSidebarOpen"),
-
-	setSidebarIsMobile: (isMobile) =>
-		set({ sidebarIsMobile: isMobile }, false, "setSidebarIsMobile"),
 });
 ```
 
