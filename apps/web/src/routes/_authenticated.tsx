@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset } from "@/components/sidebar/sidebar-inset";
+import { SidebarInset } from "@/components/ui/sidebar/sidebar-inset";
 import { useGlobalKeyboardListener, useKeybinding } from "@/hooks/use-keybinding";
 import { getAppStoreState } from "@/stores/app/store";
 

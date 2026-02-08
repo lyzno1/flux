@@ -1,13 +1,13 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { Home, PanelLeftIcon } from "lucide-react";
-import { Sidebar } from "@/components/sidebar/sidebar";
-import { SidebarContent } from "@/components/sidebar/sidebar-content";
-import { SidebarFooter } from "@/components/sidebar/sidebar-footer";
-import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel } from "@/components/sidebar/sidebar-group";
-import { SidebarHeader } from "@/components/sidebar/sidebar-header";
-import { SidebarMenu, SidebarMenuItem } from "@/components/sidebar/sidebar-menu";
-import { menuButtonStyles } from "@/components/sidebar/sidebar-menu-button";
-import { SidebarUserMenu } from "@/components/sidebar-user-menu";
+import { SidebarUserMenu } from "@/components/app-sidebar/sidebar-user-menu";
+import { Sidebar } from "@/components/ui/sidebar";
+import { SidebarContent } from "@/components/ui/sidebar/sidebar-content";
+import { SidebarFooter } from "@/components/ui/sidebar/sidebar-footer";
+import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel } from "@/components/ui/sidebar/sidebar-group";
+import { SidebarHeader } from "@/components/ui/sidebar/sidebar-header";
+import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar/sidebar-menu";
+import { menuButtonStyles } from "@/components/ui/sidebar/sidebar-menu-button";
 import { getAppStoreState } from "@/stores/app/store";
 
 function AppSidebarHeader() {

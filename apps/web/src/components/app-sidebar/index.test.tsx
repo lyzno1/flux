@@ -2,7 +2,7 @@ import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import type * as React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useAppStore } from "@/stores/app/store";
-import { AppSidebar } from "./app-sidebar";
+import { AppSidebar } from ".";
 
 const routerState = { pathname: "/dify" };
 const toggleSidebarMock = vi.fn();
@@ -26,7 +26,7 @@ vi.mock("@tanstack/react-router", async (importOriginal) => {
 	};
 });
 
-vi.mock("@/components/sidebar-user-menu", () => ({
+vi.mock("@/components/app-sidebar/sidebar-user-menu", () => ({
 	SidebarUserMenu: () => <div data-testid="sidebar-user-menu">User Menu</div>,
 }));
 

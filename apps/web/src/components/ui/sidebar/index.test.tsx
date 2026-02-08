@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useAppStore } from "@/stores/app/store";
-import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON, Sidebar } from "./sidebar";
+import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON, Sidebar } from ".";
 
 const mockUseIsMobile = vi.fn(() => false);
 

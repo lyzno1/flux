@@ -106,6 +106,13 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 	);
 }
 
+const triggerButton = (
+	<button
+		type="button"
+		className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent focus-visible:ring-1 focus-visible:ring-sidebar-ring"
+	/>
+);
+
 export function SidebarUserMenu() {
 	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
 	const { data: session, isPending } = authClient.useSession();
@@ -120,30 +127,27 @@ export function SidebarUserMenu() {
 
 	const { name, email, image } = session.user;
 
+	const triggerContent = (
+		<>
+			<UserAvatar name={name} image={image} />
+			<div className="flex min-w-0 flex-1 flex-col overflow-hidden text-left transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
+				<span className="truncate font-medium text-sidebar-foreground text-sm">{name}</span>
+				<span className="truncate text-muted-foreground text-xs">{email}</span>
+			</div>
+			<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none" />
+		</>
+	);
+
 	return (
 		<DropdownMenu>
-			<Tooltip>
-				<TooltipTrigger
-					render={
-						<DropdownMenuTrigger
-							render={
-								<button
-									type="button"
-									className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent focus-visible:ring-1 focus-visible:ring-sidebar-ring"
-								/>
-							}
-						/>
-					}
-				>
-					<UserAvatar name={name} image={image} />
-					<div className="flex min-w-0 flex-1 flex-col overflow-hidden text-left transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
-						<span className="truncate font-medium text-sidebar-foreground text-sm">{name}</span>
-						<span className="truncate text-muted-foreground text-xs">{email}</span>
-					</div>
-					<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none" />
-				</TooltipTrigger>
-				{collapsed && <TooltipContent side="right">{name}</TooltipContent>}
-			</Tooltip>
+			{collapsed ? (
+				<Tooltip>
+					<TooltipTrigger render={<DropdownMenuTrigger render={triggerButton} />}>{triggerContent}</TooltipTrigger>
+					<TooltipContent side="right">{name}</TooltipContent>
+				</Tooltip>
+			) : (
+				<DropdownMenuTrigger render={triggerButton}>{triggerContent}</DropdownMenuTrigger>
+			)}
 			<DropdownMenuContent side="top" align="start" sideOffset={8} className="w-62">
 				<UserMenuContent name={name} email={email} />
 			</DropdownMenuContent>

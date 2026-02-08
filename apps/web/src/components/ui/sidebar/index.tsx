@@ -38,12 +38,13 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 		);
 	}
 
+	const isChildInteractive = (e: React.SyntheticEvent<HTMLElement>) => {
+		const interactive = (e.target as HTMLElement).closest(INTERACTIVE_SELECTOR);
+		return interactive !== null && interactive !== e.currentTarget;
+	};
+
 	const handleSidebarExpand = (e: React.MouseEvent<HTMLElement>) => {
-		if (
-			!open &&
-			e.currentTarget.contains(e.target as Node) &&
-			!(e.target as HTMLElement).closest(INTERACTIVE_SELECTOR)
-		) {
+		if (!open && e.currentTarget.contains(e.target as Node) && !isChildInteractive(e)) {
 			setSidebarOpen(true);
 		}
 	};
@@ -53,7 +54,7 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 			!open &&
 			(e.key === "Enter" || e.key === " ") &&
 			e.currentTarget.contains(e.target as Node) &&
-			!(e.target as HTMLElement).closest(INTERACTIVE_SELECTOR)
+			!isChildInteractive(e)
 		) {
 			e.preventDefault();
 			setSidebarOpen(true);
@@ -70,6 +71,9 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 			<aside
 				data-sidebar="sidebar"
 				data-state={open ? "expanded" : "collapsed"}
+				tabIndex={open ? undefined : 0}
+				aria-label={open ? undefined : "Expand sidebar"}
+				role={open ? undefined : "button"}
 				className={cn(
 					"fixed inset-y-0 left-0 z-30 flex h-svh flex-col border-sidebar-border border-r bg-sidebar text-sidebar-foreground transition-[width,border-color] duration-200 ease-out group-data-[state=collapsed]/sidebar-wrapper:cursor-e-resize group-data-[state=collapsed]/sidebar-wrapper:border-transparent motion-reduce:transition-none group-data-[state=collapsed]/sidebar-wrapper:[&_a]:cursor-pointer group-data-[state=collapsed]/sidebar-wrapper:[&_button]:cursor-pointer",
 					className,
