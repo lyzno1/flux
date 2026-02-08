@@ -96,6 +96,9 @@ function RootComponent() {
 	const contentId = useId();
 	const isAuthRoute = matches.some((match) => match.routeId === "/_auth" || match.routeId.startsWith("/_auth/"));
 	const isHomeRoute = matches[matches.length - 1]?.routeId === "/";
+	const isAuthenticatedRoute = matches.some(
+		(match) => match.routeId === "/_authenticated" || match.routeId.startsWith("/_authenticated/"),
+	);
 	const brandingVariant: BrandingVariant = isAuthRoute ? "auth" : isHomeRoute ? "home" : "none";
 
 	return (
@@ -119,7 +122,7 @@ function RootComponent() {
 							<Outlet />
 						</Suspense>
 					</BrandingViewport>
-					<Header />
+					{!isAuthenticatedRoute && <Header />}
 				</div>
 				<Toaster richColors />
 				<GoogleOneTap />
