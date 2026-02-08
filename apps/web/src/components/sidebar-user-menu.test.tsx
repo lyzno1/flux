@@ -63,6 +63,24 @@ vi.mock("@/components/ui/avatar", () => ({
 	),
 }));
 
+vi.mock("@/components/ui/tooltip", async () => {
+	const React = await import("react");
+	return {
+		Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+		TooltipTrigger: ({ children, render }: { children?: React.ReactNode; render?: React.ReactElement }) => {
+			if (render && React.isValidElement(render)) {
+				return React.cloneElement(render as React.ReactElement, {}, children);
+			}
+			return <div>{children}</div>;
+		},
+		TooltipContent: ({ children, side }: { children: React.ReactNode; side?: string }) => (
+			<div data-testid="tooltip-content" data-side={side}>
+				{children}
+			</div>
+		),
+	};
+});
+
 vi.mock("@/components/ui/dropdown-menu", async () => {
 	const React = await import("react");
 	return {
@@ -181,7 +199,7 @@ describe("SidebarUserMenu", () => {
 		expect(screen.queryByTestId("avatar-image")).not.toBeInTheDocument();
 	});
 
-	it("positions dropdown above in expanded mode and to the right in collapsed mode", () => {
+	it("always positions dropdown above with start alignment", () => {
 		setSessionState({
 			user: { name: "Alice", email: "alice@example.com" },
 		});
@@ -195,8 +213,24 @@ describe("SidebarUserMenu", () => {
 		});
 		rerender(<SidebarUserMenu />);
 
-		expect(screen.getByTestId("dropdown-content")).toHaveAttribute("data-side", "right");
-		expect(screen.getByTestId("dropdown-content")).toHaveAttribute("data-align", "end");
+		expect(screen.getByTestId("dropdown-content")).toHaveAttribute("data-side", "top");
+		expect(screen.getByTestId("dropdown-content")).toHaveAttribute("data-align", "start");
+	});
+
+	it("shows tooltip with username when sidebar is collapsed", () => {
+		setSessionState({
+			user: { name: "Alice", email: "alice@example.com" },
+		});
+
+		const { rerender } = render(<SidebarUserMenu />);
+		expect(screen.queryByTestId("tooltip-content")).not.toBeInTheDocument();
+
+		act(() => {
+			useAppStore.setState({ sidebarOpen: false });
+		});
+		rerender(<SidebarUserMenu />);
+
+		expect(screen.getByTestId("tooltip-content")).toHaveTextContent("Alice");
 	});
 
 	it("changes language from language submenu items", () => {

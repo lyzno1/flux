@@ -16,8 +16,11 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { languages } from "@/i18n";
 import { authClient } from "@/lib/auth-client";
+import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
+import { useAppStore } from "@/stores/app/store";
 
 function UserAvatar({ name, image }: { name: string; image?: string | null }) {
 	return (
@@ -104,6 +107,7 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 }
 
 export function SidebarUserMenu() {
+	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
 	const { data: session, isPending } = authClient.useSession();
 
 	if (isPending) {
@@ -118,22 +122,29 @@ export function SidebarUserMenu() {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger
-				render={
-					<button
-						type="button"
-						className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent focus-visible:ring-1 focus-visible:ring-sidebar-ring"
-					/>
-				}
-			>
-				<UserAvatar name={name} image={image} />
-				<div className="flex min-w-0 flex-1 flex-col overflow-hidden text-left transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
-					<span className="truncate font-medium text-sidebar-foreground text-sm">{name}</span>
-					<span className="truncate text-muted-foreground text-xs">{email}</span>
-				</div>
-				<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none" />
-			</DropdownMenuTrigger>
-			<DropdownMenuContent side="top" align="start" sideOffset={8} className="w-[15.5rem]">
+			<Tooltip>
+				<TooltipTrigger
+					render={
+						<DropdownMenuTrigger
+							render={
+								<button
+									type="button"
+									className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent focus-visible:ring-1 focus-visible:ring-sidebar-ring"
+								/>
+							}
+						/>
+					}
+				>
+					<UserAvatar name={name} image={image} />
+					<div className="flex min-w-0 flex-1 flex-col overflow-hidden text-left transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
+						<span className="truncate font-medium text-sidebar-foreground text-sm">{name}</span>
+						<span className="truncate text-muted-foreground text-xs">{email}</span>
+					</div>
+					<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none" />
+				</TooltipTrigger>
+				{collapsed && <TooltipContent side="right">{name}</TooltipContent>}
+			</Tooltip>
+			<DropdownMenuContent side="top" align="start" sideOffset={8} className="w-62">
 				<UserMenuContent name={name} email={email} />
 			</DropdownMenuContent>
 		</DropdownMenu>
