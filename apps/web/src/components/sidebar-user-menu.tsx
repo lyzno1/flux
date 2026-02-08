@@ -125,7 +125,7 @@ export function SidebarUserMenu() {
 				render={
 					<button
 						type="button"
-						className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent"
+						className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent focus-visible:ring-1 focus-visible:ring-sidebar-ring"
 					/>
 				}
 			>

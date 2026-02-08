@@ -36,6 +36,19 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 		);
 	}
 
+	const handleSidebarExpand = (e: React.MouseEvent) => {
+		if (!open && !(e.target as HTMLElement).closest("button, a")) {
+			setSidebarOpen(true);
+		}
+	};
+
+	const handleSidebarKeyDown = (e: React.KeyboardEvent) => {
+		if (!open && (e.key === "Enter" || e.key === " ") && !(e.target as HTMLElement).closest("button, a")) {
+			e.preventDefault();
+			setSidebarOpen(true);
+		}
+	};
+
 	return (
 		<div
 			data-sidebar="sidebar-wrapper"
@@ -47,10 +60,12 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 				data-sidebar="sidebar"
 				data-state={open ? "expanded" : "collapsed"}
 				className={cn(
-					"fixed inset-y-0 left-0 z-30 flex h-svh flex-col border-sidebar-border border-r bg-sidebar text-sidebar-foreground transition-[width,border-color] duration-200 ease-out group-data-[state=collapsed]/sidebar-wrapper:border-transparent motion-reduce:transition-none",
+					"fixed inset-y-0 left-0 z-30 flex h-svh flex-col border-sidebar-border border-r bg-sidebar text-sidebar-foreground transition-[width,border-color] duration-200 ease-out group-data-[state=collapsed]/sidebar-wrapper:cursor-e-resize group-data-[state=collapsed]/sidebar-wrapper:border-transparent motion-reduce:transition-none group-data-[state=collapsed]/sidebar-wrapper:[&_a]:cursor-pointer group-data-[state=collapsed]/sidebar-wrapper:[&_button]:cursor-pointer",
 					className,
 				)}
 				style={{ width: open ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_ICON }}
+				onClick={handleSidebarExpand}
+				onKeyDown={handleSidebarKeyDown}
 				{...props}
 			>
 				{children}
