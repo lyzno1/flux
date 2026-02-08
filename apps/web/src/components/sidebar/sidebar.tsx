@@ -47,7 +47,7 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 				data-sidebar="sidebar"
 				data-state={open ? "expanded" : "collapsed"}
 				className={cn(
-					"fixed inset-y-0 left-0 z-30 flex h-svh flex-col border-sidebar-border border-r bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-out motion-reduce:transition-none",
+					"fixed inset-y-0 left-0 z-30 flex h-svh flex-col border-sidebar-border border-r bg-sidebar text-sidebar-foreground transition-[width,border-color] duration-200 ease-out group-data-[state=collapsed]/sidebar-wrapper:border-transparent motion-reduce:transition-none",
 					className,
 				)}
 				style={{ width: open ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_ICON }}
