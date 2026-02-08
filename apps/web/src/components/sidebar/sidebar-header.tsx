@@ -6,7 +6,7 @@ function SidebarHeader({ className, children, ...props }: React.ComponentProps<"
 		<div
 			data-sidebar="header"
 			className={cn(
-				"flex shrink-0 items-center gap-2 border-sidebar-border border-b px-3 py-3 transition-[padding] duration-200 group-data-[state=collapsed]/sidebar-wrapper:justify-center group-data-[state=collapsed]/sidebar-wrapper:px-0 motion-reduce:transition-none",
+				"flex shrink-0 items-center gap-2 overflow-hidden border-sidebar-border border-b p-2 motion-reduce:transition-none",
 				className,
 			)}
 			{...props}

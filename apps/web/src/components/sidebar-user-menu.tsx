@@ -125,16 +125,16 @@ export function SidebarUserMenu() {
 				render={
 					<button
 						type="button"
-						className="flex w-full items-center gap-2 rounded-lg p-2 outline-none hover:bg-sidebar-accent group-data-[state=collapsed]/sidebar-wrapper:justify-center group-data-[state=collapsed]/sidebar-wrapper:px-0"
+						className="flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 outline-none hover:bg-sidebar-accent"
 					/>
 				}
 			>
 				<UserAvatar name={name} image={image} />
-				<div className="flex min-w-0 flex-1 flex-col text-left group-data-[state=collapsed]/sidebar-wrapper:hidden">
+				<div className="flex min-w-0 flex-1 flex-col overflow-hidden text-left transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
 					<span className="truncate font-medium text-sidebar-foreground text-sm">{name}</span>
 					<span className="truncate text-muted-foreground text-xs">{email}</span>
 				</div>
-				<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground group-data-[state=collapsed]/sidebar-wrapper:hidden" />
+				<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none" />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
 				side={collapsed ? "right" : "top"}

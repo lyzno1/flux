@@ -9,20 +9,16 @@ import { SidebarMenu, SidebarMenuItem } from "@/components/sidebar/sidebar-menu"
 import { menuButtonStyles } from "@/components/sidebar/sidebar-menu-button";
 import { SidebarRail } from "@/components/sidebar/sidebar-rail";
 import { SidebarUserMenu } from "@/components/sidebar-user-menu";
-import { useIsMobile } from "@/hooks/use-is-mobile";
-import { cn } from "@/lib/utils";
-import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
-import { useAppStore } from "@/stores/app/store";
 
 function AppSidebarHeader() {
-	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
-
 	return (
 		<SidebarHeader>
-			<div className="flex size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+			<div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
 				<span className="font-bold text-sm">F</span>
 			</div>
-			{!collapsed && <span className="font-semibold text-sidebar-foreground">Flux</span>}
+			<span className="overflow-hidden whitespace-nowrap font-semibold text-sidebar-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
+				Flux
+			</span>
 		</SidebarHeader>
 	);
 }
@@ -30,8 +26,6 @@ function AppSidebarHeader() {
 function AppSidebarNav() {
 	const router = useRouter();
 	const currentPath = router.state.location.pathname;
-	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
-	const isMobile = useIsMobile();
 
 	return (
 		<SidebarContent>
@@ -44,10 +38,12 @@ function AppSidebarNav() {
 								to="/dify"
 								data-sidebar="menu-button"
 								data-active={currentPath === "/dify"}
-								className={cn(menuButtonStyles, collapsed && !isMobile && "justify-center px-0")}
+								className={menuButtonStyles}
 							>
 								<Home aria-hidden="true" />
-								<span className="group-data-[state=collapsed]/sidebar-wrapper:hidden">Home</span>
+								<span className="overflow-hidden whitespace-nowrap transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
+									Home
+								</span>
 							</Link>
 						</SidebarMenuItem>
 					</SidebarMenu>
