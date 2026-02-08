@@ -18,8 +18,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { languages } from "@/i18n";
 import { authClient } from "@/lib/auth-client";
-import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
-import { useAppStore } from "@/stores/app/store";
 
 function UserAvatar({ name, image }: { name: string; image?: string | null }) {
 	return (
@@ -106,7 +104,6 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 }
 
 export function SidebarUserMenu() {
-	const collapsed = useAppStore(sidebarSelectors.isSidebarCollapsed);
 	const { data: session, isPending } = authClient.useSession();
 
 	if (isPending) {
@@ -136,12 +133,7 @@ export function SidebarUserMenu() {
 				</div>
 				<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none" />
 			</DropdownMenuTrigger>
-			<DropdownMenuContent
-				side={collapsed ? "right" : "top"}
-				align={collapsed ? "end" : "start"}
-				sideOffset={8}
-				className="w-[15.5rem]"
-			>
+			<DropdownMenuContent side="top" align="start" sideOffset={8} className="w-[15.5rem]">
 				<UserMenuContent name={name} email={email} />
 			</DropdownMenuContent>
 		</DropdownMenu>
