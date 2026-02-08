@@ -195,7 +195,8 @@
 	html {
 		@apply font-sans;
 	}
-	/* Keep Base UI's internal menu backdrop above fixed app chrome (e.g. sidebar z-30). */
+	/* Workaround for https://github.com/mui/base-ui/issues/4012:
+	   keep Base UI internal menu backdrop above fixed app chrome (e.g. sidebar z-30). */
 	[data-base-ui-portal] > [data-base-ui-inert][role="presentation"] {
 		z-index: 49;
 	}
