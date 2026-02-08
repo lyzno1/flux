@@ -36,7 +36,7 @@ function AppSidebarHeader() {
 				<span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-left font-semibold text-sidebar-foreground transition-opacity duration-200 group-data-[state=collapsed]/sidebar-wrapper:opacity-0 motion-reduce:transition-none">
 					Flux
 				</span>
-				<Tooltip>
+				<Tooltip key={collapsed ? "collapsed" : "expanded"} delay={150}>
 					<TooltipTrigger render={toggleButton} />
 					<TooltipContent side={collapsed ? "right" : "bottom"}>
 						{t(collapsed ? "sidebar.open" : "sidebar.close")}{" "}

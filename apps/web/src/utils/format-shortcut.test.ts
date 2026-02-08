@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 describe("formatShortcut", () => {
 	afterEach(() => {
 		vi.resetModules();
-		vi.restoreAllMocks();
+		vi.unstubAllGlobals();
 	});
 
 	async function importWithPlatform(isMac: boolean) {
