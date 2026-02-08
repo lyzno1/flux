@@ -26,6 +26,24 @@ vi.mock("@tanstack/react-router", async (importOriginal) => {
 	};
 });
 
+vi.mock("@/components/ui/tooltip", async () => {
+	const React = await import("react");
+	return {
+		Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+		TooltipTrigger: ({ children, render }: { children?: React.ReactNode; render?: React.ReactElement }) => {
+			if (render && React.isValidElement(render)) {
+				return React.cloneElement(render as React.ReactElement, {}, children);
+			}
+			return <div>{children}</div>;
+		},
+		TooltipContent: ({ children, side }: { children: React.ReactNode; side?: string }) => (
+			<div data-testid="tooltip-content" data-side={side}>
+				{children}
+			</div>
+		),
+	};
+});
+
 vi.mock("@/components/app-sidebar/sidebar-user-menu", () => ({
 	SidebarUserMenu: () => <div data-testid="sidebar-user-menu">User Menu</div>,
 }));
@@ -70,5 +88,29 @@ describe("AppSidebar", () => {
 		routerState.pathname = "/settings";
 		rerender(<AppSidebar />);
 		expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("data-active", "false");
+	});
+
+	it("shows open tooltip on right when sidebar is collapsed", () => {
+		act(() => {
+			useAppStore.setState((state) => ({
+				...state,
+				sidebarOpen: false,
+				toggleSidebar: toggleSidebarMock,
+			}));
+		});
+
+		render(<AppSidebar />);
+
+		const tooltip = screen.getByTestId("tooltip-content");
+		expect(tooltip).toHaveAttribute("data-side", "right");
+		expect(tooltip).toHaveTextContent("sidebar.open");
+	});
+
+	it("shows close tooltip on bottom when sidebar is expanded", () => {
+		render(<AppSidebar />);
+
+		const tooltip = screen.getByTestId("tooltip-content");
+		expect(tooltip).toHaveAttribute("data-side", "bottom");
+		expect(tooltip).toHaveTextContent("sidebar.close");
 	});
 });

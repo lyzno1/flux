@@ -1,6 +1,8 @@
 {
 	"error.generic": "Error: {{message}}",
 	"error.notFound": "404 - Not Found",
+	"sidebar.close": "Close sidebar",
+	"sidebar.open": "Open sidebar",
 	"theme.dark": "Dark",
 	"theme.light": "Light",
 	"theme.system": "System",

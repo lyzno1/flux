@@ -1,6 +1,6 @@
 import type { StateCreator } from "zustand";
+import { IS_MAC } from "@/utils/platform";
 import type { KeybindingEntry } from "./initial-state";
-import { IS_MAC } from "./initial-state";
 import type { KeybindingsStore } from "./store";
 
 export type KeybindingsAction = {

@@ -1,5 +1,4 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import type * as React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useAppStore } from "@/stores/app/store";
 import { SidebarUserMenu } from "./sidebar-user-menu";
@@ -53,14 +52,6 @@ vi.mock("@/lib/auth-client", () => ({
 		useSession: mockUseSession,
 		signOut: mockSignOut,
 	},
-}));
-
-vi.mock("@/components/ui/avatar", () => ({
-	Avatar: ({ children }: { children: React.ReactNode }) => <div data-testid="avatar-root">{children}</div>,
-	AvatarImage: ({ src, alt }: { src?: string; alt?: string }) => <img data-testid="avatar-image" src={src} alt={alt} />,
-	AvatarFallback: ({ children }: { children: React.ReactNode }) => (
-		<span data-testid="avatar-fallback">{children}</span>
-	),
 }));
 
 vi.mock("@/components/ui/tooltip", async () => {
@@ -195,8 +186,8 @@ describe("SidebarUserMenu", () => {
 
 		expect(screen.getAllByText("alice")).toHaveLength(2);
 		expect(screen.getAllByText("alice@example.com")).toHaveLength(2);
-		expect(screen.getByTestId("avatar-fallback")).toHaveTextContent("A");
-		expect(screen.queryByTestId("avatar-image")).not.toBeInTheDocument();
+		expect(document.querySelector('[data-slot="avatar-fallback"]')).toHaveTextContent("A");
+		expect(document.querySelector('[data-slot="avatar-image"]')).not.toBeInTheDocument();
 	});
 
 	it("always positions dropdown above with start alignment", () => {
