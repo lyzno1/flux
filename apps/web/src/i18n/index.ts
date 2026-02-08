@@ -31,6 +31,9 @@ i18n
 			caches: ["localStorage"],
 			lookupLocalStorage: "i18nextLng",
 		},
+		react: {
+			useSuspense: false,
+		},
 	});
 
 i18n.services.formatter?.addCached("duration", (lng, options) => {
