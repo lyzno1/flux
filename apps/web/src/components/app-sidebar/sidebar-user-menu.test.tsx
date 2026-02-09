@@ -3,18 +3,27 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useAppStore } from "@/stores/app/store";
 import { SidebarUserMenu } from "./sidebar-user-menu";
 
-const { i18nState, mockChangeLanguage, mockInvalidate, mockNavigate, mockSetTheme, mockSignOut, mockUseSession } =
-	vi.hoisted(() => ({
-		i18nState: {
-			language: "en-US",
-		},
-		mockChangeLanguage: vi.fn(),
-		mockInvalidate: vi.fn(),
-		mockNavigate: vi.fn(),
-		mockSetTheme: vi.fn(),
-		mockSignOut: vi.fn(),
-		mockUseSession: vi.fn(),
-	}));
+const {
+	i18nState,
+	mockChangeLanguage,
+	mockInvalidate,
+	mockNavigate,
+	mockSetTheme,
+	mockSignOut,
+	mockTooltip,
+	mockUseSession,
+} = vi.hoisted(() => ({
+	i18nState: {
+		language: "en-US",
+	},
+	mockChangeLanguage: vi.fn(),
+	mockInvalidate: vi.fn(),
+	mockNavigate: vi.fn(),
+	mockSetTheme: vi.fn(),
+	mockSignOut: vi.fn(),
+	mockTooltip: vi.fn(),
+	mockUseSession: vi.fn(),
+}));
 
 vi.mock("@tanstack/react-router", async (importOriginal) => {
 	const actual = await importOriginal<typeof import("@tanstack/react-router")>();
@@ -57,7 +66,10 @@ vi.mock("@/lib/auth-client", () => ({
 vi.mock("@/components/ui/tooltip", async () => {
 	const React = await import("react");
 	return {
-		Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+		Tooltip: ({ children, disabled }: { children: React.ReactNode; disabled?: boolean }) => {
+			mockTooltip(disabled);
+			return <>{children}</>;
+		},
 		TooltipTrigger: ({ children, render }: { children?: React.ReactNode; render?: React.ReactElement }) => {
 			if (render && React.isValidElement(render)) {
 				return React.cloneElement(render as React.ReactElement, {}, children);
@@ -178,6 +190,7 @@ describe("SidebarUserMenu", () => {
 		mockChangeLanguage.mockReset();
 		mockUseSession.mockReset();
 		mockSignOut.mockReset();
+		mockTooltip.mockReset();
 		i18nState.language = "en-US";
 	});
 
@@ -250,6 +263,22 @@ describe("SidebarUserMenu", () => {
 		rerender(<SidebarUserMenu />);
 
 		expect(screen.getByTestId("tooltip-content")).toHaveTextContent("Alice");
+	});
+
+	it("disables tooltip interactions while sidebar is expanded", () => {
+		setSessionState({
+			user: { name: "Alice", email: "alice@example.com" },
+		});
+
+		const { rerender } = render(<SidebarUserMenu />);
+		expect(mockTooltip).toHaveBeenLastCalledWith(true);
+
+		act(() => {
+			useAppStore.setState({ sidebarOpen: false });
+		});
+		rerender(<SidebarUserMenu />);
+
+		expect(mockTooltip).toHaveBeenLastCalledWith(false);
 	});
 
 	it("keeps avatar DOM node stable when toggling sidebar state", () => {
