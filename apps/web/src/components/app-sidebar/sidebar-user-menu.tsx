@@ -142,14 +142,10 @@ export function SidebarUserMenu() {
 
 	return (
 		<DropdownMenu>
-			{collapsed ? (
-				<Tooltip>
-					<TooltipTrigger render={<DropdownMenuTrigger render={triggerButton} />}>{triggerContent}</TooltipTrigger>
-					<TooltipContent side="right">{name}</TooltipContent>
-				</Tooltip>
-			) : (
-				<DropdownMenuTrigger render={triggerButton}>{triggerContent}</DropdownMenuTrigger>
-			)}
+			<Tooltip>
+				<TooltipTrigger render={<DropdownMenuTrigger render={triggerButton} />}>{triggerContent}</TooltipTrigger>
+				{collapsed ? <TooltipContent side="right">{name}</TooltipContent> : null}
+			</Tooltip>
 			<DropdownMenuContent side="top" align="start" sideOffset={8} className="w-62">
 				<UserMenuContent name={name} email={email} />
 			</DropdownMenuContent>

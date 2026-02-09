@@ -252,6 +252,25 @@ describe("SidebarUserMenu", () => {
 		expect(screen.getByTestId("tooltip-content")).toHaveTextContent("Alice");
 	});
 
+	it("keeps avatar DOM node stable when toggling sidebar state", () => {
+		setSessionState({
+			user: { name: "Alice", email: "alice@example.com", image: "https://example.com/avatar.png" },
+		});
+
+		const { rerender } = render(<SidebarUserMenu />);
+		const avatarBeforeToggle = document.querySelector('[data-slot="avatar"]');
+		expect(avatarBeforeToggle).toBeInTheDocument();
+
+		act(() => {
+			useAppStore.setState({ sidebarOpen: false });
+		});
+		rerender(<SidebarUserMenu />);
+
+		const avatarAfterToggle = document.querySelector('[data-slot="avatar"]');
+		expect(avatarAfterToggle).toBeInTheDocument();
+		expect(avatarAfterToggle).toBe(avatarBeforeToggle);
+	});
+
 	it("changes language from language submenu items", () => {
 		setSessionState({
 			user: { name: "Alice", email: "alice@example.com" },
