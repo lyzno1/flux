@@ -44,18 +44,25 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 	};
 
 	const handleSidebarExpand = (e: React.MouseEvent<HTMLElement>) => {
-		if (!open && e.currentTarget.contains(e.target as Node) && !isChildInteractive(e)) {
+		if (open) {
+			return;
+		}
+
+		if (e.currentTarget.contains(e.target as Node) && !isChildInteractive(e)) {
 			setSidebarOpen(true);
 		}
 	};
 
 	const handleSidebarKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-		if (
-			!open &&
-			(e.key === "Enter" || e.key === " ") &&
-			e.currentTarget.contains(e.target as Node) &&
-			!isChildInteractive(e)
-		) {
+		if (open) {
+			return;
+		}
+
+		if (e.key !== "Enter" && e.key !== " ") {
+			return;
+		}
+
+		if (e.currentTarget.contains(e.target as Node) && !isChildInteractive(e)) {
 			e.preventDefault();
 			setSidebarOpen(true);
 		}
