@@ -7,4 +7,6 @@ export const languages = [
 	{ code: "zh-CN", label: "中文" },
 ] as const;
 
-export const supportedLngs = languages.map((language) => language.code);
+export type SupportedLng = (typeof languages)[number]["code"];
+
+export const supportedLngs = languages.map((language) => language.code) as SupportedLng[];

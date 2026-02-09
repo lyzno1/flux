@@ -9,8 +9,12 @@ type SharedI18nConfig = typeof import("./config");
 
 declare module "i18next" {
 	interface CustomTypeOptions {
+		// Keep string-key mode for compatibility with current t("key") usage.
+		enableSelector: false;
 		defaultNS: SharedI18nConfig["defaultNS"];
 		keySeparator: SharedI18nConfig["keySeparator"];
+		// Ensure keys are always checked against typed resources.
+		strictKeyChecks: true;
 		resources: {
 			common: typeof common;
 			auth: typeof auth;
