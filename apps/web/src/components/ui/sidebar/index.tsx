@@ -20,7 +20,7 @@ function Sidebar({ className, children, ...props }: React.ComponentProps<"div">)
 		return (
 			<Dialog.Root open={open} onOpenChange={setSidebarOpen}>
 				<Dialog.Portal>
-					<Dialog.Backdrop className="data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-overlay duration-200 data-closed:animate-out data-open:animate-in motion-reduce:animate-none motion-reduce:transition-none" />
+					<Dialog.Backdrop className="data-closed:fade-out-0 data-open:fade-in-0 absolute inset-0 z-50 bg-overlay duration-200 data-closed:animate-out data-open:animate-in motion-reduce:animate-none motion-reduce:transition-none" />
 					<Dialog.Popup
 						data-sidebar="sidebar"
 						data-mobile="true"
