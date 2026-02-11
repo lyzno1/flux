@@ -13,7 +13,7 @@ export default defineConfig({
 		name: "web",
 		environment: "jsdom",
 		include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
-		setupFiles: ["./setup-vitest.ts"],
+		setupFiles: ["./vitest.setup.ts"],
 		clearMocks: true,
 		restoreMocks: true,
 	},
