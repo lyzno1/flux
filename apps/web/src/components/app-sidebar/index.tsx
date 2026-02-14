@@ -1,3 +1,4 @@
+import { formatForDisplay } from "@tanstack/react-hotkeys";
 import { Link, useRouter } from "@tanstack/react-router";
 import { Home, PanelLeftIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -12,12 +13,11 @@ import { menuButtonStyles } from "@/components/ui/sidebar/sidebar-menu-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
 import { getAppStoreState, useAppStore } from "@/stores/app/store";
-import { formatShortcut } from "@/utils/format-shortcut";
 
 export const toggleButtonStyles =
 	"-mx-3 -my-2 shrink-0 cursor-pointer rounded-lg px-3 py-2 text-sidebar-foreground outline-none transition-[color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-1 focus-visible:ring-sidebar-ring active:bg-sidebar-accent active:text-sidebar-accent-foreground motion-reduce:transition-none";
 
-const sidebarShortcut = formatShortcut("b", { mod: true });
+const sidebarShortcut = formatForDisplay("Mod+B");
 
 function AppSidebarHeader() {
 	const { t } = useTranslation();

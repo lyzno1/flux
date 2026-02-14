@@ -8,6 +8,7 @@ catalogs:
     '@tailwindcss/vite': 4.1.18
     '@tanstack/devtools-vite': 0.5.0
     '@tanstack/react-devtools': 0.9.4
+    '@tanstack/react-hotkeys-devtools': 0.1.0
     '@tanstack/react-query-devtools': 5.91.3
     '@tanstack/react-router-devtools': 1.157.18
     '@tanstack/router-plugin': 1.157.18
@@ -45,6 +46,7 @@ catalogs:
     '@streamdown/math': 1.0.1
     '@streamdown/mermaid': 1.0.1
     '@tanstack/react-form': 1.28.0
+    '@tanstack/react-hotkeys': 0.1.0
     '@tanstack/react-query': 5.90.20
     '@tanstack/react-router': 1.157.18
     '@xyflow/react': 12.10.0
