@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { useMemo } from "react";
+import { useId } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -8,7 +8,9 @@ function SidebarMenuSkeleton({
 	showIcon = false,
 	...props
 }: React.ComponentProps<"div"> & { showIcon?: boolean }) {
-	const width = useMemo(() => `${Math.floor(Math.random() * 40) + 50}%`, []);
+	const skeletonId = useId();
+	const widthSeed = Array.from(skeletonId).reduce((total, char) => total + char.charCodeAt(0), 0);
+	const width = `${50 + (widthSeed % 40)}%`;
 
 	return (
 		<div

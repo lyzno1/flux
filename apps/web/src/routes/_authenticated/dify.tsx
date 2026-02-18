@@ -103,37 +103,43 @@ function DifyDemo() {
 		abortRef.current = controller;
 		const start = performance.now();
 
-		try {
-			const iterator = await client.dify.chatMessagesStream(
+		const finalizeStream = () => {
+			setElapsed(performance.now() - start);
+			setStreaming(false);
+			abortRef.current = null;
+			scrollToBottom();
+		};
+
+		await client.dify
+			.chatMessagesStream(
 				{
 					query,
 					inputs: {},
 					...(conversationId ? { conversation_id: conversationId } : {}),
 				},
 				{ signal: controller.signal },
-			);
-
-			await consumeStream(iterator, start, {
-				onEvent: (entry) => {
-					setEntries((prev) => [...prev, entry]);
-					scrollToBottom();
-				},
-				onAnswer: (chunk) => setAnswer((prev) => prev + chunk),
-				onConversationId: setConversationId,
+			)
+			.then(async (iterator) => {
+				await consumeStream(iterator, start, {
+					onEvent: (entry) => {
+						setEntries((prev) => [...prev, entry]);
+						scrollToBottom();
+					},
+					onAnswer: (chunk) => setAnswer((prev) => prev + chunk),
+					onConversationId: setConversationId,
+				});
+			})
+			.catch((err: unknown) => {
+				if (!(err instanceof DOMException && err.name === "AbortError")) {
+					const errorMessage = err instanceof Error ? err.message : String(err);
+					setEntries((prev) => [
+						...prev,
+						{ event: "client_error", data: { message: errorMessage }, receivedAt: performance.now() - start },
+					]);
+				}
 			});
-		} catch (err) {
-			if (!(err instanceof DOMException && err.name === "AbortError")) {
-				setEntries((prev) => [
-					...prev,
-					{ event: "client_error", data: { message: (err as Error).message }, receivedAt: performance.now() - start },
-				]);
-			}
-		} finally {
-			setElapsed(performance.now() - start);
-			setStreaming(false);
-			abortRef.current = null;
-			scrollToBottom();
-		}
+
+		finalizeStream();
 	}, [query, conversationId, scrollToBottom]);
 
 	const handleStop = useCallback(() => {
