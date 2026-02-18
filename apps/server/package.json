@@ -4,12 +4,10 @@
 		"@fastify/helmet": "catalog:prod",
 		"@flux/api": "workspace:*",
 		"@flux/auth": "workspace:*",
-		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
 		"@orpc/openapi": "catalog:prod",
 		"@orpc/server": "catalog:prod",
 		"@orpc/zod": "catalog:prod",
-		"better-auth": "catalog:prod",
 		"dotenv": "catalog:prod",
 		"fastify": "catalog:prod",
 		"zod": "catalog:prod"

@@ -1,6 +1,7 @@
 {
 	"devDependencies": {
 		"@flux/config": "workspace:*",
+		"jsdom": "catalog:dev",
 		"typescript": "catalog:dev",
 		"vitest": "catalog:dev"
 	},

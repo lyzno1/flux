@@ -10,7 +10,7 @@
 		"apps/server": {},
 		"apps/web": {
 			"entry": ["src/main.tsx", "src/routes/**/*.tsx"],
-			"ignoreDependencies": ["shadcn", "tw-animate-css", "tailwindcss", "postcss"],
+			"ignoreDependencies": ["@fontsource-variable/inter", "shadcn", "tw-animate-css", "tailwindcss", "postcss"],
 			"project": "src/**/*.{ts,tsx}"
 		},
 		"packages/api": {},

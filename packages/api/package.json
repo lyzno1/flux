@@ -1,11 +1,9 @@
 {
 	"dependencies": {
 		"@flux/auth": "workspace:*",
-		"@flux/db": "workspace:*",
 		"@flux/env": "workspace:*",
 		"@orpc/contract": "catalog:prod",
 		"@orpc/server": "catalog:prod",
-		"better-auth": "catalog:prod",
 		"dotenv": "catalog:prod",
 		"zod": "catalog:prod"
 	},
