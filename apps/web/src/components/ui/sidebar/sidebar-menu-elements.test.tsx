@@ -69,27 +69,22 @@ describe("SidebarMenuSkeleton", () => {
 		vi.restoreAllMocks();
 	});
 
-	it("generates a bounded random width once and keeps it stable across rerenders", () => {
-		const randomSpy = vi.spyOn(Math, "random");
-		randomSpy.mockReturnValue(0.25);
-
+	it("generates a bounded width once and keeps it stable across rerenders", () => {
 		const { container, rerender } = render(<SidebarMenuSkeleton />);
 		let skeletons = container.querySelectorAll<HTMLElement>('[data-slot="skeleton"]');
 		const firstWidth = skeletons[0]?.style.getPropertyValue("--skeleton-width");
 
 		expect(skeletons).toHaveLength(1);
-		expect(firstWidth).toBe("60%");
-
-		randomSpy.mockReturnValue(0.95);
+		expect(firstWidth).toMatch(/^\d+%$/);
+		expect(Number.parseInt(firstWidth ?? "", 10)).toBeGreaterThanOrEqual(50);
+		expect(Number.parseInt(firstWidth ?? "", 10)).toBeLessThan(90);
 		rerender(<SidebarMenuSkeleton />);
 
 		skeletons = container.querySelectorAll<HTMLElement>('[data-slot="skeleton"]');
-		expect(skeletons[0]?.style.getPropertyValue("--skeleton-width")).toBe("60%");
+		expect(skeletons[0]?.style.getPropertyValue("--skeleton-width")).toBe(firstWidth);
 	});
 
 	it("renders icon placeholder when showIcon is enabled", () => {
-		vi.spyOn(Math, "random").mockReturnValue(0.1);
-
 		const { container } = render(<SidebarMenuSkeleton showIcon />);
 		const skeletons = container.querySelectorAll<HTMLElement>('[data-slot="skeleton"]');
 
