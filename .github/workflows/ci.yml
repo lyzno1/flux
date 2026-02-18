@@ -50,9 +50,33 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
 
+  i18n-changes:
+    name: Detect i18n Changes
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.filter.outputs.i18n }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            i18n:
+              - "apps/web/src/**/*.{ts,tsx}"
+              - "apps/web/src/i18n/**"
+              - "apps/web/src/locales/**/*.json"
+              - "apps/web/i18next.config.ts"
+              - "apps/web/package.json"
+              - "pnpm-lock.yaml"
+              - "pnpm-workspace.yaml"
+
   i18n:
     name: i18n Check
     runs-on: ubuntu-latest
+    needs: i18n-changes
+    if: needs.i18n-changes.outputs.should_run == 'true'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
