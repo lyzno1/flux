@@ -13,7 +13,7 @@ i18n
 		supportedLngs,
 		defaultNS,
 		keySeparator,
-		ns: [],
+		ns: ["common", "auth"],
 		interpolation: {
 			escapeValue: false,
 		},
@@ -23,7 +23,7 @@ i18n
 			lookupLocalStorage: "i18nextLng",
 		},
 		react: {
-			useSuspense: false,
+			useSuspense: true,
 		},
 	});
 

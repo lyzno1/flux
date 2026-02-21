@@ -14,7 +14,7 @@ Type-safe i18n with flat keys, on-demand namespace loading, Intl-based formattin
 - **CLI Config**: `apps/web/i18next.config.ts` — i18next-cli extraction and validation settings
 - **Types**: `apps/web/src/i18n/i18next.d.ts` — module augmentation for type-safe `t()`; `defaultNS`/`keySeparator` inferred from shared config
 - **Locales**: `apps/web/src/locales/{en-US,zh-CN}/{namespace}.json`
-- **Loading**: `i18next-resources-to-backend` dynamic import, zero upfront cost (`ns: []`)
+- **Loading**: `i18next-resources-to-backend` dynamic import. Root-level namespaces (`common`, `auth`) are preloaded at init via `ns: ["common", "auth"]`; route-specific namespaces are loaded on demand by `useTranslation("ns")` with `useSuspense: true` (caught by TanStack Router's per-route Suspense boundary from `defaultPendingComponent`)
 
 ```
 apps/web/
@@ -96,7 +96,8 @@ const label = getLabel({ myKey: t("my.key") });
 ## Adding a New Namespace
 
 1. Create `locales/en-US/{ns}.json` and `locales/zh-CN/{ns}.json`
-2. Add import + resource entry in `i18next.d.ts`:
+2. If the namespace is used in the root layout (outside route components, e.g. in `__root.tsx`, `Header`, `AuthBrandPanel`), add it to the `ns` array in `i18n/index.ts` for preloading. Route-level namespaces do NOT need this — `useSuspense: true` + TanStack Router's per-route Suspense handles them automatically.
+3. Add import + resource entry in `i18next.d.ts`:
 
 ```typescript
 import type settings from "../locales/en-US/settings.json";
@@ -104,7 +105,7 @@ import type settings from "../locales/en-US/settings.json";
 settings: typeof settings;
 ```
 
-3. Run `pnpm i18n` to validate extraction
+4. Run `pnpm i18n` to validate extraction
 
 ## Adding Keys to Existing Namespace
 

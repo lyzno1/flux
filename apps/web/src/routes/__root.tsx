@@ -1,12 +1,11 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet, useMatches } from "@tanstack/react-router";
 import type * as React from "react";
-import { lazy, Suspense, useId } from "react";
+import { lazy, useId } from "react";
 import { useTranslation } from "react-i18next";
 import { AuthBrandPanel } from "@/components/auth/auth-brand-panel";
 import { DevtoolsLoader } from "@/components/devtools/loader";
 import { Header } from "@/components/header";
-import { PageLoading } from "@/components/page-loading";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { STORAGE_KEYS } from "@/config/storage-keys";
@@ -118,9 +117,7 @@ function RootComponent() {
 				</a>
 				<div className="relative h-svh overflow-hidden">
 					<BrandingViewport variant={brandingVariant} contentId={contentId}>
-						<Suspense fallback={<PageLoading />}>
-							<Outlet />
-						</Suspense>
+						<Outlet />
 					</BrandingViewport>
 					{!isAuthenticatedRoute && <Header />}
 				</div>
