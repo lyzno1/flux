@@ -13,7 +13,7 @@ i18n
 		supportedLngs,
 		defaultNS,
 		keySeparator,
-		ns: ["common", "auth"],
+		ns: ["common"],
 		interpolation: {
 			escapeValue: false,
 		},

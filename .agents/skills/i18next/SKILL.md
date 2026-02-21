@@ -14,7 +14,7 @@ Type-safe i18n with flat keys, on-demand namespace loading, Intl-based formattin
 - **CLI Config**: `apps/web/i18next.config.ts` — i18next-cli extraction and validation settings
 - **Types**: `apps/web/src/i18n/i18next.d.ts` — module augmentation for type-safe `t()`; `defaultNS`/`keySeparator` inferred from shared config
 - **Locales**: `apps/web/src/locales/{en-US,zh-CN}/{namespace}.json`
-- **Loading**: `i18next-resources-to-backend` dynamic import. Root-level namespaces (`common`, `auth`) are preloaded at init via `ns: ["common", "auth"]`; route-specific namespaces are loaded on demand by `useTranslation("ns")` with `useSuspense: true` (caught by TanStack Router's per-route Suspense boundary from `defaultPendingComponent`)
+- **Loading**: `i18next-resources-to-backend` dynamic import. The `common` namespace is preloaded at init via `ns: ["common"]`. Route-scoped namespaces (e.g. `auth`) are preloaded via TanStack Router `loader` (e.g. `_auth.tsx`). Other namespaces are loaded on demand by `useTranslation("ns")` with `useSuspense: true` (caught by TanStack Router's per-route Suspense boundary from `defaultPendingComponent`)
 
 ```
 apps/web/

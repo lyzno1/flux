@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect, useMatches } from "@tanstack/react-router";
 import * as z from "zod";
+import i18n from "@/i18n";
 
 const authSearchSchema = z.object({
 	redirect: z
@@ -30,5 +31,6 @@ export const Route = createFileRoute("/_auth")({
 			throw redirect({ to: search.redirect });
 		}
 	},
+	loader: () => i18n.loadNamespaces("auth"),
 	component: AuthLayout,
 });
