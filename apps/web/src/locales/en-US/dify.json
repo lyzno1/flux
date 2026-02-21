@@ -1,5 +1,7 @@
 {
 	"answer": "Answer",
+	"attachFiles": "Attach files",
+	"clearFiles": "Clear files",
 	"conversationId": "Conversation ID",
 	"conversationIdPlaceholder": "auto-filled after first message",
 	"elapsed": "in {{val, duration}}",
@@ -8,9 +10,23 @@
 	"eventsCount_one": "{{count}} event",
 	"eventsCount_other": "{{count}} events",
 	"eventTimestamp": "{{val, duration(maximumFractionDigits: 3)}}",
+	"fileCount_one": "{{count}} file",
+	"fileCount_other": "{{count}} files",
+	"fileTooLarge_one": "{{count}} file exceeds the size limit.",
+	"fileTooLarge_other": "{{count}} files exceed the size limit.",
+	"fileTooMany_one": "{{count}} file was ignored because the max count was reached.",
+	"fileTooMany_other": "{{count}} files were ignored because the max count was reached.",
+	"fileTypeRejected_one": "{{count}} file type is not allowed.",
+	"fileTypeRejected_other": "{{count}} file types are not allowed.",
+	"fileUploaded": "Uploaded",
+	"fileUploadFailed": "Upload failed",
+	"fileUploading": "Uploading",
 	"query": "Query",
+	"removeFile": "Remove file",
 	"send": "Send (Stream)",
 	"stop": "Stop",
 	"streaming": "Streaming...",
-	"title": "Dify Chat Messages"
+	"title": "Dify Chat Messages",
+	"uploadEmpty": "No file selected yet.",
+	"uploadHelper": "Allowed file types only. Images support hover preview."
 }

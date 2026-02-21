@@ -1,5 +1,7 @@
 {
 	"answer": "回答",
+	"attachFiles": "上传文件",
+	"clearFiles": "清空文件",
 	"conversationId": "会话 ID",
 	"conversationIdPlaceholder": "首次发送消息后自动填充",
 	"elapsed": "耗时 {{val, duration}}",
@@ -8,9 +10,23 @@
 	"eventsCount_one": "{{count}} 个事件",
 	"eventsCount_other": "{{count}} 个事件",
 	"eventTimestamp": "{{val, duration(maximumFractionDigits: 3)}}",
+	"fileCount_one": "{{count}} 个文件",
+	"fileCount_other": "{{count}} 个文件",
+	"fileTooLarge_one": "{{count}} 个文件超过大小限制。",
+	"fileTooLarge_other": "{{count}} 个文件超过大小限制。",
+	"fileTooMany_one": "已达到最大数量，忽略了 {{count}} 个文件。",
+	"fileTooMany_other": "已达到最大数量，忽略了 {{count}} 个文件。",
+	"fileTypeRejected_one": "{{count}} 个文件类型不被允许。",
+	"fileTypeRejected_other": "{{count}} 个文件类型不被允许。",
+	"fileUploaded": "已上传",
+	"fileUploadFailed": "上传失败",
+	"fileUploading": "上传中",
 	"query": "查询",
+	"removeFile": "移除文件",
 	"send": "发送（流式）",
 	"stop": "停止",
 	"streaming": "传输中...",
-	"title": "Dify 聊天消息"
+	"title": "Dify 聊天消息",
+	"uploadEmpty": "暂未选择文件。",
+	"uploadHelper": "仅支持白名单文件类型，图片支持悬停预览。"
 }

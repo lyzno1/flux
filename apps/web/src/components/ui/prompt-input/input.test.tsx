@@ -1,14 +1,15 @@
 import { cleanup, createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { createRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { PROMPT_INPUT_MAX_HEIGHT, PROMPT_INPUT_MIN_HEIGHT, PromptInput } from ".";
+import { PromptInput } from ".";
+import { PROMPT_INPUT_MAX_HEIGHT, PROMPT_INPUT_MIN_HEIGHT, PromptInputInput } from "./input";
 
 function PromptInputTest({ initialValue = "", onSubmit }: { initialValue?: string; onSubmit?: () => void }) {
 	const [value, setValue] = useState(initialValue);
 
 	return (
-		<PromptInput.Root>
-			<PromptInput.Input
+		<PromptInput>
+			<PromptInputInput
 				aria-label="Prompt"
 				onSubmit={onSubmit}
 				value={value}
@@ -16,11 +17,11 @@ function PromptInputTest({ initialValue = "", onSubmit }: { initialValue?: strin
 					setValue(event.currentTarget.value);
 				}}
 			/>
-		</PromptInput.Root>
+		</PromptInput>
 	);
 }
 
-describe("PromptInput", () => {
+describe("PromptInputInput", () => {
 	afterEach(cleanup);
 
 	it("submits on Enter when not composing", () => {
@@ -105,8 +106,8 @@ describe("PromptInput", () => {
 			const [value, setValue] = useState("");
 
 			return (
-				<PromptInput.Root>
-					<PromptInput.Input
+				<PromptInput>
+					<PromptInputInput
 						aria-label="Prompt"
 						autoFocus
 						value={value}
@@ -114,7 +115,7 @@ describe("PromptInput", () => {
 							setValue(event.currentTarget.value);
 						}}
 					/>
-				</PromptInput.Root>
+				</PromptInput>
 			);
 		}
 
@@ -127,9 +128,9 @@ describe("PromptInput", () => {
 		const onChange = vi.fn();
 
 		render(
-			<PromptInput.Root>
-				<PromptInput.Input ref={inputRef} aria-label="Prompt" value="" onChange={onChange} />
-			</PromptInput.Root>,
+			<PromptInput>
+				<PromptInputInput ref={inputRef} aria-label="Prompt" value="" onChange={onChange} />
+			</PromptInput>,
 		);
 
 		expect(inputRef.current).toBeInstanceOf(HTMLTextAreaElement);
@@ -140,9 +141,9 @@ describe("PromptInput", () => {
 		const onChange = vi.fn();
 
 		render(
-			<PromptInput.Root ref={rootRef}>
-				<PromptInput.Input aria-label="Prompt" value="" onChange={onChange} />
-			</PromptInput.Root>,
+			<PromptInput ref={rootRef}>
+				<PromptInputInput aria-label="Prompt" value="" onChange={onChange} />
+			</PromptInput>,
 		);
 
 		expect(rootRef.current?.tagName).toBe("FIELDSET");

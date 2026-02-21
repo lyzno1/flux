@@ -3,8 +3,8 @@ import { useLayoutEffect, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-export const PROMPT_INPUT_MIN_HEIGHT = 64;
-export const PROMPT_INPUT_MAX_HEIGHT = 220;
+const PROMPT_INPUT_MIN_HEIGHT = 64;
+const PROMPT_INPUT_MAX_HEIGHT = 220;
 
 function resizeTextarea(textarea: HTMLTextAreaElement, minHeight: number, maxHeight: number) {
 	textarea.style.height = "0px";
@@ -17,45 +17,22 @@ function assignRef<T>(ref: React.Ref<T> | undefined, value: T) {
 	if (!ref) {
 		return;
 	}
+
 	if (typeof ref === "function") {
 		ref(value);
 		return;
 	}
+
 	ref.current = value;
 }
 
-export type PromptInputRootProps = React.ComponentProps<"fieldset">;
-
-function Root({ className, disabled, ...props }: PromptInputRootProps) {
-	return (
-		<fieldset
-			data-slot="prompt-input-root"
-			data-disabled={disabled ? "true" : "false"}
-			disabled={disabled}
-			className={cn(
-				"flex w-full flex-col overflow-hidden rounded-xl border border-input bg-input-subtle focus-within:border-ring focus-within:ring-1 focus-within:ring-ring/50 data-[disabled=true]:opacity-60 motion-reduce:transition-none",
-				className,
-			)}
-			{...props}
-		/>
-	);
-}
-
-type PromptInputUploadAreaProps = React.ComponentProps<"div">;
-
-function UploadArea({ className, ...props }: PromptInputUploadAreaProps) {
-	return (
-		<div data-slot="prompt-input-upload-area" className={cn("border-input border-b px-3 py-2", className)} {...props} />
-	);
-}
-
-export type PromptInputInputProps = React.ComponentPropsWithRef<"textarea"> & {
+type PromptInputInputProps = React.ComponentPropsWithRef<"textarea"> & {
 	maxHeight?: number;
 	minHeight?: number;
 	onSubmit?: () => void;
 };
 
-function Input({
+function PromptInputInput({
 	className,
 	disabled: disabledProp,
 	maxHeight = PROMPT_INPUT_MAX_HEIGHT,
@@ -71,21 +48,23 @@ function Input({
 }: PromptInputInputProps) {
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 	const isComposingRef = useRef(false);
-	useLayoutEffect(() => {
-		const textarea = textareaRef.current;
-		if (!textarea || value === undefined) {
-			return;
-		}
-		resizeTextarea(textarea, minHeight, maxHeight);
-	}, [maxHeight, minHeight, value]);
+	const controlledValue = value;
 
 	useLayoutEffect(() => {
 		const textarea = textareaRef.current;
-		if (!textarea || value !== undefined) {
+		if (!textarea) {
 			return;
 		}
+		if (controlledValue !== undefined) {
+			const normalizedControlledValue = Array.isArray(controlledValue)
+				? controlledValue.join("\n")
+				: String(controlledValue);
+			if (textarea.value !== normalizedControlledValue) {
+				textarea.value = normalizedControlledValue;
+			}
+		}
 		resizeTextarea(textarea, minHeight, maxHeight);
-	}, [maxHeight, minHeight, value]);
+	}, [controlledValue, maxHeight, minHeight]);
 
 	return (
 		<Textarea
@@ -137,49 +116,7 @@ function Input({
 	);
 }
 
-type PromptInputToolbarProps = React.ComponentProps<"div">;
+PromptInputInput.displayName = "PromptInputInput";
 
-function Toolbar({ className, ...props }: PromptInputToolbarProps) {
-	return (
-		<div
-			data-slot="prompt-input-toolbar"
-			className={cn("flex items-center justify-between gap-2 border-input border-t px-2 py-2", className)}
-			{...props}
-		/>
-	);
-}
-
-type PromptInputToolSlotProps = React.ComponentProps<"div">;
-
-function ToolSlot({ className, ...props }: PromptInputToolSlotProps) {
-	return (
-		<div
-			data-slot="prompt-input-tool-slot"
-			className={cn("flex min-w-0 flex-1 items-center gap-1", className)}
-			{...props}
-		/>
-	);
-}
-
-type PromptInputSubmitSlotProps = React.ComponentProps<"div">;
-
-function SubmitSlot({ className, ...props }: PromptInputSubmitSlotProps) {
-	return (
-		<div
-			data-slot="prompt-input-submit-slot"
-			className={cn("flex shrink-0 items-center gap-1", className)}
-			{...props}
-		/>
-	);
-}
-
-Input.displayName = "PromptInputInput";
-
-export const PromptInput = {
-	Root,
-	UploadArea,
-	Input,
-	Toolbar,
-	ToolSlot,
-	SubmitSlot,
-};
+export { PROMPT_INPUT_MAX_HEIGHT, PROMPT_INPUT_MIN_HEIGHT, PromptInputInput };
+export type { PromptInputInputProps };

@@ -1,16 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Paperclip } from "lucide-react";
-import { type FocusEvent, useCallback, useId, useRef, useState } from "react";
+import { type FocusEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { PromptInput } from "@/components/prompt-input";
-import { Button } from "@/components/ui/button";
+import { AppPromptInput } from "@/components/app-prompt-input";
+import {
+	type AppPromptInputRejectedFile,
+	buildAppPromptInputAccept,
+	DEFAULT_APP_PROMPT_INPUT_FILE_POLICY,
+	filterAppPromptInputFiles,
+} from "@/components/app-prompt-input/file-helpers";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { inferPromptInputFileKind, type PromptInputFileKind } from "@/components/ui/prompt-input/file-metadata";
+import type { PromptInputAttachment } from "@/components/ui/prompt-input/types";
 import { cn } from "@/lib/utils";
-import { promptInputSelectors } from "@/stores/app/slices/prompt-input/selectors";
-import { getAppStoreState, useAppStore } from "@/stores/app/store";
 import { client } from "@/utils/orpc";
 
 export const Route = createFileRoute("/_authenticated/dify")({
@@ -22,6 +26,13 @@ interface StreamEntry {
 	data: unknown;
 	receivedAt: number;
 }
+
+type DifyUploadFileType = "audio" | "custom" | "document" | "image" | "video";
+
+type PromptUploadAttachment = PromptInputAttachment & {
+	file: File;
+	uploadFileId: string | null;
+};
 
 const EVENT_COLORS: Record<string, string> = {
 	message: "bg-info-muted text-info-foreground",
@@ -86,8 +97,60 @@ function toErrorMessage(error: unknown) {
 	return error instanceof Error ? error.message : String(error);
 }
 
-function shouldSkipStreamRequest(query: string, streaming: boolean, activeController: AbortController | null) {
-	return !query || streaming || Boolean(activeController);
+function shouldSkipStreamRequest(
+	query: string,
+	streaming: boolean,
+	activeController: AbortController | null,
+	hasUploadingFiles: boolean,
+) {
+	return !query || streaming || Boolean(activeController) || hasUploadingFiles;
+}
+
+function toDifyUploadFileType(fileKind: PromptInputFileKind): DifyUploadFileType {
+	switch (fileKind) {
+		case "image":
+			return "image";
+		case "audio":
+			return "audio";
+		case "video":
+			return "video";
+		case "document":
+			return "document";
+		default:
+			return "custom";
+	}
+}
+
+function createAttachmentId() {
+	if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+		return crypto.randomUUID();
+	}
+	return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function buildRejectedFileMessages(
+	rejected: AppPromptInputRejectedFile[],
+	t: (key: string, options?: Record<string, unknown>) => string,
+) {
+	const reasonCounter: Partial<Record<AppPromptInputRejectedFile["reason"], number>> = {};
+
+	for (const item of rejected) {
+		reasonCounter[item.reason] = (reasonCounter[item.reason] ?? 0) + 1;
+	}
+
+	const messages: string[] = [];
+
+	if (reasonCounter["file-type-not-allowed"]) {
+		messages.push(t("fileTypeRejected", { count: reasonCounter["file-type-not-allowed"] }));
+	}
+	if (reasonCounter["file-too-large"]) {
+		messages.push(t("fileTooLarge", { count: reasonCounter["file-too-large"] }));
+	}
+	if (reasonCounter["too-many-files"]) {
+		messages.push(t("fileTooMany", { count: reasonCounter["too-many-files"] }));
+	}
+
+	return messages;
 }
 
 function DifyDemo() {
@@ -100,12 +163,24 @@ function DifyDemo() {
 	const [answer, setAnswer] = useState("");
 	const [streaming, setStreaming] = useState(false);
 	const [elapsed, setElapsed] = useState<number | null>(null);
-	const uploadAreaOpen = useAppStore(promptInputSelectors.isPromptUploadAreaOpen);
-	const toggleUploadArea = getAppStoreState().togglePromptUploadArea;
+	const [attachments, setAttachments] = useState<PromptUploadAttachment[]>([]);
+	const [rejectedFileMessages, setRejectedFileMessages] = useState<string[]>([]);
+
 	const hasPlacedInitialCaretRef = useRef(false);
 	const abortRef = useRef<AbortController | null>(null);
 	const promptInputRef = useRef<HTMLTextAreaElement | null>(null);
+	const previewUrlsRef = useRef<Set<string>>(new Set());
 	const scrollRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		return () => {
+			abortRef.current?.abort();
+			for (const previewUrl of previewUrlsRef.current) {
+				URL.revokeObjectURL(previewUrl);
+			}
+			previewUrlsRef.current.clear();
+		};
+	}, []);
 
 	const scrollToBottom = useCallback(() => {
 		requestAnimationFrame(() => {
@@ -134,9 +209,144 @@ function DifyDemo() {
 		hasPlacedInitialCaretRef.current = true;
 	}, []);
 
+	const revokePreviewUrl = useCallback((previewUrl: string | null | undefined) => {
+		if (!previewUrl) {
+			return;
+		}
+		URL.revokeObjectURL(previewUrl);
+		previewUrlsRef.current.delete(previewUrl);
+	}, []);
+
+	const uploadAttachment = useCallback(async (attachment: PromptUploadAttachment) => {
+		setAttachments((prev) =>
+			prev.map((item) =>
+				item.id === attachment.id
+					? {
+							...item,
+							errorMessage: null,
+							progress: null,
+							status: "uploading",
+						}
+					: item,
+			),
+		);
+
+		try {
+			const uploaded = await client.dify.fileUpload({ file: attachment.file });
+			setAttachments((prev) =>
+				prev.map((item) =>
+					item.id === attachment.id
+						? {
+								...item,
+								progress: 100,
+								status: "uploaded",
+								uploadFileId: uploaded.id,
+							}
+						: item,
+				),
+			);
+		} catch (error) {
+			setAttachments((prev) =>
+				prev.map((item) =>
+					item.id === attachment.id
+						? {
+								...item,
+								errorMessage: toErrorMessage(error),
+								progress: null,
+								status: "error",
+								uploadFileId: null,
+							}
+						: item,
+				),
+			);
+		}
+	}, []);
+
+	const handleSelectFiles = useCallback(
+		(selectedFiles: FileList) => {
+			const { accepted, rejected } = filterAppPromptInputFiles(
+				selectedFiles,
+				DEFAULT_APP_PROMPT_INPUT_FILE_POLICY,
+				attachments.length,
+			);
+
+			setRejectedFileMessages(buildRejectedFileMessages(rejected, t));
+
+			if (accepted.length === 0) {
+				return;
+			}
+
+			const nextAttachments: PromptUploadAttachment[] = accepted.map((file) => {
+				const fileKind = inferPromptInputFileKind(file.name, file.type);
+				const previewUrl = fileKind === "image" ? URL.createObjectURL(file) : null;
+
+				if (previewUrl) {
+					previewUrlsRef.current.add(previewUrl);
+				}
+
+				return {
+					id: createAttachmentId(),
+					file,
+					fileKind,
+					mimeType: file.type || null,
+					name: file.name,
+					previewUrl,
+					progress: null,
+					size: file.size,
+					status: "uploading",
+					uploadFileId: null,
+				};
+			});
+
+			setAttachments((prev) => [...prev, ...nextAttachments]);
+
+			for (const attachment of nextAttachments) {
+				void uploadAttachment(attachment);
+			}
+		},
+		[attachments.length, t, uploadAttachment],
+	);
+
+	const handleRemoveAttachment = useCallback(
+		(attachmentId: string) => {
+			setAttachments((prev) => {
+				const removed = prev.find((item) => item.id === attachmentId);
+				revokePreviewUrl(removed?.previewUrl);
+				return prev.filter((item) => item.id !== attachmentId);
+			});
+		},
+		[revokePreviewUrl],
+	);
+
+	const handleClearAttachments = useCallback(() => {
+		setAttachments((prev) => {
+			for (const attachment of prev) {
+				revokePreviewUrl(attachment.previewUrl);
+			}
+			return [];
+		});
+		setRejectedFileMessages([]);
+	}, [revokePreviewUrl]);
+
+	const hasUploadingFiles = attachments.some((attachment) => attachment.status === "uploading");
+
+	const filesForRequest = useMemo(
+		() =>
+			attachments
+				.filter((attachment) => attachment.status === "uploaded" && attachment.uploadFileId)
+				.map((attachment) => ({
+					transfer_method: "local_file" as const,
+					upload_file_id: attachment.uploadFileId as string,
+					type: toDifyUploadFileType(
+						attachment.fileKind ?? inferPromptInputFileKind(attachment.name, attachment.mimeType),
+					),
+				})),
+		[attachments],
+	);
+
 	const handleStream = useCallback(async () => {
 		const trimmedQuery = query.trim();
-		if (shouldSkipStreamRequest(trimmedQuery, streaming, abortRef.current)) {
+		if (shouldSkipStreamRequest(trimmedQuery, streaming, abortRef.current, hasUploadingFiles)) {
 			return;
 		}
 
@@ -162,6 +372,7 @@ function DifyDemo() {
 				{
 					query: trimmedQuery,
 					inputs: {},
+					...(filesForRequest.length > 0 ? { files: filesForRequest } : {}),
 					...(conversationId ? { conversation_id: conversationId } : {}),
 				},
 				{ signal: controller.signal },
@@ -186,14 +397,14 @@ function DifyDemo() {
 		} finally {
 			finalizeStream();
 		}
-	}, [conversationId, focusPromptInputToEnd, query, scrollToBottom, streaming]);
+	}, [conversationId, filesForRequest, focusPromptInputToEnd, hasUploadingFiles, query, scrollToBottom, streaming]);
 
 	const handleSubmitPrompt = useCallback(() => {
-		if (streaming || !query.trim()) {
+		if (streaming || hasUploadingFiles || !query.trim()) {
 			return;
 		}
 		void handleStream();
-	}, [handleStream, query, streaming]);
+	}, [handleStream, hasUploadingFiles, query, streaming]);
 
 	const handleStop = useCallback(() => {
 		abortRef.current?.abort();
@@ -201,7 +412,7 @@ function DifyDemo() {
 
 	const queryId = `${id}-query`;
 	const convId = `${id}-conv`;
-	const canSubmit = !streaming && query.trim().length > 0;
+	const canSubmit = !streaming && !hasUploadingFiles && query.trim().length > 0;
 
 	return (
 		<div className="grid h-full grid-cols-[320px_1fr] gap-0 overflow-hidden">
@@ -211,52 +422,41 @@ function DifyDemo() {
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1.5">
 						<Label htmlFor={queryId}>{t("query")}</Label>
-						<PromptInput.Root>
-							{uploadAreaOpen && (
-								<PromptInput.UploadArea>
-									<Input type="file" multiple aria-label="Attach files" />
-								</PromptInput.UploadArea>
-							)}
-
-							<PromptInput.Input
-								ref={promptInputRef}
-								id={queryId}
-								name="query"
-								autoComplete="off"
-								autoFocus
-								value={query}
-								onChange={(e) => setQuery(e.currentTarget.value)}
-								onFocus={handlePromptInitialFocus}
-								onSubmit={handleSubmitPrompt}
-								placeholder={t("query")}
-								disabled={streaming}
-							/>
-
-							<PromptInput.Toolbar>
-								<PromptInput.ToolSlot>
-									<Button
-										variant="ghost"
-										size="icon-sm"
-										onClick={toggleUploadArea}
-										aria-pressed={uploadAreaOpen}
-										aria-label="Toggle file upload area"
-									>
-										<Paperclip aria-hidden="true" />
-									</Button>
-									{streaming && (
-										<Button variant="destructive" size="sm" onClick={handleStop}>
-											{t("stop")}
-										</Button>
-									)}
-								</PromptInput.ToolSlot>
-
-								<PromptInput.SubmitSlot>
-									<Button size="sm" onClick={handleSubmitPrompt} disabled={!canSubmit}>
-										{streaming ? t("streaming") : t("send")}
-									</Button>
-								</PromptInput.SubmitSlot>
-							</PromptInput.Toolbar>
-						</PromptInput.Root>
+						<AppPromptInput
+							inputId={queryId}
+							inputName="query"
+							inputRef={promptInputRef}
+							autoFocus
+							value={query}
+							onChange={setQuery}
+							onInitialFocus={handlePromptInitialFocus}
+							onSubmit={handleSubmitPrompt}
+							onStop={handleStop}
+							onSelectFiles={handleSelectFiles}
+							onRemoveAttachment={handleRemoveAttachment}
+							onClearFiles={handleClearAttachments}
+							attachments={attachments}
+							rejectedFileMessages={rejectedFileMessages}
+							fileAccept={buildAppPromptInputAccept(DEFAULT_APP_PROMPT_INPUT_FILE_POLICY)}
+							fileCountText={attachments.length > 0 ? t("fileCount", { count: attachments.length }) : undefined}
+							placeholder={t("query")}
+							disabled={streaming}
+							streaming={streaming}
+							canSubmit={canSubmit}
+							labels={{
+								attachFiles: t("attachFiles"),
+								clearFiles: t("clearFiles"),
+								fileUploadFailed: t("fileUploadFailed"),
+								fileUploaded: t("fileUploaded"),
+								fileUploading: t("fileUploading"),
+								removeFile: t("removeFile"),
+								send: t("send"),
+								stop: t("stop"),
+								streaming: t("streaming"),
+								uploadEmpty: t("uploadEmpty"),
+								uploadHelper: t("uploadHelper"),
+							}}
+						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
