@@ -1,6 +1,5 @@
 import { LanguageToggle } from "./language-toggle";
 import { ModeToggle } from "./mode-toggle";
-import { UserMenu } from "./user-menu";
 
 export function Header() {
 	return (
@@ -8,7 +7,6 @@ export function Header() {
 			<div className="pointer-events-auto flex items-center gap-2">
 				<LanguageToggle />
 				<ModeToggle />
-				<UserMenu />
 			</div>
 		</header>
 	);

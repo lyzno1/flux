@@ -7,10 +7,7 @@
 	"theme.light": "Light",
 	"theme.system": "System",
 	"theme.toggle": "Theme",
-	"user.close": "Close",
 	"user.language": "Language",
-	"user.myAccount": "My Account",
 	"user.settings": "Settings",
-	"user.signIn": "Sign In",
 	"user.signOut": "Sign Out"
 }

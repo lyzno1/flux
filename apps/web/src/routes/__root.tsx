@@ -49,18 +49,16 @@ function NotFoundComponent() {
 	return <div>{t("error.notFound")}</div>;
 }
 
-type BrandingVariant = "home" | "auth" | "none";
-
 function BrandingViewport({
-	variant,
+	isAuthRoute,
 	contentId,
 	children,
 }: {
-	variant: BrandingVariant;
+	isAuthRoute: boolean;
 	contentId: string;
 	children: React.ReactNode;
 }) {
-	if (variant === "auth") {
+	if (isAuthRoute) {
 		return (
 			<div className="relative h-full overflow-hidden">
 				<AuthBrandPanel variant="fullscreen" className="absolute inset-0" />
@@ -71,15 +69,6 @@ function BrandingViewport({
 					{children}
 				</main>
 			</div>
-		);
-	}
-
-	if (variant === "home") {
-		return (
-			<main id={contentId} className="relative h-full overflow-hidden">
-				<AuthBrandPanel variant="fullscreen" className="absolute inset-0" />
-				<div className="relative z-10">{children}</div>
-			</main>
 		);
 	}
 
@@ -94,11 +83,9 @@ function RootComponent() {
 	const matches = useMatches();
 	const contentId = useId();
 	const isAuthRoute = matches.some((match) => match.routeId === "/_auth" || match.routeId.startsWith("/_auth/"));
-	const isHomeRoute = matches[matches.length - 1]?.routeId === "/";
 	const isAuthenticatedRoute = matches.some(
 		(match) => match.routeId === "/_authenticated" || match.routeId.startsWith("/_authenticated/"),
 	);
-	const brandingVariant: BrandingVariant = isAuthRoute ? "auth" : isHomeRoute ? "home" : "none";
 
 	return (
 		<>
@@ -116,7 +103,7 @@ function RootComponent() {
 					Skip to content
 				</a>
 				<div className="relative h-svh overflow-hidden">
-					<BrandingViewport variant={brandingVariant} contentId={contentId}>
+					<BrandingViewport isAuthRoute={isAuthRoute} contentId={contentId}>
 						<Outlet />
 					</BrandingViewport>
 					{!isAuthenticatedRoute && <Header />}
