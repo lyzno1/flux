@@ -1,12 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useId, useRef, useState } from "react";
+import { Paperclip } from "lucide-react";
+import { type FocusEvent, useCallback, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { PromptInput } from "@/components/prompt-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { promptInputSelectors } from "@/stores/app/slices/prompt-input/selectors";
+import { getAppStoreState, useAppStore } from "@/stores/app/store";
 import { client } from "@/utils/orpc";
 
 export const Route = createFileRoute("/_authenticated/dify")({
@@ -74,6 +78,18 @@ async function consumeStream(
 	}
 }
 
+function isAbortError(error: unknown) {
+	return error instanceof DOMException && error.name === "AbortError";
+}
+
+function toErrorMessage(error: unknown) {
+	return error instanceof Error ? error.message : String(error);
+}
+
+function shouldSkipStreamRequest(query: string, streaming: boolean, activeController: AbortController | null) {
+	return !query || streaming || Boolean(activeController);
+}
+
 function DifyDemo() {
 	const { t } = useTranslation("dify");
 	const id = useId();
@@ -84,7 +100,11 @@ function DifyDemo() {
 	const [answer, setAnswer] = useState("");
 	const [streaming, setStreaming] = useState(false);
 	const [elapsed, setElapsed] = useState<number | null>(null);
+	const uploadAreaOpen = useAppStore(promptInputSelectors.isPromptUploadAreaOpen);
+	const toggleUploadArea = getAppStoreState().togglePromptUploadArea;
+	const hasPlacedInitialCaretRef = useRef(false);
 	const abortRef = useRef<AbortController | null>(null);
+	const promptInputRef = useRef<HTMLTextAreaElement | null>(null);
 	const scrollRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = useCallback(() => {
@@ -93,7 +113,33 @@ function DifyDemo() {
 		});
 	}, []);
 
+	const focusPromptInputToEnd = useCallback(() => {
+		requestAnimationFrame(() => {
+			const textarea = promptInputRef.current;
+			if (!textarea) {
+				return;
+			}
+			textarea.focus({ preventScroll: true });
+			const end = textarea.value.length;
+			textarea.setSelectionRange(end, end);
+		});
+	}, []);
+
+	const handlePromptInitialFocus = useCallback((event: FocusEvent<HTMLTextAreaElement>) => {
+		if (hasPlacedInitialCaretRef.current) {
+			return;
+		}
+		const end = event.currentTarget.value.length;
+		event.currentTarget.setSelectionRange(end, end);
+		hasPlacedInitialCaretRef.current = true;
+	}, []);
+
 	const handleStream = useCallback(async () => {
+		const trimmedQuery = query.trim();
+		if (shouldSkipStreamRequest(trimmedQuery, streaming, abortRef.current)) {
+			return;
+		}
+
 		setEntries([]);
 		setAnswer("");
 		setElapsed(null);
@@ -108,39 +154,46 @@ function DifyDemo() {
 			setStreaming(false);
 			abortRef.current = null;
 			scrollToBottom();
+			focusPromptInputToEnd();
 		};
 
-		await client.dify
-			.chatMessagesStream(
+		try {
+			const iterator = await client.dify.chatMessagesStream(
 				{
-					query,
+					query: trimmedQuery,
 					inputs: {},
 					...(conversationId ? { conversation_id: conversationId } : {}),
 				},
 				{ signal: controller.signal },
-			)
-			.then(async (iterator) => {
-				await consumeStream(iterator, start, {
-					onEvent: (entry) => {
-						setEntries((prev) => [...prev, entry]);
-						scrollToBottom();
-					},
-					onAnswer: (chunk) => setAnswer((prev) => prev + chunk),
-					onConversationId: setConversationId,
-				});
-			})
-			.catch((err: unknown) => {
-				if (!(err instanceof DOMException && err.name === "AbortError")) {
-					const errorMessage = err instanceof Error ? err.message : String(err);
-					setEntries((prev) => [
-						...prev,
-						{ event: "client_error", data: { message: errorMessage }, receivedAt: performance.now() - start },
-					]);
-				}
-			});
+			);
 
-		finalizeStream();
-	}, [query, conversationId, scrollToBottom]);
+			await consumeStream(iterator, start, {
+				onEvent: (entry) => {
+					setEntries((prev) => [...prev, entry]);
+					scrollToBottom();
+				},
+				onAnswer: (chunk) => setAnswer((prev) => prev + chunk),
+				onConversationId: setConversationId,
+			});
+		} catch (err: unknown) {
+			if (isAbortError(err)) {
+				return;
+			}
+			setEntries((prev) => [
+				...prev,
+				{ event: "client_error", data: { message: toErrorMessage(err) }, receivedAt: performance.now() - start },
+			]);
+		} finally {
+			finalizeStream();
+		}
+	}, [conversationId, focusPromptInputToEnd, query, scrollToBottom, streaming]);
+
+	const handleSubmitPrompt = useCallback(() => {
+		if (streaming || !query.trim()) {
+			return;
+		}
+		void handleStream();
+	}, [handleStream, query, streaming]);
 
 	const handleStop = useCallback(() => {
 		abortRef.current?.abort();
@@ -148,6 +201,7 @@ function DifyDemo() {
 
 	const queryId = `${id}-query`;
 	const convId = `${id}-conv`;
+	const canSubmit = !streaming && query.trim().length > 0;
 
 	return (
 		<div className="grid h-full grid-cols-[320px_1fr] gap-0 overflow-hidden">
@@ -157,29 +211,65 @@ function DifyDemo() {
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1.5">
 						<Label htmlFor={queryId}>{t("query")}</Label>
-						<Input id={queryId} value={query} onChange={(e) => setQuery(e.currentTarget.value)} />
+						<PromptInput.Root>
+							{uploadAreaOpen && (
+								<PromptInput.UploadArea>
+									<Input type="file" multiple aria-label="Attach files" />
+								</PromptInput.UploadArea>
+							)}
+
+							<PromptInput.Input
+								ref={promptInputRef}
+								id={queryId}
+								name="query"
+								autoComplete="off"
+								autoFocus
+								value={query}
+								onChange={(e) => setQuery(e.currentTarget.value)}
+								onFocus={handlePromptInitialFocus}
+								onSubmit={handleSubmitPrompt}
+								placeholder={t("query")}
+								disabled={streaming}
+							/>
+
+							<PromptInput.Toolbar>
+								<PromptInput.ToolSlot>
+									<Button
+										variant="ghost"
+										size="icon-sm"
+										onClick={toggleUploadArea}
+										aria-pressed={uploadAreaOpen}
+										aria-label="Toggle file upload area"
+									>
+										<Paperclip aria-hidden="true" />
+									</Button>
+									{streaming && (
+										<Button variant="destructive" size="sm" onClick={handleStop}>
+											{t("stop")}
+										</Button>
+									)}
+								</PromptInput.ToolSlot>
+
+								<PromptInput.SubmitSlot>
+									<Button size="sm" onClick={handleSubmitPrompt} disabled={!canSubmit}>
+										{streaming ? t("streaming") : t("send")}
+									</Button>
+								</PromptInput.SubmitSlot>
+							</PromptInput.Toolbar>
+						</PromptInput.Root>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
 						<Label htmlFor={convId}>{t("conversationId")}</Label>
 						<Input
 							id={convId}
+							name="conversationId"
+							autoComplete="off"
 							value={conversationId}
 							onChange={(e) => setConversationId(e.currentTarget.value)}
 							placeholder={t("conversationIdPlaceholder")}
 						/>
 					</div>
-				</div>
-
-				<div className="flex gap-2">
-					<Button onClick={handleStream} disabled={streaming || !query.trim()}>
-						{streaming ? t("streaming") : t("send")}
-					</Button>
-					{streaming && (
-						<Button variant="destructive" onClick={handleStop}>
-							{t("stop")}
-						</Button>
-					)}
 				</div>
 
 				{answer && (
@@ -206,8 +296,8 @@ function DifyDemo() {
 				)}
 			</div>
 
-			<div ref={scrollRef} className="overflow-y-auto p-4">
-				<div className="flex flex-col gap-1">
+			<div ref={scrollRef} className="overflow-y-auto p-4" aria-live="polite" aria-busy={streaming}>
+				<div className="flex flex-col gap-1 [content-visibility:auto]">
 					{entries.length === 0 && <p className="py-8 text-center text-muted-foreground text-sm">{t("emptyState")}</p>}
 					{entries.map((entry, i) => (
 						<div

@@ -5,9 +5,10 @@ import { createWithEqualityFn } from "zustand/traditional";
 import { STORAGE_KEYS } from "@/config/storage-keys";
 import type { AppState } from "./initial-state";
 import { initialState } from "./initial-state";
+import { createPromptInputSlice, type PromptInputAction } from "./slices/prompt-input/action";
 import { createSidebarSlice, type SidebarAction } from "./slices/sidebar/action";
 
-export type AppStore = AppState & SidebarAction;
+export type AppStore = AppState & SidebarAction & PromptInputAction;
 
 export const useAppStore = createWithEqualityFn<AppStore>()(
 	subscribeWithSelector(
@@ -15,6 +16,7 @@ export const useAppStore = createWithEqualityFn<AppStore>()(
 			persist(
 				(...a) => ({
 					...initialState,
+					...createPromptInputSlice(...a),
 					...createSidebarSlice(...a),
 				}),
 				{
