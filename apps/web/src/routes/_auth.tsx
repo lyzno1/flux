@@ -1,13 +1,14 @@
 import { createFileRoute, Outlet, redirect, useMatches } from "@tanstack/react-router";
 import * as z from "zod";
 import i18n from "@/i18n";
+import { AUTH_DEFAULT_REDIRECT, normalizeAuthRedirect } from "@/lib/auth-redirect";
 
 const authSearchSchema = z.object({
 	redirect: z
 		.string()
-		.default("/dify")
-		.catch("/dify")
-		.transform((v) => (v.startsWith("/") && !v.startsWith("//") ? v : "/dify")),
+		.default(AUTH_DEFAULT_REDIRECT)
+		.catch(AUTH_DEFAULT_REDIRECT)
+		.transform((v) => normalizeAuthRedirect(v, AUTH_DEFAULT_REDIRECT)),
 });
 
 function AuthLayout() {

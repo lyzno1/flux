@@ -7,6 +7,7 @@ import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 import i18n from "i18next";
 import { toast } from "sonner";
+import { getRelativeRedirectFromHref } from "@/lib/auth-redirect";
 
 const NO_RETRY_STATUSES = new Set([400, 401, 403, 404, 409, 422, 429]);
 
@@ -19,7 +20,10 @@ function handleUnauthorized() {
 		queryClient.clear();
 		import("../router")
 			.then(({ router }) => {
-				return router.navigate({ to: "/login", search: { redirect: router.state.location.href } });
+				return router.navigate({
+					to: "/login",
+					search: { redirect: getRelativeRedirectFromHref(router.state.location.href) },
+				});
 			})
 			.catch(console.error);
 	}

@@ -1,9 +1,10 @@
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
+import { useAuthRedirect } from "@/hooks/use-auth-redirect";
 import { authClient } from "@/lib/auth-client";
 import { createOtpSchema } from "@/lib/auth-validation";
 import { Button } from "../ui/button";
@@ -11,12 +12,10 @@ import { AuthFormLayout } from "./auth-form-layout";
 import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
-const authRoute = getRouteApi("/_auth");
-
 const RESEND_COOLDOWN = 60;
 
 export function VerifyEmailForm({ email }: { email: string }) {
-	const { redirect } = authRoute.useSearch();
+	const redirect = useAuthRedirect();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 	const [cooldown, setCooldown] = useState(0);

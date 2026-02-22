@@ -1,5 +1,7 @@
 import { ChevronsUpDownIcon, GlobeIcon, LogOutIcon, SettingsIcon, SunMoonIcon } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import { useTheme } from "@/components/theme-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -35,9 +37,23 @@ function UserAvatar({ name, image }: { name: string; image?: string | null }) {
 function UserMenuContent({ name, email }: { name: string; email: string }) {
 	const { t, i18n } = useTranslation();
 	const { theme, setTheme } = useTheme();
+	const [isSigningOut, setIsSigningOut] = useState(false);
 
 	const handleSignOut = async () => {
-		await authClient.signOut();
+		if (isSigningOut) {
+			return;
+		}
+		setIsSigningOut(true);
+		try {
+			const result = await authClient.signOut();
+			if (result?.error) {
+				toast.error(result.error.message || result.error.statusText);
+			}
+		} catch (error) {
+			toast.error(t("error.generic", { message: error instanceof Error ? error.message : String(error) }));
+		} finally {
+			setIsSigningOut(false);
+		}
 	};
 
 	return (
@@ -85,7 +101,7 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 			</DropdownMenuGroup>
 			<DropdownMenuSeparator />
 			<DropdownMenuGroup>
-				<DropdownMenuItem variant="destructive" onClick={handleSignOut}>
+				<DropdownMenuItem variant="destructive" disabled={isSigningOut} onClick={handleSignOut}>
 					<LogOutIcon />
 					{t("user.signOut")}
 				</DropdownMenuItem>

@@ -137,6 +137,31 @@ describe("SignInForm", () => {
 			});
 		});
 
+		it("shows send-otp error and stays on login when verify-email otp sending fails", async () => {
+			vi.mocked(authClient.signIn.email).mockResolvedValue({
+				error: { message: "", statusText: "Forbidden", status: 403 },
+			});
+			vi.mocked(authClient.emailOtp.sendVerificationOtp).mockResolvedValue({
+				error: { message: "Too many requests", statusText: "Too Many Requests" },
+			});
+			const { user, router } = renderAuthRoute(SignInForm, {
+				path: "/login",
+			});
+
+			await fillAndSubmit(user, "user@example.com", "password123");
+
+			await waitFor(() => {
+				expect(authClient.emailOtp.sendVerificationOtp).toHaveBeenCalledWith({
+					email: "user@example.com",
+					type: "email-verification",
+				});
+			});
+			await waitFor(() => {
+				expect(toast.error).toHaveBeenCalledWith("Too many requests");
+			});
+			expect(router.state.location.pathname).toBe("/login");
+		});
+
 		it("shows username-specific message on 403 for username identifier", async () => {
 			vi.mocked(authClient.signIn.username).mockResolvedValue({
 				error: { message: "", statusText: "Forbidden", status: 403 },

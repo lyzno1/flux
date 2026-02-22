@@ -4,6 +4,7 @@ import { PanelLeftIcon } from "lucide-react";
 import { AppSidebar, toggleButtonStyles } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar/sidebar-inset";
 import { useIsMobile } from "@/hooks/use-is-mobile";
+import { getRelativeRedirectFromHref } from "@/lib/auth-redirect";
 import { getAppStoreState } from "@/stores/app/store";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/_authenticated")({
 		if (!context.auth.data) {
 			throw redirect({
 				to: "/login",
-				search: { redirect: location.href },
+				search: { redirect: getRelativeRedirectFromHref(location.href) },
 			});
 		}
 		return { session: context.auth.data };

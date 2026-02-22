@@ -1,8 +1,9 @@
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
+import { useAuthRedirect } from "@/hooks/use-auth-redirect";
 import { authClient } from "@/lib/auth-client";
 import { createRequiredSchema } from "@/lib/auth-validation";
 import { GoogleOAuthButton, OAuthDivider } from "../google-oauth-button";
@@ -14,12 +15,40 @@ import {
 } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
-const authRoute = getRouteApi("/_auth");
+type SignInError = {
+	message?: string;
+	status?: number;
+	statusText: string;
+};
+
+function isForbiddenSignInError(error: SignInError) {
+	return error.status === 403 || error.statusText === "Forbidden";
+}
 
 export function SignInForm() {
-	const { redirect } = authRoute.useSearch();
+	const redirect = useAuthRedirect();
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
+
+	const showSignInError = (error: Pick<SignInError, "message" | "statusText">) => {
+		toast.error(error.message || error.statusText);
+	};
+
+	const handleEmailVerificationRequired = async (email: string) => {
+		const verificationOtpResult = await authClient.emailOtp.sendVerificationOtp({
+			email,
+			type: "email-verification",
+		});
+		if (verificationOtpResult.error) {
+			showSignInError(verificationOtpResult.error);
+			return;
+		}
+		toast.error(t("signIn.verifyEmailRequired"));
+		navigate({
+			to: "/verify-email",
+			search: (prev) => ({ ...prev, email }),
+		});
+	};
 
 	const form = useAppForm({
 		defaultValues: {
@@ -38,30 +67,23 @@ export function SignInForm() {
 						password: value.password,
 					});
 
-			if (result.error) {
-				const status = (result.error as { status?: number }).status;
-				const isForbidden = status === 403 || result.error.statusText === "Forbidden";
-				if (isForbidden) {
-					if (isEmail) {
-						void authClient.emailOtp.sendVerificationOtp({
-							email: value.identifier,
-							type: "email-verification",
-						});
-						toast.error(t("signIn.verifyEmailRequired"));
-						navigate({
-							to: "/verify-email",
-							search: (prev) => ({ ...prev, email: value.identifier }),
-						});
-					} else {
-						toast.error(t("signIn.verifyEmailRequiredUsername"));
-					}
-					return;
-				}
-				toast.error(result.error.message || result.error.statusText);
+			if (!result.error) {
+				navigate({ to: redirect });
+				toast.success(t("signIn.success"));
 				return;
 			}
-			navigate({ to: redirect });
-			toast.success(t("signIn.success"));
+
+			if (!isForbiddenSignInError(result.error as SignInError)) {
+				showSignInError(result.error);
+				return;
+			}
+
+			if (!isEmail) {
+				toast.error(t("signIn.verifyEmailRequiredUsername"));
+				return;
+			}
+
+			await handleEmailVerificationRequired(value.identifier);
 		},
 	});
 
