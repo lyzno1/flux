@@ -34,6 +34,8 @@ type PromptUploadAttachment = PromptInputAttachment & {
 	uploadFileId: string | null;
 };
 
+type RejectedFileReasonCounter = Partial<Record<AppPromptInputRejectedFile["reason"], number>>;
+
 const EVENT_COLORS: Record<string, string> = {
 	message: "bg-info-muted text-info-foreground",
 	agent_message: "bg-info-muted text-info-foreground",
@@ -128,29 +130,14 @@ function createAttachmentId() {
 	return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function buildRejectedFileMessages(
-	rejected: AppPromptInputRejectedFile[],
-	t: (key: string, options?: Record<string, unknown>) => string,
-) {
-	const reasonCounter: Partial<Record<AppPromptInputRejectedFile["reason"], number>> = {};
+function countRejectedFileReasons(rejected: AppPromptInputRejectedFile[]) {
+	const reasonCounter: RejectedFileReasonCounter = {};
 
 	for (const item of rejected) {
 		reasonCounter[item.reason] = (reasonCounter[item.reason] ?? 0) + 1;
 	}
 
-	const messages: string[] = [];
-
-	if (reasonCounter["file-type-not-allowed"]) {
-		messages.push(t("fileTypeRejected", { count: reasonCounter["file-type-not-allowed"] }));
-	}
-	if (reasonCounter["file-too-large"]) {
-		messages.push(t("fileTooLarge", { count: reasonCounter["file-too-large"] }));
-	}
-	if (reasonCounter["too-many-files"]) {
-		messages.push(t("fileTooMany", { count: reasonCounter["too-many-files"] }));
-	}
-
-	return messages;
+	return reasonCounter;
 }
 
 function DifyDemo() {
@@ -270,7 +257,20 @@ function DifyDemo() {
 				attachments.length,
 			);
 
-			setRejectedFileMessages(buildRejectedFileMessages(rejected, t));
+			const reasonCounter = countRejectedFileReasons(rejected);
+			const messages: string[] = [];
+
+			if (reasonCounter["file-type-not-allowed"]) {
+				messages.push(t("fileTypeRejected", { count: reasonCounter["file-type-not-allowed"] }));
+			}
+			if (reasonCounter["file-too-large"]) {
+				messages.push(t("fileTooLarge", { count: reasonCounter["file-too-large"] }));
+			}
+			if (reasonCounter["too-many-files"]) {
+				messages.push(t("fileTooMany", { count: reasonCounter["too-many-files"] }));
+			}
+
+			setRejectedFileMessages(messages);
 
 			if (accepted.length === 0) {
 				return;
