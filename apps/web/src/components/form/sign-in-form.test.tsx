@@ -13,7 +13,7 @@ vi.mock("@/lib/auth-client", () => ({
 }));
 
 vi.mock("sonner", () => ({
-	toast: { success: vi.fn(), error: vi.fn() },
+	toast: { success: vi.fn(), error: vi.fn(), warning: vi.fn() },
 }));
 
 import { toast } from "sonner";
@@ -26,6 +26,7 @@ beforeEach(() => {
 	vi.mocked(authClient.emailOtp.sendVerificationOtp).mockReset();
 	vi.mocked(toast.success).mockReset();
 	vi.mocked(toast.error).mockReset();
+	vi.mocked(toast.warning).mockReset();
 });
 
 afterEach(() => {
@@ -130,7 +131,7 @@ describe("SignInForm", () => {
 				});
 			});
 			await waitFor(() => {
-				expect(toast.error).toHaveBeenCalledWith("signIn.verifyEmailRequired");
+				expect(toast.warning).toHaveBeenCalledWith("signIn.verifyEmailRequired");
 			});
 			await waitFor(() => {
 				expect(router.state.location.pathname).toBe("/verify-email");

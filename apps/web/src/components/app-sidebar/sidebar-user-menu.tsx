@@ -39,6 +39,9 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 	const { theme, setTheme } = useTheme();
 	const [isSigningOut, setIsSigningOut] = useState(false);
 
+	// Navigation is handled implicitly by InnerApp (main.tsx) which detects
+	// session changes via useSession() and calls router.invalidate(). Adding
+	// explicit router.navigate() here would race with that invalidation.
 	const handleSignOut = async () => {
 		if (isSigningOut) {
 			return;

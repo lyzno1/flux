@@ -15,13 +15,7 @@ import {
 } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";
 
-type SignInError = {
-	message?: string;
-	status?: number;
-	statusText: string;
-};
-
-function isForbiddenSignInError(error: SignInError) {
+function isForbiddenSignInError(error: { status: number; statusText: string }) {
 	return error.status === 403 || error.statusText === "Forbidden";
 }
 
@@ -30,7 +24,7 @@ export function SignInForm() {
 	const navigate = useNavigate();
 	const { t } = useTranslation("auth");
 
-	const showSignInError = (error: Pick<SignInError, "message" | "statusText">) => {
+	const showSignInError = (error: { message?: string; statusText: string }) => {
 		toast.error(error.message || error.statusText);
 	};
 
@@ -43,7 +37,7 @@ export function SignInForm() {
 			showSignInError(verificationOtpResult.error);
 			return;
 		}
-		toast.error(t("signIn.verifyEmailRequired"));
+		toast.warning(t("signIn.verifyEmailRequired"));
 		navigate({
 			to: "/verify-email",
 			search: (prev) => ({ ...prev, email }),
@@ -73,7 +67,7 @@ export function SignInForm() {
 				return;
 			}
 
-			if (!isForbiddenSignInError(result.error as SignInError)) {
+			if (!isForbiddenSignInError(result.error)) {
 				showSignInError(result.error);
 				return;
 			}
