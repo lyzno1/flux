@@ -1,4 +1,3 @@
-import { useRouter } from "@tanstack/react-router";
 import { ChevronsUpDownIcon, GlobeIcon, LogOutIcon, SettingsIcon, SunMoonIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/components/theme-provider";
@@ -34,24 +33,11 @@ function UserAvatar({ name, image }: { name: string; image?: string | null }) {
 }
 
 function UserMenuContent({ name, email }: { name: string; email: string }) {
-	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { theme, setTheme } = useTheme();
-	const { refetch } = authClient.useSession();
 
 	const handleSignOut = async () => {
 		await authClient.signOut();
-		await refetch();
-		try {
-			await router.invalidate({ sync: true });
-			await router.navigate({
-				to: "/login",
-				search: { redirect: "/dify" },
-				replace: true,
-			});
-		} catch {
-			window.location.assign("/login?redirect=%2Fdify");
-		}
 	};
 
 	return (

@@ -3,38 +3,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useAppStore } from "@/stores/app/store";
 import { SidebarUserMenu } from "./sidebar-user-menu";
 
-const {
-	i18nState,
-	mockChangeLanguage,
-	mockInvalidate,
-	mockNavigate,
-	mockSetTheme,
-	mockSignOut,
-	mockTooltip,
-	mockUseSession,
-} = vi.hoisted(() => ({
+const { i18nState, mockChangeLanguage, mockSetTheme, mockSignOut, mockTooltip, mockUseSession } = vi.hoisted(() => ({
 	i18nState: {
 		language: "en-US",
 	},
 	mockChangeLanguage: vi.fn(),
-	mockInvalidate: vi.fn(),
-	mockNavigate: vi.fn(),
 	mockSetTheme: vi.fn(),
 	mockSignOut: vi.fn(),
 	mockTooltip: vi.fn(),
 	mockUseSession: vi.fn(),
 }));
-
-vi.mock("@tanstack/react-router", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@tanstack/react-router")>();
-	return {
-		...actual,
-		useRouter: () => ({
-			invalidate: mockInvalidate,
-			navigate: mockNavigate,
-		}),
-	};
-});
 
 vi.mock("react-i18next", async (importOriginal) => {
 	const actual = await importOriginal<typeof import("react-i18next")>();
@@ -170,13 +148,11 @@ type TestSession = {
 };
 
 function setSessionState(session: TestSession | null, isPending = false) {
-	const refetch = vi.fn().mockResolvedValue(undefined);
 	mockUseSession.mockReturnValue({
 		data: session,
 		isPending,
-		refetch,
+		refetch: vi.fn().mockResolvedValue(undefined),
 	});
-	return { refetch };
 }
 
 describe("SidebarUserMenu", () => {
@@ -184,8 +160,6 @@ describe("SidebarUserMenu", () => {
 		act(() => {
 			useAppStore.setState({ sidebarOpen: true });
 		});
-		mockNavigate.mockReset();
-		mockInvalidate.mockReset();
 		mockSetTheme.mockReset();
 		mockChangeLanguage.mockReset();
 		mockUseSession.mockReset();
@@ -329,13 +303,11 @@ describe("SidebarUserMenu", () => {
 		expect(mockSetTheme).toHaveBeenNthCalledWith(3, "system");
 	});
 
-	it("signs out, refetches session and navigates to login on success", async () => {
-		const { refetch } = setSessionState({
+	it("signs out when user clicks sign out", async () => {
+		setSessionState({
 			user: { name: "Alice", email: "alice@example.com" },
 		});
 		mockSignOut.mockResolvedValue(undefined);
-		mockInvalidate.mockResolvedValue(undefined);
-		mockNavigate.mockResolvedValue(undefined);
 
 		render(<SidebarUserMenu />);
 
@@ -344,29 +316,5 @@ describe("SidebarUserMenu", () => {
 		await waitFor(() => {
 			expect(mockSignOut).toHaveBeenCalledOnce();
 		});
-		expect(refetch).toHaveBeenCalledOnce();
-		expect(mockInvalidate).toHaveBeenCalledWith({ sync: true });
-		expect(mockNavigate).toHaveBeenCalledWith({
-			to: "/login",
-			search: { redirect: "/dify" },
-			replace: true,
-		});
-	});
-
-	it("falls back to hard navigation when router invalidation fails", async () => {
-		setSessionState({
-			user: { name: "Alice", email: "alice@example.com" },
-		});
-		mockSignOut.mockResolvedValue(undefined);
-		mockInvalidate.mockRejectedValue(new Error("invalidate failed"));
-
-		render(<SidebarUserMenu />);
-
-		fireEvent.click(screen.getByRole("button", { name: "user.signOut" }));
-
-		await waitFor(() => {
-			expect(mockInvalidate).toHaveBeenCalledWith({ sync: true });
-		});
-		expect(mockNavigate).not.toHaveBeenCalled();
 	});
 });

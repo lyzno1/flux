@@ -1,4 +1,5 @@
 import { RouterProvider } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
 
 import { PageLoading } from "./components/page-loading";
@@ -14,8 +15,26 @@ if (!rootElement) {
 
 function InnerApp() {
 	const auth = authClient.useSession();
+	const hasResolvedInitialSession = useRef(false);
+	const authStatus = auth.data ? "authenticated" : "anonymous";
+	const previousAuthStatus = useRef(authStatus);
 
-	if (auth.isPending) {
+	if (!auth.isPending) {
+		hasResolvedInitialSession.current = true;
+	}
+
+	useEffect(() => {
+		if (!hasResolvedInitialSession.current) {
+			return;
+		}
+		if (previousAuthStatus.current === authStatus) {
+			return;
+		}
+		previousAuthStatus.current = authStatus;
+		void router.invalidate();
+	}, [authStatus]);
+
+	if (!hasResolvedInitialSession.current && auth.isPending) {
 		return <PageLoading />;
 	}
 
