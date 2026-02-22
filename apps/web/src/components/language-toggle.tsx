@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { languages } from "@/i18n/config";
@@ -22,15 +23,13 @@ export function LanguageToggle() {
 				<span className="sr-only">Change language</span>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
-				{languages.map((lang) => (
-					<DropdownMenuItem
-						key={lang.code}
-						disabled={i18n.language === lang.code}
-						onClick={() => i18n.changeLanguage(lang.code)}
-					>
-						{lang.label}
-					</DropdownMenuItem>
-				))}
+				<DropdownMenuRadioGroup value={i18n.language} onValueChange={(value) => i18n.changeLanguage(value)}>
+					{languages.map((lang) => (
+						<DropdownMenuRadioItem key={lang.code} value={lang.code}>
+							{lang.label}
+						</DropdownMenuRadioItem>
+					))}
+				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

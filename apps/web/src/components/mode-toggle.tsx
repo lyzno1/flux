@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 export function ModeToggle() {
-	const { setTheme } = useTheme();
+	const { theme, setTheme } = useTheme();
 	const { t } = useTranslation();
 
 	return (
@@ -24,9 +25,11 @@ export function ModeToggle() {
 				<span className="sr-only">{t("theme.toggle")}</span>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
-				<DropdownMenuItem onClick={() => setTheme("light")}>{t("theme.light")}</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("dark")}>{t("theme.dark")}</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("system")}>{t("theme.system")}</DropdownMenuItem>
+				<DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+					<DropdownMenuRadioItem value="light">{t("theme.light")}</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value="dark">{t("theme.dark")}</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value="system">{t("theme.system")}</DropdownMenuRadioItem>
+				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

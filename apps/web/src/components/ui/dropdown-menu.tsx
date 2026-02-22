@@ -121,7 +121,7 @@ function DropdownMenuSubContent({
 	align = "start",
 	alignOffset = -3,
 	side = "right",
-	sideOffset = 0,
+	sideOffset = 2,
 	className,
 	...props
 }: React.ComponentProps<typeof DropdownMenuContent>) {
@@ -169,10 +169,11 @@ function DropdownMenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
 	return <MenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 }
 
-function DropdownMenuRadioItem({ className, children, ...props }: MenuPrimitive.RadioItem.Props) {
+function DropdownMenuRadioItem({ className, children, closeOnClick = true, ...props }: MenuPrimitive.RadioItem.Props) {
 	return (
 		<MenuPrimitive.RadioItem
 			data-slot="dropdown-menu-radio-item"
+			closeOnClick={closeOnClick}
 			className={cn(
 				"relative flex cursor-pointer select-none items-center gap-2 rounded-lg py-2 pr-8 pl-2 text-base outline-hidden focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 sm:text-sm [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
 				className,

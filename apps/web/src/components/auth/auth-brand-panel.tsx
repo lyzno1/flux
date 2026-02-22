@@ -13,12 +13,11 @@ const MASK_OFFSCREEN_X = -9999;
 const DOT_GRID = `radial-gradient(circle, currentColor ${DOT_SIZE / 2}px, transparent ${DOT_SIZE / 2}px)`;
 const GLOW_CENTER = "radial-gradient(circle at 50% 45%, oklch(0.93 0 0 / 0.024) 0%, transparent 70%)";
 
-interface AuthBrandPanelProps {
-	variant?: "sidebar" | "fullscreen";
+type AuthBrandPanelProps = {
 	className?: string;
-}
+};
 
-export function AuthBrandPanel({ variant = "sidebar", className }: AuthBrandPanelProps) {
+export function AuthBrandPanel({ className }: AuthBrandPanelProps) {
 	const panelRef = useRef<HTMLDivElement>(null);
 	const panelRectRef = useRef<DOMRect | null>(null);
 	const pointerRef = useRef({ x: MASK_OFFSCREEN_X, y: 0 });
@@ -85,8 +84,7 @@ export function AuthBrandPanel({ variant = "sidebar", className }: AuthBrandPane
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
 			className={cn(
-				"relative overflow-hidden bg-background",
-				variant === "sidebar" ? "hidden h-full shrink-0 lg:flex lg:w-96 xl:w-md 2xl:w-220" : "flex h-full w-full",
+				"fade-in relative hidden h-full shrink-0 animate-in overflow-hidden bg-background duration-500 motion-reduce:animate-none lg:flex lg:w-xl xl:w-2xl 2xl:w-220",
 				className,
 			)}
 			style={{ "--mx": `${MASK_OFFSCREEN_X}px`, "--my": "0px" } as React.CSSProperties}
@@ -109,12 +107,7 @@ export function AuthBrandPanel({ variant = "sidebar", className }: AuthBrandPane
 				}}
 			/>
 
-			<div
-				className={cn(
-					"relative z-10 flex flex-1 flex-col px-15 pb-10",
-					variant === "fullscreen" ? "pt-18 xl:pt-22" : "pt-20 xl:pt-24",
-				)}
-			>
+			<div className="relative z-10 flex flex-1 flex-col px-15 pt-20 pb-10 xl:pt-24">
 				<div className="flex flex-1 translate-y-5 flex-col items-start justify-start gap-4 text-left">
 					<h1 className="font-bold text-[56px] text-foreground tracking-tight">{t("brand.title")}</h1>
 					<p className="text-[17px] text-muted-foreground tracking-wide">{t("brand.subtitle")}</p>

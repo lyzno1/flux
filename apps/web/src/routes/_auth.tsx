@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect, useMatches } from "@tanstack/react-router";
 import * as z from "zod";
+import { AuthBrandPanel } from "@/components/auth/auth-brand-panel";
 import i18n from "@/i18n";
 import { AUTH_DEFAULT_REDIRECT, normalizeAuthRedirect } from "@/lib/auth-redirect";
 
@@ -16,11 +17,14 @@ function AuthLayout() {
 	const leafId = matches[matches.length - 1]?.id;
 
 	return (
-		<div
-			key={leafId}
-			className="fade-in slide-in-from-bottom-2 h-full animate-in duration-300 motion-reduce:animate-none"
-		>
-			<Outlet />
+		<div className="flex h-full">
+			<AuthBrandPanel />
+			<div
+				key={leafId}
+				className="fade-in slide-in-from-bottom-2 h-full flex-1 animate-in overflow-y-auto duration-300 motion-reduce:animate-none lg:border-border lg:border-l"
+			>
+				<Outlet />
+			</div>
 		</div>
 	);
 }
