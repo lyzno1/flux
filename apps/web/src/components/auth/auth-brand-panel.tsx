@@ -84,7 +84,7 @@ export function AuthBrandPanel({ className }: AuthBrandPanelProps) {
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
 			className={cn(
-				"fade-in relative hidden h-full shrink-0 animate-in overflow-hidden bg-background duration-500 motion-reduce:animate-none lg:flex lg:w-xl xl:w-2xl 2xl:w-220",
+				"relative hidden h-full shrink-0 overflow-hidden bg-background lg:flex lg:w-xl xl:w-2xl 2xl:w-220",
 				className,
 			)}
 			style={{ "--mx": `${MASK_OFFSCREEN_X}px`, "--my": "0px" } as React.CSSProperties}
@@ -109,8 +109,12 @@ export function AuthBrandPanel({ className }: AuthBrandPanelProps) {
 
 			<div className="relative z-10 flex flex-1 flex-col px-15 pt-20 pb-10 xl:pt-24">
 				<div className="flex flex-1 translate-y-5 flex-col items-start justify-start gap-4 text-left">
-					<h1 className="font-bold text-[56px] text-foreground tracking-tight">{t("brand.title")}</h1>
-					<p className="text-[17px] text-muted-foreground tracking-wide">{t("brand.subtitle")}</p>
+					<h1 className="fade-in slide-in-from-bottom-1 animate-in fill-mode-backwards font-bold text-[56px] text-foreground tracking-tight delay-100 duration-300 motion-reduce:animate-none">
+						{t("brand.title")}
+					</h1>
+					<p className="fade-in slide-in-from-bottom-1 animate-in fill-mode-backwards text-[17px] text-muted-foreground tracking-wide delay-200 duration-300 motion-reduce:animate-none">
+						{t("brand.subtitle")}
+					</p>
 				</div>
 			</div>
 		</div>
