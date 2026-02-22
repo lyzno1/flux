@@ -3,7 +3,6 @@ import * as schema from "@flux/db/schema/auth.sql";
 import { env } from "@flux/env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { oneTap } from "better-auth/plugins";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { username } from "better-auth/plugins/username";
 import { Resend } from "resend";
@@ -60,7 +59,6 @@ export const auth = betterAuth({
 	},
 	plugins: [
 		username(),
-		oneTap(),
 		emailOTP({
 			otpLength: 6,
 			expiresIn: 300,

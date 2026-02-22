@@ -1,7 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet, useMatches } from "@tanstack/react-router";
 import type * as React from "react";
-import { lazy, useId } from "react";
+import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import { AuthBrandPanel } from "@/components/auth/auth-brand-panel";
 import { DevtoolsLoader } from "@/components/devtools/loader";
@@ -13,8 +13,6 @@ import type { authClient } from "@/lib/auth-client";
 import type { orpc } from "@/utils/orpc";
 
 import "../index.css";
-
-const GoogleOneTap = lazy(() => import("@/components/google-one-tap").then((m) => ({ default: m.GoogleOneTap })));
 
 export interface RouterAppContext {
 	orpc: typeof orpc;
@@ -109,7 +107,6 @@ function RootComponent() {
 					{!isAuthenticatedRoute && <Header />}
 				</div>
 				<Toaster richColors />
-				<GoogleOneTap />
 			</ThemeProvider>
 			<DevtoolsLoader />
 		</>
