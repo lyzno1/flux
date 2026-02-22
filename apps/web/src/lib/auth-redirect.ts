@@ -1,6 +1,6 @@
 export const AUTH_DEFAULT_REDIRECT = "/dify";
 
-const REDIRECT_PARSE_BASE = "https://flux.local";
+const URL_PARSE_BASE = "https://placeholder.local";
 
 function isSafeRelativePath(path: string) {
 	return path.startsWith("/") && !path.startsWith("//");
@@ -19,7 +19,7 @@ export function normalizeAuthRedirect(value: string | null | undefined, fallback
 	}
 
 	try {
-		const parsed = new URL(value, REDIRECT_PARSE_BASE);
+		const parsed = new URL(value, URL_PARSE_BASE);
 		const relative = `${parsed.pathname}${parsed.search}${parsed.hash}`;
 		return isSafeRelativePath(relative) ? relative : fallback;
 	} catch {
@@ -29,18 +29,9 @@ export function normalizeAuthRedirect(value: string | null | undefined, fallback
 
 export function getRelativeRedirectFromHref(href: string, fallback = AUTH_DEFAULT_REDIRECT) {
 	try {
-		const parsed = new URL(href, REDIRECT_PARSE_BASE);
+		const parsed = new URL(href, URL_PARSE_BASE);
 		const relative = `${parsed.pathname}${parsed.search}${parsed.hash}`;
 		return normalizeAuthRedirect(relative, fallback);
-	} catch {
-		return fallback;
-	}
-}
-
-export function getRedirectParamFromHref(href: string, fallback = AUTH_DEFAULT_REDIRECT) {
-	try {
-		const parsed = new URL(href, REDIRECT_PARSE_BASE);
-		return normalizeAuthRedirect(parsed.searchParams.get("redirect"), fallback);
 	} catch {
 		return fallback;
 	}

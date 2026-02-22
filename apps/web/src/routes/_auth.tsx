@@ -8,7 +8,7 @@ const authSearchSchema = z.object({
 		.string()
 		.default(AUTH_DEFAULT_REDIRECT)
 		.catch(AUTH_DEFAULT_REDIRECT)
-		.transform((v) => normalizeAuthRedirect(v, AUTH_DEFAULT_REDIRECT)),
+		.transform((v) => normalizeAuthRedirect(v)),
 });
 
 function AuthLayout() {
