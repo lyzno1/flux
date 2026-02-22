@@ -14,8 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { inferPromptInputFileKind, type PromptInputFileKind } from "@/components/ui/prompt-input/file-metadata";
 import type { PromptInputAttachment } from "@/components/ui/prompt-input/types";
+import { client } from "@/lib/orpc";
 import { cn } from "@/lib/utils";
-import { client } from "@/utils/orpc";
 
 export const Route = createFileRoute("/_authenticated/dify")({
 	component: DifyDemo,

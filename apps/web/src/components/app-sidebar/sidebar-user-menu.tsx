@@ -21,7 +21,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { languages } from "@/i18n/config";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 import { sidebarSelectors } from "@/stores/app/slices/sidebar/selectors";
 import { useAppStore } from "@/stores/app/store";
 

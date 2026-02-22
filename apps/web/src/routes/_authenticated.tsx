@@ -4,7 +4,7 @@ import { PanelLeftIcon } from "lucide-react";
 import { AppSidebar, toggleButtonStyles } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar/sidebar-inset";
 import { useIsMobile } from "@/hooks/use-is-mobile";
-import { getRelativeRedirectFromHref } from "@/lib/auth-redirect";
+import { getRelativeRedirectFromHref } from "@/lib/auth/redirect";
 import { getAppStoreState } from "@/stores/app/store";
 
 export const Route = createFileRoute("/_authenticated")({

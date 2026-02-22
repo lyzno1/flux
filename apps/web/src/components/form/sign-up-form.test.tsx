@@ -2,13 +2,13 @@ import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import type userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 import { renderAuthRoute } from "@/test/auth-test-utils";
 import { SignUpForm } from "./sign-up-form";
 
 const mockNavigate = vi.fn();
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		signUp: { email: vi.fn() },
 		signIn: { social: vi.fn() },

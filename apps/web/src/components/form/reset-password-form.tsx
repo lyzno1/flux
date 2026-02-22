@@ -2,8 +2,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
-import { authClient } from "@/lib/auth-client";
-import { createOtpSchema, createPasswordSchema } from "@/lib/auth-validation";
+import { authClient } from "@/lib/auth/client";
+import { createOtpSchema, createPasswordSchema } from "@/lib/auth/validation";
 import { AuthFormLayout } from "./auth-form-layout";
 import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";
 import { useAppForm } from "./use-app-form";

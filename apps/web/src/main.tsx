@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 
 import { PageLoading } from "./components/page-loading";
 import "./i18n";
-import { authClient } from "./lib/auth-client";
+import { authClient } from "./lib/auth/client";
 import { router } from "./router";
 
 const rootElement = document.getElementById("app");

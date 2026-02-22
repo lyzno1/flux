@@ -9,9 +9,10 @@ Zustand state management with Slice architecture for the Flux monorepo.
 
 ## Architecture
 
-- **Factory**: `apps/web/src/lib/create-store.ts` — `createStore` wrapper with `subscribeWithSelector` + `devtools` + `shallow`
+- **Factory**: `apps/web/src/lib/create-store.ts` — `createStore` wrapper with `subscribeWithSelector` + `devtools` + `shallow`, and optional `persist` support
 - **Store definitions**: `apps/web/src/stores/` — domain stores live in the consuming app
-- **Store creation**: Use `createStore` wrapper for simple stores; use `createWithEqualityFn` inline when additional middleware is needed (e.g. `persist`)
+- **Store creation**: All Zustand stores must be created through `createStore`; for persistence use the third argument `options.persist`
+- **Middleware ownership**: `createStore` owns middleware composition (`devtools`, `subscribeWithSelector`, optional `persist`) — do not compose these inline in feature store files
 - **Organization**: Multi-store by domain, each store uses Slice pattern
 - **Selectors**: Strict mode — all state access through selector objects
 - **Types**: `type` only (no `interface`) — Store = State & SliceAction1 & SliceAction2 & ...
@@ -41,14 +42,14 @@ apps/web/src/stores/
 
 ## Rules
 
-1. Never access store state directly in components — always use selectors
-2. Every selector function must be exported via a `xxxSelectors` object
-3. Use `shallow` as default equality fn; use `isEqual` for deep objects only when needed
-4. Prefix internal-only actions with `internal_`
+1. Create stores only via `createStore` from `apps/web/src/lib/create-store.ts`; do not use `create`/`createWithEqualityFn` directly in feature stores
+2. Never compose `devtools`, `subscribeWithSelector`, or `persist` directly in `stores/**/store.ts`; extend `createStore` first if new middleware behavior is required
+3. Never access store state directly in components — always use selectors
+4. Every selector function must be exported via a `xxxSelectors` object
 5. Keep state flat — avoid deeply nested objects
-6. Use Zustand `persist` middleware for localStorage persistence; use `partialize` to persist only needed fields
-7. Use `subscribeWithSelector` on stores that need external subscriptions
-8. Use `type` for all state and action type definitions — never `interface` (prevents declaration merging)
+6. For localStorage persistence, pass `options.persist` into `createStore` and use `partialize` to persist only needed fields
+7. Use `type` for all state and action type definitions — never `interface` (prevents declaration merging)
+8. Prefix internal-only actions with `internal_`
 9. Access actions via `getXxxStoreState()` in callbacks to avoid subscriptions (Vercel: `rerender-defer-reads`)
 10. Subscribe to derived booleans, not raw values (Vercel: `rerender-derived-state`)
 11. Use functional `set((s) => ...)` for state updates that depend on current state (Vercel: `rerender-functional-setstate`)

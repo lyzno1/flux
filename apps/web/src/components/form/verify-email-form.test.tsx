@@ -43,7 +43,7 @@ vi.mock("@/components/ui/input-otp", () => {
 	return { InputOTP, InputOTPGroup, InputOTPSlot };
 });
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		emailOtp: { verifyEmail: vi.fn(), sendVerificationOtp: vi.fn() },
 	},
@@ -54,7 +54,7 @@ vi.mock("sonner", () => ({
 }));
 
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 
 const mockVerifyEmail = vi.mocked(authClient.emailOtp.verifyEmail);
 const mockSendOtp = vi.mocked(authClient.emailOtp.sendVerificationOtp);

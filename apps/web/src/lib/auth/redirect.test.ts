@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AUTH_DEFAULT_REDIRECT, getRelativeRedirectFromHref, normalizeAuthRedirect } from "./auth-redirect";
+import { AUTH_DEFAULT_REDIRECT, getRelativeRedirectFromHref, normalizeAuthRedirect } from "./redirect";
 
 describe("auth-redirect", () => {
 	it("keeps safe relative redirect values", () => {

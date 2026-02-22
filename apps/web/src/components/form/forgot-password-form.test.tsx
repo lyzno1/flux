@@ -1,11 +1,11 @@
 import { cleanup, screen, waitFor } from "@testing-library/react";
 import { toast } from "sonner";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 import { renderAuthRoute } from "@/test/auth-test-utils";
 import { ForgotPasswordForm } from "./forgot-password-form";
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		emailOtp: { sendVerificationOtp: vi.fn() },
 	},

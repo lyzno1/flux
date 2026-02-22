@@ -3,7 +3,7 @@ import type * as React from "react";
 import { toast } from "sonner";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import * as z from "zod";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 import { renderAuthRoute } from "@/test/auth-test-utils";
 
 import { OtpLoginForm } from "./otp-login-form";
@@ -47,7 +47,7 @@ vi.mock("@/components/ui/input-otp", () => {
 	return { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
 });
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		emailOtp: { sendVerificationOtp: vi.fn() },
 		signIn: { emailOtp: vi.fn() },

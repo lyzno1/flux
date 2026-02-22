@@ -1,8 +1,8 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { PageLoading } from "./components/page-loading";
+import { orpc, queryClient } from "./lib/orpc";
 import { routeTree } from "./routeTree.gen";
-import { orpc, queryClient } from "./utils/orpc";
 
 export const router = createRouter({
 	routeTree,

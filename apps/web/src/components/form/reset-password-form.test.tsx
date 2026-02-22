@@ -58,7 +58,7 @@ vi.mock("@/components/ui/input-otp", () => {
 	return { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
 });
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		emailOtp: { resetPassword: vi.fn() },
 	},
@@ -69,7 +69,7 @@ vi.mock("sonner", () => ({
 }));
 
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 
 const mockResetPassword = vi.mocked(authClient.emailOtp.resetPassword);
 

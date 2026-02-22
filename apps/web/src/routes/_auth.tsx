@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import * as z from "zod";
 import { AuthBrandPanel } from "@/components/auth/auth-brand-panel";
 import i18n from "@/i18n";
-import { AUTH_DEFAULT_REDIRECT, normalizeAuthRedirect } from "@/lib/auth-redirect";
+import { AUTH_DEFAULT_REDIRECT, normalizeAuthRedirect } from "@/lib/auth/redirect";
 
 const authSearchSchema = z.object({
 	redirect: z

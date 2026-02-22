@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { useAuthRedirect } from "@/hooks/use-auth-redirect";
-import { authClient } from "@/lib/auth-client";
-import { createEmailSchema, createOtpSchema } from "@/lib/auth-validation";
+import { authClient } from "@/lib/auth/client";
+import { createEmailSchema, createOtpSchema } from "@/lib/auth/validation";
 import { Button } from "../ui/button";
 import { AuthFormLayout } from "./auth-form-layout";
 import { AUTH_PRIMARY_SUBMIT_BUTTON_CLASS, AuthFooterLinkRow } from "./auth-form-primitives";

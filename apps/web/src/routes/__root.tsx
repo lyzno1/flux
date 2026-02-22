@@ -7,8 +7,8 @@ import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { STORAGE_KEYS } from "@/config/storage-keys";
-import type { authClient } from "@/lib/auth-client";
-import type { orpc } from "@/utils/orpc";
+import type { authClient } from "@/lib/auth/client";
+import type { orpc } from "@/lib/orpc";
 
 import "../index.css";
 

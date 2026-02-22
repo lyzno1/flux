@@ -34,7 +34,7 @@ vi.mock("@/components/theme-provider", () => ({
 	}),
 }));
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		useSession: mockUseSession,
 		signOut: mockSignOut,

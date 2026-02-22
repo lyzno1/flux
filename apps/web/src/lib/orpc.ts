@@ -7,7 +7,7 @@ import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 import i18n from "i18next";
 import { toast } from "sonner";
-import { getRelativeRedirectFromHref } from "@/lib/auth-redirect";
+import { getRelativeRedirectFromHref } from "@/lib/auth/redirect";
 
 const NO_RETRY_STATUSES = new Set([400, 401, 403, 404, 409, 422, 429]);
 

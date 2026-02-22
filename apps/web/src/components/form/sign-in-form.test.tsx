@@ -5,7 +5,7 @@ import { renderAuthRoute } from "@/test/auth-test-utils";
 
 import { SignInForm } from "./sign-in-form";
 
-vi.mock("@/lib/auth-client", () => ({
+vi.mock("@/lib/auth/client", () => ({
 	authClient: {
 		signIn: { email: vi.fn(), username: vi.fn(), social: vi.fn() },
 		emailOtp: { sendVerificationOtp: vi.fn() },
@@ -17,7 +17,7 @@ vi.mock("sonner", () => ({
 }));
 
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 
 beforeEach(() => {
 	vi.mocked(authClient.signIn.email).mockReset();
