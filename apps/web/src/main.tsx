@@ -15,16 +15,11 @@ if (!rootElement) {
 
 function InnerApp() {
 	const auth = authClient.useSession();
-	const hasResolvedInitialSession = useRef(false);
 	const authStatus = auth.data ? "authenticated" : "anonymous";
 	const previousAuthStatus = useRef(authStatus);
 
-	if (!auth.isPending) {
-		hasResolvedInitialSession.current = true;
-	}
-
 	useEffect(() => {
-		if (!hasResolvedInitialSession.current) {
+		if (auth.isPending) {
 			return;
 		}
 		if (previousAuthStatus.current === authStatus) {
@@ -32,9 +27,9 @@ function InnerApp() {
 		}
 		previousAuthStatus.current = authStatus;
 		void router.invalidate();
-	}, [authStatus]);
+	}, [auth.isPending, authStatus]);
 
-	if (!hasResolvedInitialSession.current && auth.isPending) {
+	if (auth.isPending && !auth.data) {
 		return <PageLoading />;
 	}
 

@@ -47,15 +47,17 @@ function UserMenuContent({ name, email }: { name: string; email: string }) {
 			return;
 		}
 		setIsSigningOut(true);
-		try {
-			const result = await authClient.signOut();
-			if (result?.error) {
-				toast.error(result.error.message || result.error.statusText);
-			}
-		} catch (error) {
-			toast.error(t("error.generic", { message: error instanceof Error ? error.message : String(error) }));
-		} finally {
-			setIsSigningOut(false);
+		const result = await authClient
+			.signOut()
+			.catch((error: unknown) => {
+				toast.error(t("error.generic", { message: error instanceof Error ? error.message : String(error) }));
+				return null;
+			})
+			.finally(() => {
+				setIsSigningOut(false);
+			});
+		if (result?.error) {
+			toast.error(result.error.message || result.error.statusText);
 		}
 	};
 

@@ -387,16 +387,14 @@ function DifyDemo() {
 				onConversationId: setConversationId,
 			});
 		} catch (err: unknown) {
-			if (isAbortError(err)) {
-				return;
+			if (!isAbortError(err)) {
+				setEntries((prev) => [
+					...prev,
+					{ event: "client_error", data: { message: toErrorMessage(err) }, receivedAt: performance.now() - start },
+				]);
 			}
-			setEntries((prev) => [
-				...prev,
-				{ event: "client_error", data: { message: toErrorMessage(err) }, receivedAt: performance.now() - start },
-			]);
-		} finally {
-			finalizeStream();
 		}
+		finalizeStream();
 	}, [conversationId, filesForRequest, focusPromptInputToEnd, hasUploadingFiles, query, scrollToBottom, streaming]);
 
 	const handleSubmitPrompt = useCallback(() => {
