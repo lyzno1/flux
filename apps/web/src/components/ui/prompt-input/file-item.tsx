@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import type * as React from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,7 @@ type PromptInputFileItemProps = React.ComponentProps<"div"> & {
 	attachment: PromptInputAttachment;
 	errorLabel?: string;
 	onRemove?: (attachmentId: string) => void;
+	removeDisabled?: boolean;
 	removeLabel?: string;
 	uploadedLabel?: string;
 	uploadingLabel?: string;
@@ -29,6 +31,7 @@ function PromptInputFileItem({
 	className,
 	errorLabel = "Upload failed",
 	onRemove,
+	removeDisabled,
 	removeLabel = "Remove file",
 	uploadedLabel = "Uploaded",
 	uploadingLabel = "Uploading",
@@ -74,7 +77,8 @@ function PromptInputFileItem({
 						size="icon-xs"
 						className="rounded-lg"
 						onClick={() => onRemove(attachment.id)}
-						aria-label={removeLabel}
+						aria-label={`${removeLabel}: ${attachment.name}`}
+						disabled={removeDisabled}
 					>
 						<X aria-hidden="true" />
 					</Button>
@@ -84,5 +88,7 @@ function PromptInputFileItem({
 	);
 }
 
-export { PromptInputFileItem };
+const MemoizedPromptInputFileItem = memo(PromptInputFileItem);
+
+export { MemoizedPromptInputFileItem as PromptInputFileItem };
 export type { PromptInputFileItemProps };

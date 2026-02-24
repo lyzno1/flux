@@ -39,13 +39,29 @@ function PromptInputFilePreview({ fileKind, previewUrl, name }: PromptInputFileP
 						type="button"
 						className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 motion-reduce:transition-none"
 					>
-						<img src={previewUrl} alt={name} className="size-full object-cover" />
+						<img
+							src={previewUrl}
+							alt={name}
+							width={40}
+							height={40}
+							loading="lazy"
+							decoding="async"
+							className="size-full object-cover"
+						/>
 					</button>
 				}
 			/>
 			<HoverCardContent side="top" align="start" className="w-72 p-2">
 				<div className="overflow-hidden rounded-lg bg-muted">
-					<img src={previewUrl} alt={name} className="max-h-80 w-full object-contain" />
+					<img
+						src={previewUrl}
+						alt={name}
+						width={288}
+						height={320}
+						loading="lazy"
+						decoding="async"
+						className="max-h-80 w-full object-contain"
+					/>
 				</div>
 			</HoverCardContent>
 		</HoverCard>

@@ -7,10 +7,11 @@ const PROMPT_INPUT_MIN_HEIGHT = 64;
 const PROMPT_INPUT_MAX_HEIGHT = 220;
 
 function resizeTextarea(textarea: HTMLTextAreaElement, minHeight: number, maxHeight: number) {
-	textarea.style.height = "0px";
-	const nextHeight = Math.min(Math.max(textarea.scrollHeight, minHeight), maxHeight);
+	textarea.style.height = "auto";
+	const scrollHeight = textarea.scrollHeight;
+	const nextHeight = Math.min(Math.max(scrollHeight, minHeight), maxHeight);
 	textarea.style.height = `${nextHeight}px`;
-	textarea.style.overflowY = textarea.scrollHeight > maxHeight ? "auto" : "hidden";
+	textarea.style.overflowY = scrollHeight > maxHeight ? "auto" : "hidden";
 }
 
 function assignRef<T>(ref: React.Ref<T> | undefined, value: T) {

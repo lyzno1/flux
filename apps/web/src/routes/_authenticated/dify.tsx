@@ -22,6 +22,7 @@ export const Route = createFileRoute("/_authenticated/dify")({
 });
 
 interface StreamEntry {
+	id: string;
 	event: string;
 	data: unknown;
 	receivedAt: number;
@@ -79,7 +80,12 @@ async function consumeStream(
 	callbacks: StreamCallbacks,
 ) {
 	for await (const event of iterator) {
-		callbacks.onEvent({ event: event.event, data: event, receivedAt: performance.now() - start });
+		callbacks.onEvent({
+			id: createStreamEntryId(),
+			event: event.event,
+			data: event,
+			receivedAt: performance.now() - start,
+		});
 
 		if ((event.event === "message" || event.event === "agent_message") && "answer" in event) {
 			callbacks.onAnswer(event.answer as string);
@@ -124,6 +130,13 @@ function toDifyUploadFileType(fileKind: PromptInputFileKind): DifyUploadFileType
 }
 
 function createAttachmentId() {
+	if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+		return crypto.randomUUID();
+	}
+	return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function createStreamEntryId() {
 	if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
 		return crypto.randomUUID();
 	}
@@ -186,6 +199,13 @@ function DifyDemo() {
 			textarea.setSelectionRange(end, end);
 		});
 	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined" || !window.matchMedia("(pointer: fine)").matches) {
+			return;
+		}
+		focusPromptInputToEnd();
+	}, [focusPromptInputToEnd]);
 
 	const handlePromptInitialFocus = useCallback((event: FocusEvent<HTMLTextAreaElement>) => {
 		if (hasPlacedInitialCaretRef.current) {
@@ -390,7 +410,12 @@ function DifyDemo() {
 			if (!isAbortError(err)) {
 				setEntries((prev) => [
 					...prev,
-					{ event: "client_error", data: { message: toErrorMessage(err) }, receivedAt: performance.now() - start },
+					{
+						id: createStreamEntryId(),
+						event: "client_error",
+						data: { message: toErrorMessage(err) },
+						receivedAt: performance.now() - start,
+					},
 				]);
 			}
 		}
@@ -424,7 +449,6 @@ function DifyDemo() {
 							inputId={queryId}
 							inputName="query"
 							inputRef={promptInputRef}
-							autoFocus
 							value={query}
 							onChange={setQuery}
 							onInitialFocus={handlePromptInitialFocus}
@@ -438,8 +462,7 @@ function DifyDemo() {
 							fileAccept={buildAppPromptInputAccept(DEFAULT_APP_PROMPT_INPUT_FILE_POLICY)}
 							fileCountText={attachments.length > 0 ? t("fileCount", { count: attachments.length }) : undefined}
 							placeholder={t("query")}
-							disabled={streaming}
-							streaming={streaming}
+							mode={streaming ? "streaming" : "ready"}
 							canSubmit={canSubmit}
 							labels={{
 								attachFiles: t("attachFiles"),
@@ -497,11 +520,8 @@ function DifyDemo() {
 			<div ref={scrollRef} className="overflow-y-auto p-4" aria-live="polite" aria-busy={streaming}>
 				<div className="flex flex-col gap-1 [content-visibility:auto]">
 					{entries.length === 0 && <p className="py-8 text-center text-muted-foreground text-sm">{t("emptyState")}</p>}
-					{entries.map((entry, i) => (
-						<div
-							key={`${entry.receivedAt}-${i}`}
-							className="flex items-start gap-2 rounded border p-2 font-mono text-xs"
-						>
+					{entries.map((entry) => (
+						<div key={entry.id} className="flex items-start gap-2 rounded border p-2 font-mono text-xs">
 							<span className="w-20 shrink-0 text-right text-muted-foreground">
 								{t("eventTimestamp", { val: entry.receivedAt })}
 							</span>

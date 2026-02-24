@@ -16,7 +16,7 @@ function PromptInputAttachmentStatusBadge({
 }: PromptInputAttachmentStatusBadgeProps) {
 	if (status === "uploading") {
 		return (
-			<span className="inline-flex items-center gap-1 text-muted-foreground text-xs">
+			<span className="inline-flex items-center gap-1 text-muted-foreground text-xs" aria-live="polite">
 				<Loader2 className="size-3 animate-spin motion-reduce:animate-none" aria-hidden="true" />
 				{uploadingLabel}
 			</span>
@@ -24,11 +24,19 @@ function PromptInputAttachmentStatusBadge({
 	}
 
 	if (status === "uploaded") {
-		return <span className="text-muted-foreground text-xs">{uploadedLabel}</span>;
+		return (
+			<span className="text-muted-foreground text-xs" aria-live="polite">
+				{uploadedLabel}
+			</span>
+		);
 	}
 
 	if (status === "error") {
-		return <span className="text-destructive text-xs">{errorLabel}</span>;
+		return (
+			<span className="text-destructive text-xs" aria-live="polite">
+				{errorLabel}
+			</span>
+		);
 	}
 
 	return null;

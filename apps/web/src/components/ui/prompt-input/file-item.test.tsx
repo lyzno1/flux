@@ -17,7 +17,7 @@ describe("PromptInputFileItem", () => {
 			/>,
 		);
 
-		fireEvent.click(screen.getByRole("button", { name: "Remove file" }));
+		fireEvent.click(screen.getByRole("button", { name: "Remove file: notes.txt" }));
 		expect(onRemove).toHaveBeenCalledWith("attachment-1");
 	});
 });
