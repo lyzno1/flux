@@ -10,8 +10,6 @@ import { STORAGE_KEYS } from "@/config/storage-keys";
 import type { authClient } from "@/lib/auth/client";
 import type { orpc } from "@/lib/orpc";
 
-import "../index.css";
-
 export interface RouterAppContext {
 	orpc: typeof orpc;
 	queryClient: QueryClient;
